@@ -17,11 +17,11 @@ class MQHttpGet {
     requestSettings.forEach((key, value) {
       fullUri += "$key=" + value + "&";
     });
-    var response;
+    http.Response response;
     try {
       response = await http.get(fullUri);
     } catch (e) {
-      print('Error: Connection Error');
+      print('Connection Error: ${response.statusCode}');
     }
     try {
       Function.apply(callback, [response]);
