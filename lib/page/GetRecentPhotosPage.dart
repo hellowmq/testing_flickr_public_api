@@ -7,8 +7,10 @@ class GetRecentPhotosPage extends StatefulWidget {
 }
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
+  var dataList;
   var responseText = '未发送';
-  TextEditingController _controller = TextEditingController();
+  bool _isSending = false;
+  bool _loadingDone = true;
 
   @override
   Widget build(BuildContext context) {
@@ -26,17 +28,27 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
         child: Icon(Icons.send),
       ),
       body: ListView(
-        children: <Widget>[new Text(responseText)],
+        children: ((dataList != null) && (!_isSending))
+            ? dataList
+            : <Widget>[
+                new Center(
+                  child: new Container(
+                    padding: EdgeInsets.all(30.0),
+                    height: 150.0,
+                    width: 150.0,
+                    child: CircularProgressIndicator(),
+                  ),
+                ),
+              ],
       ),
     );
   }
 
   _sendMessage() async {
-    var newText = await GetRecentPhotos().request();
-    if (newText.isNotEmpty) {
-      setState(() {
-        responseText = newText;
-      });
-    }
+    _isSending = true;
+    dataList = await GetRecentPhotos().request();
+    _isSending = false;
+    _loadingDone = true;
+    setState(() {});
   }
 }
