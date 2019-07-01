@@ -59,14 +59,27 @@ final Map<String, WidgetBuilder> routeMap =
       ..['/'] = (context) => MainPage();
 
 List<Widget> buildWidgetList(context) {
-  return pageIndexs.map((v) {
-    return new ListTile(
+  List<Widget> pageEnterList = new List();
+  pageIndexs.forEach((v) {
+    pageEnterList.add(new ListTile(
       title: Text(v.title),
       subtitle: Text(v.subtitle),
       isThreeLine: true,
       onTap: () {
         Navigator.pushNamed(context, v.routeName);
       },
-    );
-  }).toList();
+    ));
+    pageEnterList.add(Divider());
+  });
+  return pageEnterList;
+//  return pageIndexs.map((v) {
+//    return new ListTile(
+//      title: Text(v.title),
+//      subtitle: Text(v.subtitle),
+//      isThreeLine: true,
+//      onTap: () {
+//        Navigator.pushNamed(context, v.routeName);
+//      },
+//    );
+//  }).toList();
 }
