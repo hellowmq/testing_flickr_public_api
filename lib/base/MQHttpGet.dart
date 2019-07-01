@@ -26,7 +26,7 @@ class MQHttpGet {
     try {
       Function.apply(callback, [response]);
     } catch (e) {
-      print('callback function throw exception');
+      print('callback function throw exception' + e.toString());
     }
   }
 }

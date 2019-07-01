@@ -8,8 +8,10 @@ class GetRecentPhotosPage extends StatefulWidget {
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   var dataList;
+  var widgetList;
   var responseText = '未发送';
   bool _isSending = false;
+
 //  bool _loadingDone = true;
 
   @override
@@ -29,7 +31,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
       ),
       body: ListView(
         children: ((dataList != null) && (!_isSending))
-            ? dataList
+            ? widgetList
             : <Widget>[
                 new Column(
                   children: <Widget>[
@@ -42,7 +44,9 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
                       height: 150.0,
                       width: 150.0,
                       child: new Center(
-                        child: CircularProgressIndicator(),
+                        child: _isSending
+                            ? CircularProgressIndicator()
+                            : new Placeholder(),
                       ),
                     ),
                   ],
@@ -53,10 +57,14 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   }
 
   _sendMessage() async {
-    _isSending = true;
+    setState(() {
+      _isSending = true;
+    });
     dataList = await GetRecentPhotos().request();
-    _isSending = false;
+    widgetList = GetRecentPhotos.buildPhotoCardList(dataList);
 //    _loadingDone = true;
-    setState(() {});
+    setState(() {
+      _isSending = false;
+    });
   }
 }

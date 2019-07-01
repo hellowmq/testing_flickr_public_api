@@ -2,7 +2,7 @@ import 'dart:async';
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
-import 'package:wenmq_first_flickr_flutter_app/base/MQHttpGet.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class EchoTest {
 //  {"method":{"_content":"flickr.test.echo"},"api_key":{"_content":"28b8ea4d523ed0bc1ce264306327c4c3"},"format":{"_content":"json"},"nojsoncallback":{"_content":"1"},"name":{"_content":"123"},"stat":"ok"}
