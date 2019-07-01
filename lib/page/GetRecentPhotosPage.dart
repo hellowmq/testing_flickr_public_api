@@ -10,7 +10,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   var dataList;
   var responseText = '未发送';
   bool _isSending = false;
-  bool _loadingDone = true;
+//  bool _loadingDone = true;
 
   @override
   Widget build(BuildContext context) {
@@ -31,14 +31,22 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
         children: ((dataList != null) && (!_isSending))
             ? dataList
             : <Widget>[
-                new Center(
-                  child: new Container(
-                    padding: EdgeInsets.all(30.0),
-                    height: 150.0,
-                    width: 150.0,
-                    child: CircularProgressIndicator(),
-                  ),
-                ),
+                new Column(
+                  children: <Widget>[
+                    new ListTile(
+                      title: new Text('点击按钮获取最近图片'),
+                      subtitle: new Text('如果无效请使用代理'),
+                    ),
+                    new Container(
+                      padding: EdgeInsets.all(30.0),
+                      height: 150.0,
+                      width: 150.0,
+                      child: new Center(
+                        child: CircularProgressIndicator(),
+                      ),
+                    ),
+                  ],
+                )
               ],
       ),
     );
@@ -48,7 +56,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
     _isSending = true;
     dataList = await GetRecentPhotos().request();
     _isSending = false;
-    _loadingDone = true;
+//    _loadingDone = true;
     setState(() {});
   }
 }

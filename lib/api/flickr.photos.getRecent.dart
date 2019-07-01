@@ -3,12 +3,13 @@ import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
+import 'package:transparent_image/transparent_image.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/MQHttpGet.dart';
 
 class GetRecentPhotos {
   GetRecentPhotos();
 
-  Future<List<ListTile>> request() async {
+  Future<List<Widget>> request() async {
     Map<String, String> params = new Map();
     params['method'] = 'flickr.photos.getRecent';
     List<Photo> photoList;
@@ -30,12 +31,32 @@ class GetRecentPhotos {
     return _buildPhotoCardList(photoList);
   }
 
-  List<ListTile> _buildPhotoCardList(List<Photo> photoList) {
+  List<Widget> _buildPhotoCardList(List<Photo> photoList) {
     return photoList
-        .map((photo) => new ListTile(
-              title: Text(photo.title),
-              subtitle: Text(photo.id + ' ' + photo.owner + ' ' + photo.secret),
-            ))
+        .map(
+          (photo) => new Padding(
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 8.0),
+                child: new Card(
+                  child: new Column(
+                    children: <Widget>[
+                      new ListTile(
+                        title: Text(photo.title),
+                        subtitle: Text(
+                            photo.id + ' ' + photo.owner + ' ' + photo.secret),
+                      ),
+                      new Padding(
+                        padding: EdgeInsets.all(5.0),
+                        child: FadeInImage.memoryNetwork(
+                          placeholder: kTransparentImage,
+                          image:
+                              'https://live.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg',
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+        )
         .toList();
   }
 }
