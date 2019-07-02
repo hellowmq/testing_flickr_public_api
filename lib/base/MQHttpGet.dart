@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
 
@@ -17,16 +19,26 @@ class MQHttpGet {
     requestSettings.forEach((key, value) {
       fullUri += "$key=" + value + "&";
     });
+
+//
     http.Response response;
     try {
       response = await http.get(fullUri);
+
+      if (response == null || response.statusCode != 200) {
+        throw Exception('Connection Error: ${response.statusCode}');
+      }
+      if (json.decode(response.body)['stat'] != 'ok') {
+        throw Exception('Flickr Api Error: ' + response.body);
+      }
+      try {
+        Function.apply(callback, [response]);
+      } catch (callbackError) {
+        throw Exception('Callback Function Error: $callbackError');
+      }
     } catch (e) {
-      print('Connection Error: ${response.statusCode}');
-    }
-    try {
-      Function.apply(callback, [response]);
-    } catch (e) {
-      print('callback function throw exception' + e.toString());
+      print('Connection Error: $e');
+      rethrow;
     }
   }
 }

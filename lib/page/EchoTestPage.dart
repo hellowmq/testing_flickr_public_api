@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.test.echo.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class EchoTestPage extends StatefulWidget {
   @override
@@ -7,12 +8,14 @@ class EchoTestPage extends StatefulWidget {
 }
 
 class _EchoTestPageState extends State<EchoTestPage> {
+  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   String echoText = '未发送';
   TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       appBar: new AppBar(
         title: new Text('Echo'),
         leading: new IconButton(
@@ -51,7 +54,12 @@ class _EchoTestPageState extends State<EchoTestPage> {
 
   _sendMessage() async {
     if (_controller.text.isNotEmpty) {
-      String newText = await EchoTest().request(_controller.text);
+      String newText;
+      try {
+        newText = await EchoTest().request(_controller.text);
+      } catch (e) {
+        ShowMessage.showSnackBar(key, e);
+      }
       if (newText != null && newText.isNotEmpty) {
         setState(() {
 //        echoText;

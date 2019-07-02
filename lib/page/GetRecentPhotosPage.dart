@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getRecent.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class GetRecentPhotosPage extends StatefulWidget {
   @override
@@ -7,6 +8,7 @@ class GetRecentPhotosPage extends StatefulWidget {
 }
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
+  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   var dataList;
   var widgetList;
   var responseText = '未发送';
@@ -17,6 +19,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: key,
       appBar: new AppBar(
         title: new Text('GetRecent'),
         leading: new IconButton(
@@ -46,7 +49,9 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
                       child: new Center(
                         child: _isSending
                             ? CircularProgressIndicator()
-                            : new Placeholder(),
+                            : new Container(
+                                child: Text(''),
+                              ),
                       ),
                     ),
                   ],
@@ -60,9 +65,14 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
     setState(() {
       _isSending = true;
     });
-    dataList = await GetRecentPhotos().request();
-    widgetList = GetRecentPhotos.buildPhotoCardList(dataList);
+    try {
+      dataList = await GetRecentPhotos().request();
+      widgetList = GetRecentPhotos.buildPhotoCardList(dataList);
 //    _loadingDone = true;
+    } catch (e) {
+      ShowMessage.showSnackBar(key, e);
+    }
+
     setState(() {
       _isSending = false;
     });

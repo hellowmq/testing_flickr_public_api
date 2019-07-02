@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/page/all.dart';
+import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
 class PageIndex {
   final String title;
@@ -50,6 +50,14 @@ List<PageIndex> pageIndexs = <PageIndex>[
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.photos.search.html',
     buildRoute: (context) => SearchPhotosPage(),
+  ),
+  PageIndex(
+    title: 'flickr.photos.getPopular',
+    subtitle: "Returns a list of popular photos",
+    routeName: '/getPopular',
+    documentationUrl:
+        'https://www.flickr.com/services/api/flickr.photos.getPopular.html',
+    buildRoute: (context) => GetPopularPhotosPage(),
   ),
 ];
 

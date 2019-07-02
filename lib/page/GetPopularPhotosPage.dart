@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.search.dart';
+import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getPopular.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
-class SearchPhotosPage extends StatefulWidget {
+class GetPopularPhotosPage extends StatefulWidget {
   @override
-  _SearchPhotosPageState createState() => _SearchPhotosPageState();
+  _GetPopularPhotosPageState createState() => _GetPopularPhotosPageState();
 }
 
-class _SearchPhotosPageState extends State<SearchPhotosPage> {
+class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   var dataList;
   List<Widget> widgetList;
@@ -80,17 +80,18 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
     setState(() {
       _isSending = true;
     });
-
-    if (_controller.text.isNotEmpty) {
-      try {
-        dataList = await SearchPhotos()
-            .request(additionalParams: {'text': _controller.text});
-        widgetList = SearchPhotos.buildPhotoCardList(dataList);
-      } catch (e) {
-        ShowMessage.showSnackBar(key, e);
+    try {
+      if (_controller.text.isNotEmpty) {
+        dataList = await GetPopularPhotos()
+            .request(additionalParams: {'user_id': _controller.text});
+      } else {
+        dataList = await GetPopularPhotos().request();
       }
-    }
+      widgetList = GetPopularPhotos.buildPhotoCardList(dataList);
 //    _loadingDone = true;
+    } catch (e) {
+      ShowMessage.showSnackBar(key, e);
+    }
     setState(() {
       _isSending = false;
     });
