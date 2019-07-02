@@ -13,7 +13,9 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   List<Widget> widgetList;
   var responseText = '未发送';
   bool _isSending = false;
-  static TextEditingController _controller = TextEditingController();
+  static TextEditingController _controller = TextEditingController(
+    text: '46627222@N03',
+  );
 
 //  bool _loadingDone = true;
 
@@ -46,8 +48,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
                 controller: _controller,
                 style: TextStyle(fontSize: 18),
                 decoration: InputDecoration(
-                  labelText: '输入关键字进行检索',
-                ),
+                    labelText: '输入user_id进行查看', hintText: '146621154@N02'),
               ),
             ),
           ),

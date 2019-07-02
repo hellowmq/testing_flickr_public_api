@@ -35,6 +35,13 @@ List<PageIndex> pageIndexs = <PageIndex>[
     buildRoute: (context) => EchoTestPage(),
   ),
   PageIndex(
+    title: 'request.token',
+    subtitle: "signing request",
+    routeName: '/signingRequest',
+    documentationUrl: 'https://www.flickr.com/services/api/auth.oauth.html',
+    buildRoute: (context) => SigningRequestPage(),
+  ),
+  PageIndex(
     title: 'flickr.photos.getRecent',
     subtitle: "Returns a list of the latest public photos uploaded to flickr.",
     routeName: '/getRecent',

@@ -20,7 +20,7 @@ class MQHttpGet {
       fullUri += "$key=" + value + "&";
     });
 
-//
+    print(fullUri);
     http.Response response;
     try {
       response = await http.get(fullUri);
