@@ -31,7 +31,7 @@ class GetRecentPhotos {
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     };
-    await MQHttpGet.getM(params, parseResponse);
+    await MQHttpRestGet.getM(params, parseResponse);
     return photoList;
   }
 

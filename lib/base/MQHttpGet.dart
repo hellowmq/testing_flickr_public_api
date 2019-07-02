@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
 
-class MQHttpGet {
+class MQHttpRestGet {
   static const String uri = 'https://www.flickr.com/services/rest/';
   static const Map<String, String> requestSettings = {
     'format': 'json',

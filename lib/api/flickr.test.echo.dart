@@ -28,7 +28,7 @@ class EchoTest {
       print('get Echo from flickr.test.echo: ${response.body}');
       text = name;
     };
-    await MQHttpGet.getM(params, parseResponse);
+    await MQHttpRestGet.getM(params, parseResponse);
     return text;
   }
 }
