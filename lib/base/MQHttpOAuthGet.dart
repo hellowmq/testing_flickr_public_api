@@ -1,9 +1,6 @@
 import 'package:http/http.dart' as http;
 
-class MQHttpOAuthGet {
-  static const String uri =
-      'https://www.flickr.com/services/oauth/request_token?';
-
+class MQHttpByUrl {
   static getM(String url, Function callback) async {
     http.Response response;
     try {

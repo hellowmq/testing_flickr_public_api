@@ -42,6 +42,13 @@ List<PageIndex> pageIndexs = <PageIndex>[
     buildRoute: (context) => SigningRequestPage(),
   ),
   PageIndex(
+    title: 'auth.oauth',
+    subtitle: "AuthOAuthTestPage",
+    routeName: '/authOAuth',
+    documentationUrl: 'https://www.flickr.com/services/api/auth.oauth.html',
+    buildRoute: (context) => AuthOAuthTestPage(),
+  ),
+  PageIndex(
     title: 'flickr.photos.getRecent',
     subtitle: "Returns a list of the latest public photos uploaded to flickr.",
     routeName: '/getRecent',
