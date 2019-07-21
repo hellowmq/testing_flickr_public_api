@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:webview_flutter/webview_flutter.dart';
+import 'package:wenmq_first_flickr_flutter_app/api/auth.oauth.dart';
 
 class AuthOAuthTestPage extends StatefulWidget {
   @override
@@ -6,56 +8,50 @@ class AuthOAuthTestPage extends StatefulWidget {
 }
 
 class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
+  FlickrOAuth _flickrOAuth = new FlickrOAuth();
   int currentStep = 0;
+  static Map<String, String> pageContent = new Map<String, String>();
+  static String authUrl = 'www.baidu.com';
   List<Step> steps = [
     Step(
-      title: Text('stepTitle A'),
-      subtitle: Text('disabled状态'),
-      state: StepState.disabled,
+      title: Text('簽署要求'),
+      subtitle: Text('_generateSignature'),
+      state: StepState.indexed,
       content: Card(
-          color: Colors.red,
-          child: SizedBox(
-            child: Center(
-              child: Text(
-                  "设置state: StepState.disabled，注意标题setTitle A字体颜色为灰色,此时该Step"
-                  "不会响应onStepTapped 事件"),
-            ),
-            width: 600.0,
-            height: 100.0,
-          )),
+        color: Colors.red,
+        child: SizedBox(
+          width: 600.0,
+          child: Column(
+            children: <Widget>[
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text('建立基本字串'),
+              ),
+            ],
+          ),
+        ),
+      ),
     ),
     Step(
-      title: Text('stepTitle B'),
-      subtitle: Text('activie为true'),
+      title: Text('取得要求記錄'),
+      subtitle: Text('request_token'),
       isActive: true,
       content: Card(
           color: Colors.blue,
           child: SizedBox(
             child: Center(
-              child: Text("设置isActive: true,此时步骤2为蓝色"),
+              child: Text(pageContent.containsKey('oauth_signature')
+                  ? pageContent['oauth_signature']
+                  : '生成 oauth_signature 失败'),
             ),
             width: 600.0,
             height: 100.0,
           )),
     ),
     Step(
-      title: Text('stepTitle C'),
-      subtitle: Text('error状态'),
+      title: Text('取得使用者授權'),
+      subtitle: Text('_authorize'),
       state: StepState.error,
-      content: Card(
-          color: Colors.red,
-          child: SizedBox(
-            child: Center(
-              child: Text("设置state: StepState.error，表明此步骤错误，为进度条显示红色警告"),
-            ),
-            width: 600.0,
-            height: 100.0,
-          )),
-    ),
-    Step(
-      title: Text('stepTitle D'),
-      subtitle: Text('editing状态'),
-      state: StepState.editing,
       content: Card(
           color: Colors.yellow,
           child: SizedBox(
@@ -65,9 +61,41 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
             width: 600.0,
             height: 50.0,
           )),
+//      Container(
+//        height: 400.0,
+//        width: 600.0,
+//        child: WebView(initialUrl: authUrl),
+//      ),
     ),
     Step(
-      title: Text('stepTitle E'),
+      title: Text('交換要求記錄，以取得存取記錄的權限'),
+      subtitle: Text('_accessToken'),
+      state: StepState.editing,
+      content: Container(
+        height: 1000.0,
+        width: 600.0,
+        child: WebView(
+          initialUrl: authUrl,
+          javascriptMode: JavascriptMode.unrestricted,
+          onPageFinished: (str) {
+            print('onPageFinished');
+            pageContent.addAll(
+                Uri.splitQueryString(str.substring(str.indexOf('?') + 1)));
+          },
+        ),
+      ),
+//      Card(
+//          color: Colors.yellow,
+//          child: SizedBox(
+//            child: Center(
+//              child: Text("设置state: StepState.editing，自动设置了编辑状态的铅笔标志"),
+//            ),
+//            width: 600.0,
+//            height: 50.0,
+//          )),
+    ),
+    Step(
+      title: Text('透過 OAuth 呼叫 Flickr API'),
       subtitle: Text('indexed状态'),
       state: StepState.indexed,
       content: Card(
@@ -81,28 +109,75 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
           )),
     ),
     Step(
-      title: Text('stepTitle F'),
-      subtitle: Text('complete状态'),
-      state: StepState.complete,
+      title: Text('Finish'),
+      state: StepState.indexed,
       content: Card(
           color: Colors.pink,
           child: SizedBox(
             child: Center(
-              child: Text("设置state: StepState.complete，此状态为默认状态，显示对号"),
+              child: Text("完成"),
             ),
             width: 600.0,
             height: 50.0,
           )),
-    ),
+    )
   ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Center(child: Text("Stepper简单使用")),
+          title: Text("透過 Flickr 使用 OAuth"),
           elevation: 0.0,
         ),
         body: _createStepper());
+  }
+
+  _generateSignature() {
+    _flickrOAuth = new FlickrOAuth();
+    setState(() {
+      pageContent['oauth_signature'] = _flickrOAuth.generateSignature();
+      print(pageContent['oauth_signature']);
+    });
+  }
+
+  _requestToken() {
+    _flickrOAuth.requestToken()
+      ..then((result) => pageContent['oauth_callback_confirmed'] = result)
+      ..catchError((error) =>
+          throw Exception('_flickrOAuth._requestToken onError $error'));
+  }
+
+  _authorize() {
+    setState(() {
+      authUrl =
+          '${FlickrOAuth.oauthUrl}authorize?oauth_token=${_flickrOAuth.authParamsMap['oauth_token']}';
+    });
+    print(authUrl);
+//    _flickrOAuth.authorize()
+//      ..then((result) => pageContent['oauth_verifier'] = result)
+//      ..catchError(
+//          (error) => throw Exception('_flickrOAuth._authorize onError $error'));
+  }
+
+  _accessToken() {
+    try {
+      _flickrOAuth.authParamsMap['oauth_verifier'] =
+          pageContent['oauth_verifier'];
+    } catch (e) {
+      print('_accessToken Add oauth_verifier Error');
+    }
+    _flickrOAuth.accessToken()
+      ..then((result) => pageContent['oauth_token_secret'] = result)
+      ..catchError((error) =>
+          throw Exception('_flickrOAuth._accessToken onError $error'));
+  }
+
+  _loginTest() {
+    _flickrOAuth.testLogin()
+      ..then((result) => pageContent['user_info'] = result)
+      ..catchError(
+          (error) => throw Exception('_flickrOAuth._loginTest onError $error'));
   }
 
   Widget _createStepper() {
@@ -127,8 +202,33 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
       },
       onStepContinue: () {
         //下一步
+        print(_flickrOAuth.authParamsMap);
         setState(() {
           if (currentStep < steps.length - 1) {
+            switch (currentStep) {
+              case 0:
+                _generateSignature();
+                break;
+              case 1:
+                _requestToken();
+                print('await _requestToken()' 'Finish');
+                break;
+              case 2:
+                _authorize();
+                print('await _authorize()' 'Finish');
+                break;
+              case 3:
+                _accessToken();
+                print('await _accessToken()' 'Finish');
+                break;
+              case 4:
+                _loginTest();
+                print('await _loginTest()' 'Finish');
+                break;
+              default:
+                throw Exception("CurrentStep Error");
+                break;
+            }
             currentStep = currentStep + 1;
           } else {
             currentStep = 0;
