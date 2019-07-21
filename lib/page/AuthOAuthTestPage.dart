@@ -136,7 +136,8 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   _generateSignature() {
     _flickrOAuth = new FlickrOAuth();
     setState(() {
-      pageContent['oauth_signature'] = _flickrOAuth.generateSignature();
+      pageContent['oauth_signature'] = _flickrOAuth.generateSignature(
+          pathOauth: 'request_token', requestMethod: 'GET');
       print(pageContent['oauth_signature']);
     });
   }

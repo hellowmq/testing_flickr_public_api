@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as app_key;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
+// 请务必在每次需要传递 signature 时更新 signature（使用 HMAC-SHA1 加密）
 class FlickrOAuth {
   static const String oauthUrl = 'https://www.flickr.com/services/oauth/';
   Map<String, String> authParamsMap = new SplayTreeMap()
@@ -20,7 +21,8 @@ class FlickrOAuth {
     ..['flutter_string'] = 'flutter_string';
 
 //  簽署要求
-  String generateSignature() {
+  String generateSignature(
+      {String pathOauth = 'request_token', String requestMethod = 'GET'}) {
     String _generateBaseString() {
       const List<String> paramsNames = [
         'oauth_nonce',
@@ -30,13 +32,13 @@ class FlickrOAuth {
         'oauth_version',
         'oauth_callback'
       ];
-      String requestUrlString = Uri.encodeComponent(oauthUrl + 'request_token');
+      String requestUrlString = Uri.encodeComponent(oauthUrl + pathOauth);
       String paramsString = Uri.encodeComponent(authParamsMap.keys
           .where((key) => paramsNames.contains(key))
           .map((key) => '$key=${authParamsMap[key]}')
           .toList()
           .join('&'));
-      return 'GET&$requestUrlString&$paramsString';
+      return '$requestMethod&$requestUrlString&$paramsString';
     }
 
     String _generateKey() =>
@@ -87,7 +89,7 @@ class FlickrOAuth {
         print('requestToken.parseRequestToken' + e.toString());
       }
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-      generateSignature();
+      generateSignature(pathOauth: 'access_token', requestMethod: 'POST');
       if (authParamsMap['oauth_callback_confirmed'] != 'true') {
         throw Exception('oauth_callback_confirmed == false');
       }
