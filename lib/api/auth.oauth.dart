@@ -20,37 +20,29 @@ class FlickrOAuth {
     ..['oauth_token_secret'] = ''
     ..['flutter_string'] = 'flutter_string';
 
-//  簽署要求
-  String generateSignature(
-      {String pathOauth = 'request_token', String requestMethod = 'GET'}) {
+  static String getSignature(
+      {String httpVerb = 'GET',
+      String requestUrl = 'request_token',
+      SplayTreeMap<String, String> params,
+      String tokenSecret}) {
+    assert(httpVerb != null);
+    assert(requestUrl != null);
+    assert(params != null);
+    assert(tokenSecret != null);
+
     String _generateBaseString() {
-      const List<String> paramsNames = [
-        'oauth_nonce',
-        'oauth_timestamp',
-        'oauth_consumer_key',
-        'oauth_signature_method',
-        'oauth_version',
-        'oauth_callback'
-      ];
-      String requestUrlString = Uri.encodeComponent(oauthUrl + pathOauth);
-      String paramsString = Uri.encodeComponent(authParamsMap.keys
-          .where((key) => paramsNames.contains(key))
-          .map((key) => '$key=${authParamsMap[key]}')
-          .toList()
-          .join('&'));
-      return '$requestMethod&$requestUrlString&$paramsString';
+      String requestUrlString = Uri.encodeComponent(oauthUrl + requestUrl);
+      String paramsString = Uri.encodeComponent(
+          params.keys.map((key) => '$key=${params[key]}').toList().join('&'));
+      return '$httpVerb&$requestUrlString&$paramsString';
     }
 
-    String _generateKey() =>
-        '${app_key.secret}&${authParamsMap['oauth_token_secret']}';
-
+    String _generateKey() => '${app_key.secret}&$tokenSecret';
     try {
       var hmacSha1 = new Hmac(sha1, utf8.encode(_generateKey()));
       print(_generateBaseString());
       String signature = Uri.encodeComponent(base64
           .encode(hmacSha1.convert(utf8.encode(_generateBaseString())).bytes));
-      authParamsMap['oauth_signature'] = signature;
-      print('FlickrOAuth.generateSignature = $signature');
       return signature;
     } catch (e) {
       print(e);
@@ -58,8 +50,63 @@ class FlickrOAuth {
     }
   }
 
+//  簽署要求
+//  String generateSignature(
+//      {String pathOauth = 'request_token', String requestMethod = 'GET'}) {
+//    String _generateBaseString() {
+//      const List<String> paramsNames = [
+//        'oauth_nonce',
+//        'oauth_timestamp',
+//        'oauth_consumer_key',
+//        'oauth_signature_method',
+//        'oauth_version',
+//        'oauth_callback'
+//      ];
+//      String requestUrlString = Uri.encodeComponent(oauthUrl + pathOauth);
+//      String paramsString = Uri.encodeComponent(authParamsMap.keys
+//          .where((key) => paramsNames.contains(key))
+//          .map((key) => '$key=${authParamsMap[key]}')
+//          .toList()
+//          .join('&'));
+//      return '$requestMethod&$requestUrlString&$paramsString';
+//    }
+//
+//    String _generateKey() =>
+//        '${app_key.secret}&${authParamsMap['oauth_token_secret']}';
+//
+//    try {
+//      var hmacSha1 = new Hmac(sha1, utf8.encode(_generateKey()));
+//      print(_generateBaseString());
+//      String signature = Uri.encodeComponent(base64
+//          .encode(hmacSha1.convert(utf8.encode(_generateBaseString())).bytes));
+//      authParamsMap['oauth_signature'] = signature;
+//      print('FlickrOAuth.generateSignature = $signature');
+//      return signature;
+//    } catch (e) {
+//      print(e);
+//      throw FormatException('Generate Signature Error');
+//    }
+//  }
+
 //  取得要求記錄
   Future<String> requestToken() async {
+    void _generateSignature() {
+      SplayTreeMap<String, String> params = new SplayTreeMap()
+        ..['oauth_nonce'] = authParamsMap['oauth_nonce']
+        ..['oauth_timestamp'] = authParamsMap['oauth_timestamp']
+        ..['oauth_consumer_key'] = authParamsMap['oauth_consumer_key']
+        ..['oauth_signature_method'] = authParamsMap['oauth_signature_method']
+        ..['oauth_version'] = authParamsMap['oauth_version']
+//        ..['oauth_signature'] = authParamsMap['oauth_signature']
+        ..['oauth_callback'] = authParamsMap['oauth_callback'];
+      String tokenSecret = authParamsMap['oauth_token_secret'];
+      authParamsMap['oauth_signature'] = FlickrOAuth.getSignature(
+          httpVerb: 'GET',
+          requestUrl: 'access_token',
+          params: params,
+          tokenSecret: tokenSecret);
+    }
+
     String _generateRequestTokenUrl() {
       const List<String> paramsNames = [
         'oauth_nonce',
@@ -89,11 +136,14 @@ class FlickrOAuth {
         print('requestToken.parseRequestToken' + e.toString());
       }
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-      generateSignature(pathOauth: 'access_token', requestMethod: 'POST');
+//      generateSignature(pathOauth: 'access_token', requestMethod: 'POST');
+
       if (authParamsMap['oauth_callback_confirmed'] != 'true') {
         throw Exception('oauth_callback_confirmed == false');
       }
     }
+
+    _generateSignature();
 
     await MQHttpByUrl.getM(_generateRequestTokenUrl(), parseRequestToken);
 
