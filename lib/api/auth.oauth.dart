@@ -24,7 +24,7 @@ class FlickrOAuth {
     ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
     ..['oauth_token_secret'] = '';
 
-//  Get A FLickrOAuth Object. if null create one.
+//  Get A FlickrOAuth Object. if null create one.
   static FlickrOAuth getInstance() {
     if (_instance == null) {
       _instance = new FlickrOAuth();
@@ -42,6 +42,7 @@ class FlickrOAuth {
     return _instance;
   }
 
+//  A private crypto method cause OAuth request a signature with crypto.
   static String _getSignature(
       {String httpVerb = 'GET',
       String requestUrl = '/services/oauth/request_token',
@@ -52,6 +53,9 @@ class FlickrOAuth {
     assert(params != null);
     assert(tokenSecret != null);
 
+// The base string is constructed by concatenating the HTTP verb,
+// the request URL, and all request parameters sorted by name,
+// using lexicograhpical byte value ordering, separated by an '&'.
     String _generateBaseString() {
       String requestUrlString =
           Uri.encodeComponent(FLICKR_OAUTH_URL + requestUrl);
@@ -60,7 +64,10 @@ class FlickrOAuth {
       return '$httpVerb&$requestUrlString&$paramsString';
     }
 
+// Use the base string as the text and the key is the concatenated values
+// of the Consumer Secret and Token Secret, separated by an '&'.
     String _generateKey() => '${app_key.secret}&$tokenSecret';
+//    process of crypto with a base string and key.
     try {
       var hmacSha1 = new Hmac(sha1, utf8.encode(_generateKey()));
       print(_generateBaseString());
@@ -73,7 +80,9 @@ class FlickrOAuth {
     }
   }
 
+//  Getting a Request Token is the first step of OAuth
   Future<String> requestToken() async {
+//    provide some variables for signature crypto
     void _generateSignature() {
       SplayTreeMap<String, String> params = new SplayTreeMap()
         ..['oauth_nonce'] = authParamsMap['oauth_nonce']
@@ -89,7 +98,7 @@ class FlickrOAuth {
           params: params,
           tokenSecret: tokenSecret);
     }
-
+//    generate url to Getting a Request Token
     String _generateRequestTokenUrl() {
       const List<String> paramsNames = [
         'oauth_nonce',
@@ -108,7 +117,7 @@ class FlickrOAuth {
           .join('&');
       return '${FLICKR_OAUTH_URL}request_token?$paramsString';
     }
-
+//    callback function for Getting a Request Token
     parseRequestToken(value) {
       final response = value as http.Response;
       try {
