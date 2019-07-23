@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
+///
+/// auth: hellowmq 2019/07/23
+///
+
+// All sub page should be routed with a PageIndex.
 class PageIndex {
   final String title;
   final String subtitle;
@@ -23,8 +28,8 @@ class PageIndex {
     return '$runtimeType($title $routeName)';
   }
 }
-
-List<PageIndex> pageIndexs = <PageIndex>[
+// All sub routes are stored in a PageIndex List.
+List<PageIndex> pageIndexList = <PageIndex>[
   PageIndex(
     title: 'flickr.test.echo',
     subtitle:
@@ -75,14 +80,16 @@ List<PageIndex> pageIndexs = <PageIndex>[
   ),
 ];
 
+// a routeMap should be submit to MaterialApp as a route
 final Map<String, WidgetBuilder> routeMap =
-    new Map<String, WidgetBuilder>.fromIterable(pageIndexs,
+    new Map<String, WidgetBuilder>.fromIterable(pageIndexList,
         key: (v) => v.routeName, value: (v) => v.buildRoute)
       ..['/'] = (context) => MainPage();
 
+// create the enter for the sub page
 List<Widget> buildWidgetList(context) {
   List<Widget> pageEnterList = new List();
-  pageIndexs.forEach((v) {
+  pageIndexList.forEach((v) {
     pageEnterList.add(new ListTile(
       title: Text(v.title),
       subtitle: Text(v.subtitle),
@@ -94,14 +101,4 @@ List<Widget> buildWidgetList(context) {
     pageEnterList.add(Divider());
   });
   return pageEnterList;
-//  return pageIndexs.map((v) {
-//    return new ListTile(
-//      title: Text(v.title),
-//      subtitle: Text(v.subtitle),
-//      isThreeLine: true,
-//      onTap: () {
-//        Navigator.pushNamed(context, v.routeName);
-//      },
-//    );
-//  }).toList();
 }

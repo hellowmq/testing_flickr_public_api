@@ -14,3 +14,22 @@ A few resources to get you started if this is your first Flutter project:
 For help getting started with Flutter, view our 
 [online documentation](https://flutter.io/docs), which offers tutorials, 
 samples, guidance on mobile development, and a full API reference.
+
+### How to use
+
+1. create a build configuration
+create some build control file such as AndroidManifest.xml
+```
+flutter create .
+```
+
+2. get flutter and dart dependencies
+```
+flutter pub get
+// DO NOT USE pub get of Dart SDK
+```
+
+3. run the application
+```
+flutter run
+```
