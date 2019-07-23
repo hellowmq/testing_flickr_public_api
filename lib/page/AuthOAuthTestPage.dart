@@ -8,7 +8,6 @@ class AuthOAuthTestPage extends StatefulWidget {
 }
 
 class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
-  FlickrOAuth _flickrOAuth = new FlickrOAuth();
   int currentStep = 0;
   static Map<String, String> pageContent = new Map<String, String>();
   static String authUrl = 'www.baidu.com';
@@ -61,11 +60,6 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
             width: 600.0,
             height: 50.0,
           )),
-//      Container(
-//        height: 400.0,
-//        width: 600.0,
-//        child: WebView(initialUrl: authUrl),
-//      ),
     ),
     Step(
       title: Text('交換要求記錄，以取得存取記錄的權限'),
@@ -84,15 +78,6 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
           },
         ),
       ),
-//      Card(
-//          color: Colors.yellow,
-//          child: SizedBox(
-//            child: Center(
-//              child: Text("设置state: StepState.editing，自动设置了编辑状态的铅笔标志"),
-//            ),
-//            width: 600.0,
-//            height: 50.0,
-//          )),
     ),
     Step(
       title: Text('透過 OAuth 呼叫 Flickr API'),
@@ -133,52 +118,41 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
         body: _createStepper());
   }
 
-  _generateSignature() {
-    _flickrOAuth = new FlickrOAuth();
-    setState(() {
-//      pageContent['oauth_signature'] = _flickrOAuth.generateSignature(
-//          pathOauth: 'request_token', requestMethod: 'GET');
-//      print(pageContent['oauth_signature']);
-    });
-  }
 
   _requestToken() {
-    _flickrOAuth.requestToken()
+    FlickrOAuth.getInstance().requestToken()
       ..then((result) => pageContent['oauth_callback_confirmed'] = result)
-      ..catchError((error) =>
-          throw Exception('_flickrOAuth._requestToken onError $error'));
+      ..catchError((error) => throw Exception(
+          'FlickrOAuth Instance.requestToken onError $error'));
   }
 
   _authorize() {
     setState(() {
       authUrl =
-          '${FlickrOAuth.oauthUrl}authorize?oauth_token=${_flickrOAuth.authParamsMap['oauth_token']}';
+          '${FlickrOAuth.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().authParamsMap['oauth_token']}';
     });
     print(authUrl);
-//    _flickrOAuth.authorize()
-//      ..then((result) => pageContent['oauth_verifier'] = result)
-//      ..catchError(
-//          (error) => throw Exception('_flickrOAuth._authorize onError $error'));
   }
 
   _accessToken() {
     try {
-      _flickrOAuth.authParamsMap['oauth_verifier'] =
+      FlickrOAuth.getInstance().authParamsMap['oauth_verifier'] =
           pageContent['oauth_verifier'];
+      print('Update FlickrOAuth instance authParamsMap["oauth_verifier"]');
     } catch (e) {
       print('_accessToken Add oauth_verifier Error');
     }
-    _flickrOAuth.accessToken()
+    FlickrOAuth.getInstance().accessToken()
       ..then((result) => pageContent['oauth_token_secret'] = result)
-      ..catchError((error) =>
-          throw Exception('_flickrOAuth._accessToken onError $error'));
+      ..catchError((error) => throw Exception(
+          'FlickrOAuth Instance()._accessToken onError $error'));
   }
 
   _loginTest() {
-    _flickrOAuth.testLogin()
+    FlickrOAuth.getInstance().testLogin()
       ..then((result) => pageContent['user_info'] = result)
-      ..catchError(
-          (error) => throw Exception('_flickrOAuth._loginTest onError $error'));
+      ..catchError((error) => throw Exception(
+          'FlickrOAuth Instance()._loginTest onError $error'));
   }
 
   Widget _createStepper() {
@@ -203,12 +177,11 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
       },
       onStepContinue: () {
         //下一步
-        print(_flickrOAuth.authParamsMap);
+        print(FlickrOAuth.getInstance().authParamsMap);
         setState(() {
           if (currentStep < steps.length - 1) {
             switch (currentStep) {
               case 0:
-                _generateSignature();
                 break;
               case 1:
                 _requestToken();

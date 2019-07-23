@@ -9,29 +9,39 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 // 请务必在每次需要传递 signature 时更新 signature（使用 HMAC-SHA1 加密）
 class FlickrOAuth {
   static FlickrOAuth _instance;
-  static const String oauthUrl = 'https://www.flickr.com/services/oauth/';
+  static const String FLICKR_HOST_URL = 'https://www.flickr.com';
+  static const String FLICKR_OAUTH_URL =
+      'https://www.flickr.com/services/oauth/';
   Map<String, String> authParamsMap = new SplayTreeMap()
     ..['oauth_nonce'] = '123456'
     ..['oauth_timestamp'] =
         ((new DateTime.now().millisecondsSinceEpoch / 1000).floor()).toString()
-    ..['oauth_consumer_key'] = '82c6bf925a8bf9823d980b7a3785d4b3'
+    ..['oauth_consumer_key'] = app_key.apiKey
     ..['oauth_signature_method'] = 'HMAC-SHA1'
     ..['oauth_version'] = '1.0'
     ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
-    ..['oauth_token_secret'] = ''
-    ..['flutter_string'] = 'flutter_string';
+    ..['oauth_token_secret'] = '';
 
-  static FlickrOAuth getInstance(){
-    if(_instance == null ){
+  static FlickrOAuth getInstance() {
+    if (_instance == null) {
       _instance = new FlickrOAuth();
+      _instance.authParamsMap = new SplayTreeMap()
+        ..['oauth_nonce'] = '123456'
+        ..['oauth_timestamp'] =
+            ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
+                .toString()
+        ..['oauth_consumer_key'] = app_key.apiKey
+        ..['oauth_signature_method'] = 'HMAC-SHA1'
+        ..['oauth_version'] = '1.0'
+        ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
+        ..['oauth_token_secret'] = '';
     }
     return _instance;
-
   }
 
-  static String getSignature(
+  static String _getSignature(
       {String httpVerb = 'GET',
-      String requestUrl = 'request_token',
+      String requestUrl = '/services/oauth/request_token',
       SplayTreeMap<String, String> params,
       String tokenSecret}) {
     assert(httpVerb != null);
@@ -40,7 +50,8 @@ class FlickrOAuth {
     assert(tokenSecret != null);
 
     String _generateBaseString() {
-      String requestUrlString = Uri.encodeComponent(oauthUrl + requestUrl);
+      String requestUrlString =
+          Uri.encodeComponent(FLICKR_OAUTH_URL + requestUrl);
       String paramsString = Uri.encodeComponent(
           params.keys.map((key) => '$key=${params[key]}').toList().join('&'));
       return '$httpVerb&$requestUrlString&$paramsString';
@@ -59,45 +70,6 @@ class FlickrOAuth {
     }
   }
 
-//  簽署要求
-//  String generateSignature(
-//      {String pathOauth = 'request_token', String requestMethod = 'GET'}) {
-//    String _generateBaseString() {
-//      const List<String> paramsNames = [
-//        'oauth_nonce',
-//        'oauth_timestamp',
-//        'oauth_consumer_key',
-//        'oauth_signature_method',
-//        'oauth_version',
-//        'oauth_callback'
-//      ];
-//      String requestUrlString = Uri.encodeComponent(oauthUrl + pathOauth);
-//      String paramsString = Uri.encodeComponent(authParamsMap.keys
-//          .where((key) => paramsNames.contains(key))
-//          .map((key) => '$key=${authParamsMap[key]}')
-//          .toList()
-//          .join('&'));
-//      return '$requestMethod&$requestUrlString&$paramsString';
-//    }
-//
-//    String _generateKey() =>
-//        '${app_key.secret}&${authParamsMap['oauth_token_secret']}';
-//
-//    try {
-//      var hmacSha1 = new Hmac(sha1, utf8.encode(_generateKey()));
-//      print(_generateBaseString());
-//      String signature = Uri.encodeComponent(base64
-//          .encode(hmacSha1.convert(utf8.encode(_generateBaseString())).bytes));
-//      authParamsMap['oauth_signature'] = signature;
-//      print('FlickrOAuth.generateSignature = $signature');
-//      return signature;
-//    } catch (e) {
-//      print(e);
-//      throw FormatException('Generate Signature Error');
-//    }
-//  }
-
-//  取得要求記錄
   Future<String> requestToken() async {
     void _generateSignature() {
       SplayTreeMap<String, String> params = new SplayTreeMap()
@@ -106,12 +78,11 @@ class FlickrOAuth {
         ..['oauth_consumer_key'] = authParamsMap['oauth_consumer_key']
         ..['oauth_signature_method'] = authParamsMap['oauth_signature_method']
         ..['oauth_version'] = authParamsMap['oauth_version']
-//        ..['oauth_signature'] = authParamsMap['oauth_signature']
         ..['oauth_callback'] = authParamsMap['oauth_callback'];
       String tokenSecret = authParamsMap['oauth_token_secret'];
-      authParamsMap['oauth_signature'] = FlickrOAuth.getSignature(
+      authParamsMap['oauth_signature'] = FlickrOAuth._getSignature(
           httpVerb: 'GET',
-          requestUrl: 'access_token',
+          requestUrl: '/services/oauth/request_token',
           params: params,
           tokenSecret: tokenSecret);
     }
@@ -132,7 +103,7 @@ class FlickrOAuth {
           .map((key) => '$key=${authParamsMap[key]}')
           .toList()
           .join('&');
-      return '${oauthUrl}request_token?$paramsString';
+      return '${FLICKR_OAUTH_URL}request_token?$paramsString';
     }
 
     parseRequestToken(value) {
@@ -145,8 +116,6 @@ class FlickrOAuth {
         print('requestToken.parseRequestToken' + e.toString());
       }
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-//      generateSignature(pathOauth: 'access_token', requestMethod: 'POST');
-
       if (authParamsMap['oauth_callback_confirmed'] != 'true') {
         throw Exception('oauth_callback_confirmed == false');
       }
@@ -162,7 +131,7 @@ class FlickrOAuth {
 //  取得使用者授權
   Future<String> authorize() async {
     String generateAuthorizeUrl() {
-      return '${oauthUrl}authorize?oauth_token=${authParamsMap['oauth_token']}';
+      return '${FLICKR_OAUTH_URL}authorize?oauth_token=${authParamsMap['oauth_token']}';
     }
 
     parseAuthorizeResult(value) {
@@ -182,12 +151,32 @@ class FlickrOAuth {
       }
     }
 
+    if(authParamsMap.containsKey('oauth_token')&& authParamsMap['oauth_token'].isNotEmpty) {
+      return authParamsMap['FlickrOAuth'];
+    }
 //    await MQHttpByUrl.getM(_generateAuthorizeUrl(), parseAuthorizeResult);
-    return authParamsMap['FlickrOAuth'];
+    throw Exception('authParamsMap["oauth_token"].isEmpty');
   }
 
 //  交換要求記錄，以取得存取記錄的權限
   Future<String> accessToken() async {
+    void _generateSignature() {
+      SplayTreeMap<String, String> params = new SplayTreeMap()
+        ..['oauth_nonce'] = authParamsMap['oauth_nonce']
+        ..['oauth_timestamp'] = authParamsMap['oauth_timestamp']
+        ..['oauth_verifier'] = authParamsMap['oauth_verifier']
+        ..['oauth_consumer_key'] = authParamsMap['oauth_consumer_key']
+        ..['oauth_signature_method'] = authParamsMap['oauth_signature_method']
+        ..['oauth_version'] = authParamsMap['oauth_version']
+        ..['oauth_token'] = authParamsMap['oauth_token'];
+      String tokenSecret = authParamsMap['oauth_token_secret'];
+      authParamsMap['oauth_signature'] = FlickrOAuth._getSignature(
+          httpVerb: 'GET',
+          requestUrl: '/services/oauth/access_token',
+          params: params,
+          tokenSecret: tokenSecret);
+    }
+
     String _generateAccessTokenUrl() {
       const List<String> paramsNames = [
         'oauth_nonce',
@@ -204,7 +193,7 @@ class FlickrOAuth {
           .map((key) => '$key=${authParamsMap[key]}')
           .toList()
           .join('&');
-      return '${oauthUrl}access_token?$paramsString';
+      return '${FLICKR_OAUTH_URL}access_token?$paramsString';
     }
 
     parseAccessToken(value) {
@@ -224,12 +213,30 @@ class FlickrOAuth {
       }
     }
 
+    _generateSignature();
     await MQHttpByUrl.getM(_generateAccessTokenUrl(), parseAccessToken);
     return authParamsMap['oauth_token_secret'];
   }
 
 //  透過 OAuth 呼叫 Flickr API
   Future<String> testLogin() async {
+    void _generateSignature() {
+      SplayTreeMap<String, String> params = new SplayTreeMap()
+        ..['format'] = authParamsMap['json']
+        ..['oauth_consumer_key'] = authParamsMap['oauth_consumer_key']
+        ..['oauth_timestamp'] = authParamsMap['oauth_timestamp']
+        ..['oauth_signature_method'] = authParamsMap['oauth_signature_method']
+        ..['oauth_version'] = authParamsMap['oauth_version']
+        ..['oauth_token'] = authParamsMap['oauth_token']
+        ..['method'] = authParamsMap['flickr.test.login'];
+      String tokenSecret = authParamsMap['oauth_token_secret'];
+      authParamsMap['oauth_signature'] = FlickrOAuth._getSignature(
+          httpVerb: 'GET',
+          requestUrl: '/services/rest',
+          params: params,
+          tokenSecret: tokenSecret);
+    }
+
     String _generateTestLoginUrl() {
       String url =
           'https://www.flickr.com/services/rest?nojsoncallback=1 &format=json&method=flickr.test.login&';
@@ -266,6 +273,7 @@ class FlickrOAuth {
       userInfo = response.body;
     }
 
+    _generateSignature();
     await MQHttpByUrl.getM(_generateTestLoginUrl(), parseTestLogin);
     return userInfo;
   }
