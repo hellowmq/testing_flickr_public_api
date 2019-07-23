@@ -154,7 +154,8 @@ class FlickrOAuth {
       }
     }
 
-    if(authParamsMap.containsKey('oauth_token')&& authParamsMap['oauth_token'].isNotEmpty) {
+    if (authParamsMap.containsKey('oauth_token') &&
+        authParamsMap['oauth_token'].isNotEmpty) {
       return authParamsMap['FlickrOAuth'];
     }
 //    await MQHttpByUrl.getM(_generateAuthorizeUrl(), parseAuthorizeResult);
@@ -261,7 +262,6 @@ class FlickrOAuth {
       return url + paramsString;
     }
 
-    String userInfo = '';
     parseTestLogin(value) {
       final response = value as http.Response;
       try {
@@ -272,6 +272,8 @@ class FlickrOAuth {
       } catch (e) {
         print('testLogin.parseTestLogin()' + e.toString());
       }
+
+      String userInfo = '';
       print(response.body);
       userInfo = response.body;
     }
