@@ -8,10 +8,12 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 // 请务必在每次需要传递 signature 时更新 signature（使用 HMAC-SHA1 加密）
 class FlickrOAuth {
+//  Use FlickrOAuth.getinstance() to get a FlickrOAuth Object
   static FlickrOAuth _instance;
   static const String FLICKR_HOST_URL = 'https://www.flickr.com';
   static const String FLICKR_OAUTH_URL =
       'https://www.flickr.com/services/oauth/';
+//  Keep all the variables of the OAuth process.
   Map<String, String> authParamsMap = new SplayTreeMap()
     ..['oauth_nonce'] = '123456'
     ..['oauth_timestamp'] =
@@ -22,6 +24,7 @@ class FlickrOAuth {
     ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
     ..['oauth_token_secret'] = '';
 
+//  Get A FLickrOAuth Object. if null create one.
   static FlickrOAuth getInstance() {
     if (_instance == null) {
       _instance = new FlickrOAuth();
