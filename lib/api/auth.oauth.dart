@@ -262,6 +262,7 @@ class FlickrOAuth {
       return url + paramsString;
     }
 
+    String userInfo = '';
     parseTestLogin(value) {
       final response = value as http.Response;
       try {
@@ -273,13 +274,13 @@ class FlickrOAuth {
         print('testLogin.parseTestLogin()' + e.toString());
       }
 
-      String userInfo = '';
       print(response.body);
       userInfo = response.body;
     }
 
     _generateSignature();
     await MQHttpByUrl.getM(_generateTestLoginUrl(), parseTestLogin);
+    print(userInfo);
     return userInfo;
   }
 }
