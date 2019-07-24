@@ -37,7 +37,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
           print('await _requestToken()' 'Finish');
           break;
         case 2:
-          _authorize();
+          _generateAuthorizeUrl();
           print('await _authorize()' 'Finish');
           break;
         case 3:
@@ -80,7 +80,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
         steps: <Step>[
           Step(
             title: Text('Reset'),
-            subtitle: Text('_generateSignature'),
+            subtitle: Text('recreate instance'),
             state: StepState.indexed,
             content: Card(
               color: Colors.red,
@@ -102,7 +102,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
             ),
           ),
           Step(
-            title: Text('取得要求記錄'),
+            title: Text('request_token'),
             subtitle: Text('request_token'),
             isActive: true,
             content: Card(
@@ -236,10 +236,10 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
           throw Exception('FlickrOAuth Instance.requestToken onError $error'));
   }
 
-  _authorize() {
+  _generateAuthorizeUrl() {
     setState(() {
       authUrl =
-          '${FlickrOAuth.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().authorize()}';
+          '${FlickrOAuth.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
     });
     print(authUrl);
   }

@@ -151,33 +151,11 @@ class FlickrOAuth {
   }
 
 //  取得使用者授權
-  Future<String> authorize() async {
-    String generateAuthorizeUrl() {
-      return '${FLICKR_OAUTH_URL}authorize?oauth_token=${authParamsMap['oauth_token']}';
-    }
-
-    parseAuthorizeResult(value) {
-      final response = value as http.Response;
-      try {
-        if (response == null) {
-          throw Exception("value == null");
-        }
-      } catch (e) {
-        print(e.toString());
-      }
-      Uri.decodeComponent(response.body);
-      authParamsMap.addAll(Uri.splitQueryString(response.body));
-      if (!authParamsMap.containsKey('oauth_verifier')) {
-        throw Exception(
-            'FlickrOAuth.Authorize authParamsMap["oauth_verifier"] == null');
-      }
-    }
-
+  String generateAuthorizeUrl() {
     if (authParamsMap.containsKey('oauth_token') &&
         authParamsMap['oauth_token'].isNotEmpty) {
       return authParamsMap['oauth_token'];
     }
-//    await MQHttpByUrl.getM(_generateAuthorizeUrl(), parseAuthorizeResult);
     throw Exception('authParamsMap["oauth_token"].isEmpty');
   }
 
