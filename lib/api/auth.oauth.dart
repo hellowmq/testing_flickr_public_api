@@ -42,6 +42,23 @@ class FlickrOAuth {
     return _instance;
   }
 
+  FlickrOAuth();
+
+  FlickrOAuth updateInstance() {
+    _instance = new FlickrOAuth();
+    _instance.authParamsMap = new SplayTreeMap()
+      ..['oauth_nonce'] = '123456'
+      ..['oauth_timestamp'] =
+          ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
+              .toString()
+      ..['oauth_consumer_key'] = app_key.apiKey
+      ..['oauth_signature_method'] = 'HMAC-SHA1'
+      ..['oauth_version'] = '1.0'
+      ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
+      ..['oauth_token_secret'] = '';
+    return _instance;
+  }
+
   static String _getSignature(
       {String httpVerb = 'GET',
       String requestUrl = '/services/oauth/request_token',
@@ -54,7 +71,7 @@ class FlickrOAuth {
 
     String _generateBaseString() {
       String requestUrlString =
-          Uri.encodeComponent(FLICKR_OAUTH_URL + requestUrl);
+          Uri.encodeComponent(FLICKR_HOST_URL + requestUrl);
       String paramsString = Uri.encodeComponent(
           params.keys.map((key) => '$key=${params[key]}').toList().join('&'));
       return '$httpVerb&$requestUrlString&$paramsString';
@@ -118,7 +135,9 @@ class FlickrOAuth {
       } catch (e) {
         print('requestToken.parseRequestToken' + e.toString());
       }
+      print("request token get data:\n${Uri.splitQueryString(response.body)}");
       authParamsMap.addAll(Uri.splitQueryString(response.body));
+      print(authParamsMap);
       if (authParamsMap['oauth_callback_confirmed'] != 'true') {
         throw Exception('oauth_callback_confirmed == false');
       }
@@ -156,7 +175,7 @@ class FlickrOAuth {
 
     if (authParamsMap.containsKey('oauth_token') &&
         authParamsMap['oauth_token'].isNotEmpty) {
-      return authParamsMap['FlickrOAuth'];
+      return authParamsMap['oauth_token'];
     }
 //    await MQHttpByUrl.getM(_generateAuthorizeUrl(), parseAuthorizeResult);
     throw Exception('authParamsMap["oauth_token"].isEmpty');
