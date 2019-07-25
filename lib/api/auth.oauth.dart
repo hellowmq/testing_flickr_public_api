@@ -1,5 +1,6 @@
 import "dart:collection";
 import 'dart:convert';
+import 'dart:math';
 
 import 'package:crypto/crypto.dart';
 import 'package:http/http.dart' as http;
@@ -15,28 +16,28 @@ class FlickrOAuth {
       'https://www.flickr.com/services/oauth/';
 //  Keep all the variables of the OAuth process.
   Map<String, String> authParamsMap = new SplayTreeMap()
-    ..['oauth_nonce'] = '123456'
+    ..['oauth_nonce'] = Random().nextInt(2147483647).toString()
     ..['oauth_timestamp'] =
         ((new DateTime.now().millisecondsSinceEpoch / 1000).floor()).toString()
     ..['oauth_consumer_key'] = app_key.apiKey
     ..['oauth_signature_method'] = 'HMAC-SHA1'
     ..['oauth_version'] = '1.0'
-    ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
+    ..['oauth_callback'] = 'https%3A%2F%2Fhellowmq.github.io'
     ..['oauth_token_secret'] = '';
 
-//  Get A FLickrOAuth Object. if null create one.
+//  Get A FlickrOAuth Object. if null create one.
   static FlickrOAuth getInstance() {
     if (_instance == null) {
       _instance = new FlickrOAuth();
       _instance.authParamsMap = new SplayTreeMap()
-        ..['oauth_nonce'] = '123456'
+        ..['oauth_nonce'] = Random().nextInt(2147483647).toString()
         ..['oauth_timestamp'] =
             ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
                 .toString()
         ..['oauth_consumer_key'] = app_key.apiKey
         ..['oauth_signature_method'] = 'HMAC-SHA1'
         ..['oauth_version'] = '1.0'
-        ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
+        ..['oauth_callback'] = 'https%3A%2F%2Fhellowmq.github.io'
         ..['oauth_token_secret'] = '';
     }
     return _instance;
@@ -46,15 +47,16 @@ class FlickrOAuth {
 
   FlickrOAuth updateInstance() {
     _instance = new FlickrOAuth();
+//    var rng = new Random().nextInt(2147483647).toString();
     _instance.authParamsMap = new SplayTreeMap()
-      ..['oauth_nonce'] = '123456'
+      ..['oauth_nonce'] = Random().nextInt(2147483647).toString()
       ..['oauth_timestamp'] =
           ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
               .toString()
       ..['oauth_consumer_key'] = app_key.apiKey
       ..['oauth_signature_method'] = 'HMAC-SHA1'
       ..['oauth_version'] = '1.0'
-      ..['oauth_callback'] = 'https%3A%2F%2Fwww.example.com'
+      ..['oauth_callback'] = 'https%3A%2F%2Fhellowmq.github.io'
       ..['oauth_token_secret'] = '';
     return _instance;
   }
@@ -172,7 +174,7 @@ class FlickrOAuth {
         ..['oauth_token'] = authParamsMap['oauth_token'];
       String tokenSecret = authParamsMap['oauth_token_secret'];
       authParamsMap['oauth_signature'] = FlickrOAuth._getSignature(
-          httpVerb: 'GET',
+          httpVerb: 'POST',
           requestUrl: '/services/oauth/access_token',
           params: params,
           tokenSecret: tokenSecret);
@@ -200,7 +202,6 @@ class FlickrOAuth {
     parseAccessToken(value) {
       final response = value as http.Response;
       try {
-        print(response.body);
         if (response == null) {
           throw Exception("value == null");
         }
@@ -208,9 +209,9 @@ class FlickrOAuth {
         print('accessToken.parseAccessToken' + e.toString());
       }
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-      if (!authParamsMap.containsKey('oauth_token_secret')) {
+      if (!authParamsMap.containsKey('oauth_problem')) {
         throw Exception(
-            'FlickrOAuth.Authorize authParamsMap["oauth_token_secret"] == null');
+            'FlickrOAuth.Authorize authParamsMap["oauth_problem"] == ${authParamsMap["oauth_problem"]}');
       }
     }
 
@@ -223,7 +224,7 @@ class FlickrOAuth {
   Future<String> testLogin() async {
     void _generateSignature() {
       SplayTreeMap<String, String> params = new SplayTreeMap()
-        ..['format'] = authParamsMap['json']
+//        ..['format'] = 'json'
         ..['oauth_consumer_key'] = authParamsMap['oauth_consumer_key']
         ..['oauth_timestamp'] = authParamsMap['oauth_timestamp']
         ..['oauth_signature_method'] = authParamsMap['oauth_signature_method']
@@ -240,7 +241,7 @@ class FlickrOAuth {
 
     String _generateTestLoginUrl() {
       String url =
-          'https://www.flickr.com/services/rest?nojsoncallback=1 &format=json&method=flickr.test.login&';
+          'https://www.flickr.com/services/rest?nojsoncallback=1&format=json&method=flickr.test.login&';
       const List<String> paramsNames = [
         'oauth_nonce',
         'oauth_timestamp',
