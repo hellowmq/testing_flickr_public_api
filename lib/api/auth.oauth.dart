@@ -13,8 +13,9 @@ class FlickrOAuth {
   static const String FLICKR_HOST_URL = 'https://www.flickr.com';
   static const String FLICKR_OAUTH_URL =
       'https://www.flickr.com/services/oauth/';
+
 //  Keep all the variables of the OAuth process.
-  Map<String, String> authParamsMap = new SplayTreeMap()
+  SplayTreeMap<String, String> authParamsMap = new SplayTreeMap()
     ..['oauth_nonce'] = '123456'
     ..['oauth_timestamp'] =
         ((new DateTime.now().millisecondsSinceEpoch / 1000).floor()).toString()
@@ -123,7 +124,7 @@ class FlickrOAuth {
           .map((key) => '$key=${authParamsMap[key]}')
           .toList()
           .join('&');
-      return '${FLICKR_OAUTH_URL}request_token?$paramsString';
+      return  '${FLICKR_OAUTH_URL}request_token?$paramsString';
     }
 
     parseRequestToken(value) {
@@ -136,8 +137,9 @@ class FlickrOAuth {
         print('requestToken.parseRequestToken' + e.toString());
       }
       print("request token get data:\n${Uri.splitQueryString(response.body)}");
+      print('before addAll: $authParamsMap');
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-      print(authParamsMap);
+      print('after addAll : $authParamsMap');
       if (authParamsMap['oauth_callback_confirmed'] != 'true') {
         throw Exception('oauth_callback_confirmed == false');
       }
@@ -147,7 +149,7 @@ class FlickrOAuth {
 
     await MQHttpByUrl.getM(_generateRequestTokenUrl(), parseRequestToken);
 
-    return 'true';
+    return authParamsMap['oauth_callback_confirmed'];
   }
 
 //  取得使用者授權
@@ -155,8 +157,9 @@ class FlickrOAuth {
     if (authParamsMap.containsKey('oauth_token') &&
         authParamsMap['oauth_token'].isNotEmpty) {
       return authParamsMap['oauth_token'];
+    } else {
+      throw Exception('authParamsMap["oauth_token"].isEmpty');
     }
-    throw Exception('authParamsMap["oauth_token"].isEmpty');
   }
 
 //  交換要求記錄，以取得存取記錄的權限
