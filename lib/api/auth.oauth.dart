@@ -16,8 +16,6 @@ class FlickrOAuth {
       'https://www.flickr.com/services/oauth/';
 //  Keep all the variables of the OAuth process.
   SplayTreeMap<String, String> authParamsMap = new SplayTreeMap()
-    ..['oauth_nonce'] = '123456'
-  Map<String, String> authParamsMap = new SplayTreeMap()
     ..['oauth_nonce'] = Random().nextInt(2147483647).toString()
     ..['oauth_timestamp'] =
         ((new DateTime.now().millisecondsSinceEpoch / 1000).floor()).toString()
