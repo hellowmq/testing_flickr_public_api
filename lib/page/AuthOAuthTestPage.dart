@@ -72,10 +72,10 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("透過 Flickr 使用 OAuth"),
-        elevation: 0.0,
-      ),
+//      appBar: AppBar(
+//        title: Text("透過 Flickr 使用 OAuth"),
+//        elevation: 0.0,
+//      ),
       body: new Stepper(
         steps: <Step>[
           Step(
@@ -241,7 +241,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
       authUrl =
           '${FlickrOAuth.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
     });
-    print(authUrl);
+    print('authUrl = $authUrl');
   }
 
   _accessToken() {
