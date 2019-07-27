@@ -176,7 +176,7 @@ class FlickrOAuth {
         ..['oauth_token'] = authParamsMap['oauth_token'];
       String tokenSecret = authParamsMap['oauth_token_secret'];
       authParamsMap['oauth_signature'] = FlickrOAuth._getSignature(
-          httpVerb: 'POST',
+          httpVerb: 'GET',
           requestUrl: '/services/oauth/access_token',
           params: params,
           tokenSecret: tokenSecret);
@@ -212,7 +212,7 @@ class FlickrOAuth {
         print('accessToken.parseAccessToken' + e.toString());
       }
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-      if (!authParamsMap.containsKey('oauth_problem')) {
+      if (authParamsMap.containsKey('oauth_problem')) {
         throw Exception(
             'FlickrOAuth.Authorize authParamsMap["oauth_problem"] == ${authParamsMap["oauth_problem"]}');
       }
@@ -227,13 +227,16 @@ class FlickrOAuth {
   Future<String> testLogin() async {
     void _generateSignature() {
       SplayTreeMap<String, String> params = new SplayTreeMap()
-//        ..['format'] = 'json'
+        ..['format'] = 'json'
+        ..['method'] = 'flickr.test.login'
+        ..['nojsoncallback'] = '1'
         ..['oauth_consumer_key'] = authParamsMap['oauth_consumer_key']
-        ..['oauth_timestamp'] = authParamsMap['oauth_timestamp']
+        ..['oauth_nonce'] = authParamsMap['oauth_nonce']
         ..['oauth_signature_method'] = authParamsMap['oauth_signature_method']
-        ..['oauth_version'] = authParamsMap['oauth_version']
+        ..['oauth_timestamp'] = authParamsMap['oauth_timestamp']
         ..['oauth_token'] = authParamsMap['oauth_token']
-        ..['method'] = authParamsMap['flickr.test.login'];
+        ..['oauth_verifier'] = authParamsMap['oauth_verifier']
+        ..['oauth_version'] = authParamsMap['oauth_version'];
       String tokenSecret = authParamsMap['oauth_token_secret'];
       authParamsMap['oauth_signature'] = FlickrOAuth._getSignature(
           httpVerb: 'GET',

@@ -10,8 +10,9 @@ class AuthOAuthTestPage extends StatefulWidget {
 class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   int currentStep = 0;
   static Map<String, String> pageContent = new Map<String, String>();
-  static String authUrl = 'www.baidu.com';
+  String authUrl = 'www.baidu.com';
   String realTimeMapData = '';
+  WebViewController controller;
 
   void onStepCancel() {
     //回到上一步
@@ -76,6 +77,15 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
 //        title: Text("透過 Flickr 使用 OAuth"),
 //        elevation: 0.0,
 //      ),
+      floatingActionButton: new FloatingActionButton(
+        onPressed: () {
+          print(authUrl);
+          setState(() {
+            controller.loadUrl(authUrl);
+          });
+        },
+        child: Icon(Icons.send),
+      ),
       body: new Stepper(
         steps: <Step>[
           Step(
@@ -162,6 +172,9 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
                   pageContent.addAll(Uri.splitQueryString(
                       str.substring(str.indexOf('?') + 1)));
                 },
+                onWebViewCreated: (WebViewController webViewController) {
+                  controller = webViewController;
+                },
               ),
             ),
           ),
@@ -242,6 +255,9 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
           '${FlickrOAuth.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
     });
     print('authUrl = $authUrl');
+    setState(() {
+      controller.loadUrl(authUrl);
+    });
   }
 
   _accessToken() {
