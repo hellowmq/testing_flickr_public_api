@@ -4,7 +4,6 @@ class MQHttpByUrl {
   static getM(String url, Function callback) async {
     http.Response response;
     try {
-      print(url);
       response = await http.get(url);
       if (response == null) {
         throw Exception('Connection Error: ${response.statusCode}');
