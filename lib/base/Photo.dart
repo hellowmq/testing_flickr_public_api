@@ -1,3 +1,4 @@
+/// Photo data bean of Flickr
 class Photo {
   final String id;
   final String owner;
@@ -33,4 +34,16 @@ class Photo {
       isfamily: json['isfamily'],
     );
   }
+
+  Map<String, dynamic> toJson() => {
+        'id': id,
+        'owner': owner,
+        'secret': secret,
+        'server': server,
+        'farm': farm,
+        'title': title,
+        'ispublic': ispublic,
+        'isfriend': isfriend,
+        'isfamily': isfamily,
+      };
 }
