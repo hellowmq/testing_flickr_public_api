@@ -25,6 +25,9 @@ dependencies:
   crypto: ^2.0.6
   webview_flutter: ^0.3.9+1
   flutter_facebook_login: ^2.0.1
+  sqflite: ^1.1.6
+
+
 
 #  firebase_core: ^0.4.0+7
 #  firebase_database: ^3.0.4

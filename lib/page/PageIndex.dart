@@ -28,6 +28,7 @@ class PageIndex {
     return '$runtimeType($title $routeName)';
   }
 }
+
 // All sub routes are stored in a PageIndex List.
 List<PageIndex> pageIndexList = <PageIndex>[
   PageIndex(
@@ -78,6 +79,14 @@ List<PageIndex> pageIndexList = <PageIndex>[
         'https://www.flickr.com/services/api/flickr.photos.getPopular.html',
     buildRoute: (context) => GetPopularPhotosPage(),
   ),
+  PageIndex(
+    title: 'sqflite test',
+    subtitle:
+        "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
+    routeName: '/testSqflite',
+    documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
+    buildRoute: (context) => GetPopularPhotosPage(),
+  )
 ];
 
 // a routeMap should be submit to MaterialApp as a route

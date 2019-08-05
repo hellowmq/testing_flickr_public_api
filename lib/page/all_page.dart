@@ -6,3 +6,4 @@ export 'GetRecentPhotosPage.dart';
 export 'MainPage.dart';
 export 'SearchPhotoPage.dart';
 export 'SigningRequestPage.dart';
+export 'SqfLiteTestPage.dart';
