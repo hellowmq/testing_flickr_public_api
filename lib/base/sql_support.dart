@@ -17,15 +17,6 @@ class LocalDataBase {
     openDatabase(
       join(await getDatabasesPath(), "photo_database.db"),
       onCreate: (db, version) {
-//        this.id,
-//        this.owner,
-//        this.secret,
-//        this.server,
-//        this.farm,
-//        this.title,
-//        this.ispublic,
-//        this.isfriend,
-//        this.isfamily
 
         return db.execute(
           "CREATE TABLE photos(id INTEGER PRIMARY KEY, "
@@ -36,7 +27,7 @@ class LocalDataBase {
       },
       version: 1,
     ).then((db) {
-      getDataBaseInstance() = db;
+      _database = db;
     });
   }
 }
