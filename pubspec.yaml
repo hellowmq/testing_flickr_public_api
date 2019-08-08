@@ -26,6 +26,8 @@ dependencies:
   webview_flutter: ^0.3.9+1
   flutter_facebook_login: ^2.0.1
   sqflite: ^1.1.6
+  path: ^1.6.2
+
 
 
 

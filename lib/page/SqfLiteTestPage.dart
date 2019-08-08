@@ -6,6 +6,8 @@ class SqfLiteTestPage extends StatefulWidget {
 }
 
 class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
+
+  final database = LocalDataBase.getDataBaseInstance();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
