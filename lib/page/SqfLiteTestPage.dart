@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/sql_support.dart';
 
 class SqfLiteTestPage extends StatefulWidget {
