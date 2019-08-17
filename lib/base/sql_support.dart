@@ -3,6 +3,8 @@ import 'package:path/path.dart';
 
 import 'package:sqflite/sqflite.dart';
 
+import 'Photo.dart';
+
 class LocalDataBase {
   static Database _database;
 
@@ -17,12 +19,11 @@ class LocalDataBase {
     openDatabase(
       join(await getDatabasesPath(), "photo_database.db"),
       onCreate: (db, version) {
-
         return db.execute(
           "CREATE TABLE photos(id INTEGER PRIMARY KEY, "
-              "owner TEXT, secret TEXT, server TEXT, farm"
-              " TEXT, title TEXT, ispublic char(1), isfriend"
-              " char(1), isfamily char(1))",
+          "owner TEXT, secret TEXT, server TEXT, farm"
+          " TEXT, title TEXT, ispublic char(1), isfriend"
+          " char(1), isfamily char(1))",
         );
       },
       version: 1,
@@ -30,4 +31,22 @@ class LocalDataBase {
       _database = db;
     });
   }
+
+  Future<void> insertPhoto(Photo photo) async {
+    final Database database = _database;
+    if (database == null) {
+      throw Exception("Database not open");
+    }
+    await database.insert(
+      'photos',
+      photo.toJson(),
+      conflictAlgorithm: ConflictAlgorithm.replace,
+    );
+
+
+
+  }
+
+
+
 }
