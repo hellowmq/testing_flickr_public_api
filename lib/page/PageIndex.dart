@@ -85,7 +85,7 @@ List<PageIndex> pageIndexList = <PageIndex>[
         "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
     routeName: '/testSqflite',
     documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
-    buildRoute: (context) => GetPopularPhotosPage(),
+    buildRoute: (context) => SqfLiteTestPage(),
   )
 ];
 

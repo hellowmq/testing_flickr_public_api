@@ -49,17 +49,7 @@ class LocalDataBase {
     final List<Map<String, dynamic>> maps = await database.query("photos");
     return List.generate(
       maps.length,
-      (i) => Photo(
-        id: maps[i]['id'],
-        owner: maps[i]['owner'],
-        secret: maps[i]['secret'],
-        server: maps[i]['server'],
-        farm: maps[i]['farm'],
-        title: maps[i]['title'],
-        ispublic: maps[i]['ispublic'],
-        isfriend: maps[i]['isfriend'],
-        isfamily: maps[i]['isfamily'],
-      ),
+      (i) => Photo.fromJson(maps[i]),
     );
   }
 }

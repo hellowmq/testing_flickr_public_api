@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:sqflite/sqflite.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getRecent.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
@@ -19,23 +18,24 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
       body: Column(
         children: <Widget>[],
       ),
-      floatingActionButton: new FloatingActionButton(onPressed: () async {
-        Photo photo = await GetRecentPhotos().request().then((v) => v[0]);
-        debugPrint(
-          TAG +
-              "---Generate Photo Object---" +
-              LocalDataBase.getPhotos().toString(),
-        );
-        debugPrint(
-            TAG + "---Generate Photo Object---" + photo.toJson().toString());
+      floatingActionButton: new FloatingActionButton(
+          child: Icon(Icons.add),
+          onPressed: () async {
+            Photo photo = await GetRecentPhotos().request().then((v) => v[0]);
+            var photos = await LocalDataBase.getPhotos();
+            print(
+              TAG + "---Generate Photo Object---" + photos.toString(),
+            );
+            print(TAG +
+                "---Generate Photo Object---" +
+                photo.toJson().toString());
 
-        LocalDataBase.insertPhoto(photo);
-        debugPrint(
-          TAG +
-              "---Generate Photo Object---" +
-              LocalDataBase.getPhotos().toString(),
-        );
-      }),
+            LocalDataBase.insertPhoto(photo);
+            photos = await LocalDataBase.getPhotos();
+            print(
+              TAG + "---Generate Photo Object---" + photos.toString(),
+            );
+          }),
     );
   }
 }

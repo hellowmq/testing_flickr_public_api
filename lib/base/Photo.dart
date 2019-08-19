@@ -4,11 +4,11 @@ class Photo {
   final String owner;
   final String secret;
   final String server;
-  final int farm;
+  final String farm;
   final String title;
-  final int ispublic;
-  final int isfriend;
-  final int isfamily;
+  final String ispublic;
+  final String isfriend;
+  final String isfamily;
 
   Photo(
       {this.id,
@@ -23,15 +23,15 @@ class Photo {
 
   factory Photo.fromJson(Map<String, dynamic> json) {
     return Photo(
-      id: json['id'],
-      owner: json['owner'],
-      secret: json['secret'],
-      server: json['server'],
-      farm: json['farm'],
-      title: json['title'],
-      ispublic: json['ispublic'],
-      isfriend: json['isfriend'],
-      isfamily: json['isfamily'],
+      id: json['id'].toString(),
+      owner: json['owner'].toString(),
+      secret: json['secret'].toString(),
+      server: json['server'].toString(),
+      farm: json['farm'].toString(),
+      title: json['title'].toString(),
+      ispublic: json['ispublic'].toString(),
+      isfriend: json['isfriend'].toString(),
+      isfamily: json['isfamily'].toString(),
     );
   }
 
@@ -46,4 +46,9 @@ class Photo {
         'isfriend': isfriend,
         'isfamily': isfamily,
       };
+
+  @override
+  String toString() {
+    return this.toJson().toString();
+  }
 }
