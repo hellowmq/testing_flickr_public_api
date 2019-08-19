@@ -3,6 +3,8 @@ import 'package:sqflite/sqflite.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getRecent.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
+const String TAG = "SqfLiteTestPage";
+
 class SqfLiteTestPage extends StatefulWidget {
   @override
   _SqfLiteTestPageState createState() => _SqfLiteTestPageState();
@@ -19,8 +21,20 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
       ),
       floatingActionButton: new FloatingActionButton(onPressed: () async {
         Photo photo = await GetRecentPhotos().request().then((v) => v[0]);
-        debugPrint(photo.toJson().toString());
+        debugPrint(
+          TAG +
+              "---Generate Photo Object---" +
+              LocalDataBase.getPhotos().toString(),
+        );
+        debugPrint(
+            TAG + "---Generate Photo Object---" + photo.toJson().toString());
 
+        LocalDataBase.insertPhoto(photo);
+        debugPrint(
+          TAG +
+              "---Generate Photo Object---" +
+              LocalDataBase.getPhotos().toString(),
+        );
       }),
     );
   }

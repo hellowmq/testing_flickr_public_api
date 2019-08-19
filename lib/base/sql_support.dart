@@ -32,7 +32,7 @@ class LocalDataBase {
     });
   }
 
-  Future<void> insertPhoto(Photo photo) async {
+  static Future<void> insertPhoto(Photo photo) async {
     final Database database = _database;
     if (database == null) {
       throw Exception("Database not open");
@@ -42,11 +42,24 @@ class LocalDataBase {
       photo.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
-
-
-
   }
 
-
-
+  static Future<List<Photo>> getPhotos() async {
+    final database = _database;
+    final List<Map<String, dynamic>> maps = await database.query("photos");
+    return List.generate(
+      maps.length,
+      (i) => Photo(
+        id: maps[i]['id'],
+        owner: maps[i]['owner'],
+        secret: maps[i]['secret'],
+        server: maps[i]['server'],
+        farm: maps[i]['farm'],
+        title: maps[i]['title'],
+        ispublic: maps[i]['ispublic'],
+        isfriend: maps[i]['isfriend'],
+        isfamily: maps[i]['isfamily'],
+      ),
+    );
+  }
 }
