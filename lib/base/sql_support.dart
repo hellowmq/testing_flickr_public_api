@@ -20,10 +20,10 @@ class LocalDataBase {
       join(await getDatabasesPath(), "photo_database.db"),
       onCreate: (db, version) {
         return db.execute(
-            "CREATE TABLE photos(id TEXT PRIMARY KEY, "
-            "owner TEXT, secret TEXT, server TEXT, farm"
-            " TEXT, title TEXT, ispublic TEXT, isfriend"
-            " TEXT, isfamily TEXT)",
+          "CREATE TABLE photos(id TEXT PRIMARY KEY, "
+          "owner TEXT, secret TEXT, server TEXT, farm"
+          " TEXT, title TEXT, ispublic TEXT, isfriend"
+          " TEXT, isfamily TEXT)",
         );
       },
       version: 1,
@@ -50,6 +50,15 @@ class LocalDataBase {
     return List.generate(
       maps.length,
       (i) => Photo.fromDatabaseMap(maps[i]),
+    );
+  }
+
+  static Future<void> deleteDog(String id) async {
+    final database = _database;
+    await database.delete(
+      'photos',
+      where: "id = ?",
+      whereArgs: [id],
     );
   }
 }
