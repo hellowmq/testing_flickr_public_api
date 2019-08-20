@@ -44,8 +44,34 @@ class LocalDataBase {
     );
   }
 
+  static Future<void> insertPhotoList(List<Photo> photoList) async {
+    final Database database = _database;
+    if (database == null) {
+      throw Exception("Database not open");
+    }
+    photoList.forEach(
+      (p) => database.insert(
+        'photos',
+        p.toJson(),
+        conflictAlgorithm: ConflictAlgorithm.replace,
+      ),
+    );
+  }
+
+  static Future<void> clearPhotoDatabase() async{
+    final Database database = _database;
+    if(database == null){
+      throw Exception("Database not open");
+    }
+    database.execute("DROP TABLE " + "photos");
+
+  }
+
   static Future<List<Photo>> getPhotos() async {
     final database = _database;
+    if (database == null) {
+      throw Exception("Database not open");
+    }
     final List<Map<String, dynamic>> maps = await database.query("photos");
     return List.generate(
       maps.length,
@@ -53,12 +79,28 @@ class LocalDataBase {
     );
   }
 
-  static Future<void> deleteDog(String id) async {
+  static Future<void> deletePhoto(String id) async {
     final database = _database;
+    if (database == null) {
+      throw Exception("Database not open");
+    }
     await database.delete(
       'photos',
       where: "id = ?",
       whereArgs: [id],
+    );
+  }
+
+  static Future<void> updatePhoto(Photo photo) async {
+    final database = _database;
+    if (database == null) {
+      throw Exception("Database not open");
+    }
+    await database.update(
+      'photos',
+      photo.toJson(),
+      where: "id = ?",
+      whereArgs: [photo.id],
     );
   }
 }

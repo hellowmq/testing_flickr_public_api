@@ -21,7 +21,12 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
       floatingActionButton: new FloatingActionButton(
           child: Icon(Icons.add),
           onPressed: () async {
-            Photo photo = await GetRecentPhotos().request().then((v) => v[0]);
+            Photo photo = await GetRecentPhotos()
+                .request(
+                    additionalParams: new Map<String, String>()
+                      ..['per_page'] = '5'
+                      ..['page'] = '1')
+                .then((v) => v[0]);
             var photos = await LocalDataBase.getPhotos();
             print(
               TAG + "---Generate Photo Object---" + photos.toString(),
