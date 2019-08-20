@@ -20,10 +20,10 @@ class LocalDataBase {
       join(await getDatabasesPath(), "photo_database.db"),
       onCreate: (db, version) {
         return db.execute(
-          "CREATE TABLE photos(id INTEGER PRIMARY KEY, "
-          "owner TEXT, secret TEXT, server TEXT, farm"
-          " TEXT, title TEXT, ispublic char(1), isfriend"
-          " char(1), isfamily char(1))",
+            "CREATE TABLE photos(id TEXT PRIMARY KEY, "
+            "owner TEXT, secret TEXT, server TEXT, farm"
+            " TEXT, title TEXT, ispublic TEXT, isfriend"
+            " TEXT, isfamily TEXT)",
         );
       },
       version: 1,
@@ -49,7 +49,7 @@ class LocalDataBase {
     final List<Map<String, dynamic>> maps = await database.query("photos");
     return List.generate(
       maps.length,
-      (i) => Photo.fromJson(maps[i]),
+      (i) => Photo.fromDatabaseMap(maps[i]),
     );
   }
 }
