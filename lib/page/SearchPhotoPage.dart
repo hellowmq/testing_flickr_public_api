@@ -85,7 +85,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
       try {
         dataList = await SearchPhotos()
             .request(additionalParams: {'text': _controller.text});
-        widgetList = SearchPhotos.buildPhotoCardList(dataList);
+        widgetList = ViewBuilder.buildPhotoCardList(dataList);
       } catch (e) {
         ShowMessage.showSnackBar(key, e);
       }

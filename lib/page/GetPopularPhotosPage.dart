@@ -88,7 +88,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
       } else {
         dataList = await GetPopularPhotos().request();
       }
-      widgetList = GetPopularPhotos.buildPhotoCardList(dataList);
+      widgetList = ViewBuilder.buildPhotoCardList(dataList);
 //    _loadingDone = true;
     } catch (e) {
       ShowMessage.showSnackBar(key, e);

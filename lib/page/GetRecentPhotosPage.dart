@@ -67,7 +67,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
     });
     try {
       dataList = await GetRecentPhotos().request();
-      widgetList = GetRecentPhotos.buildPhotoCardList(dataList);
+      widgetList = ViewBuilder.buildPhotoCardList(dataList);
 //    _loadingDone = true;
     } catch (e) {
       ShowMessage.showSnackBar(key, e);
