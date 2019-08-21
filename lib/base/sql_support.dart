@@ -3,7 +3,7 @@ import 'package:path/path.dart';
 
 import 'package:sqflite/sqflite.dart';
 
-import 'Photo.dart';
+import 'photo.dart';
 
 class LocalDataBase {
   static Database _database;

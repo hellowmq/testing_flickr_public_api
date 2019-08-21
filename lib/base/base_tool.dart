@@ -1,5 +1,7 @@
-export 'MQHttpGet.dart';
-export 'MQHttpOAuthGet.dart';
-export 'Photo.dart';
-export 'ShowMessage.dart';
+export 'http_get.dart';
+export 'http_oauth_get.dart';
+export 'photo.dart';
+export 'message.dart';
 export 'sql_support.dart';
+
+export 'view.dart';

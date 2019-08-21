@@ -44,3 +44,4 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
     );
   }
 }
+
