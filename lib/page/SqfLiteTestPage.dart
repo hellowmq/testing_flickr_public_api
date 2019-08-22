@@ -11,12 +11,24 @@ class SqfLiteTestPage extends StatefulWidget {
 
 class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
   final database = LocalDataBase.getDataBaseInstance();
+  List<Photo> _photos = List<Photo>();
+  List<Widget> _widgetList = List<Widget>();
+
+  void updateWidgetList() {
+    setState(() {
+      _widgetList = ViewBuilder.buildPhotoCardList(_photos);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
+    LocalDataBase.getPhotos().then((list) {
+      _photos = list;
+      updateWidgetList();
+    });
     return Scaffold(
-      body: Column(
-        children: <Widget>[],
+      body: ListView(
+        children: _widgetList,
       ),
       floatingActionButton: new FloatingActionButton(
           child: Icon(Icons.add),
@@ -27,21 +39,21 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
                       ..['per_page'] = '5'
                       ..['page'] = '1')
                 .then((v) => v[0]);
-            var photos = await LocalDataBase.getPhotos();
+            this._photos = await LocalDataBase.getPhotos();
             print(
-              TAG + "---Generate Photo Object---" + photos.toString(),
+              TAG + "---Generate Photo Object---" + this._photos.toString(),
             );
             print(TAG +
                 "---Generate Photo Object---" +
                 photo.toJson().toString());
 
             LocalDataBase.insertPhoto(photo);
-            photos = await LocalDataBase.getPhotos();
+            this._photos = await LocalDataBase.getPhotos();
             print(
-              TAG + "---Generate Photo Object---" + photos.toString(),
+              TAG + "---Generate Photo Object---" + _photos.toString(),
             );
+            updateWidgetList();
           }),
     );
   }
 }
-

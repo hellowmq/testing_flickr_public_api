@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'photo.dart';
 import 'package:transparent_image/transparent_image.dart';
+
+import 'dart:async';
+import 'photo.dart';
 
 class ViewBuilder {
   static List<Widget> buildPhotoCardList(List<Photo> photoList) {
@@ -14,8 +16,12 @@ class ViewBuilder {
                 children: <Widget>[
                   new ListTile(
                     title: Text(photo.title),
-                    subtitle:
-                        Text('id :'+photo.id + ' owner:' + photo.owner + ' secret:' + photo.secret),
+                    subtitle: Text('id :' +
+                        photo.id +
+                        ' owner:' +
+                        photo.owner +
+                        ' secret:' +
+                        photo.secret),
                   ),
                   new Padding(
                     padding: EdgeInsets.all(5.0),
@@ -32,4 +38,11 @@ class ViewBuilder {
         )
         .toList();
   }
+}
+
+class MRefreshWidget extends RefreshIndicator{
+
+
+
+
 }
