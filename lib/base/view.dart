@@ -15,7 +15,7 @@ class ViewBuilder {
                   new ListTile(
                     title: Text(photo.title),
                     subtitle:
-                        Text(photo.id + ' ' + photo.owner + ' ' + photo.secret),
+                        Text('id :'+photo.id + ' owner:' + photo.owner + ' secret:' + photo.secret),
                   ),
                   new Padding(
                     padding: EdgeInsets.all(5.0),
