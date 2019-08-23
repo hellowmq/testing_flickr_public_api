@@ -2,12 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'PageIndex.dart' as page;
 
-class MainPage extends StatefulWidget {
-  @override
-  _MainPageState createState() => _MainPageState();
-}
-
-class _MainPageState extends State<MainPage> {
+class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
