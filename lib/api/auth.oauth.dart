@@ -15,6 +15,7 @@ class FlickrOAuth {
   static const String FLICKR_HOST_URL = 'https://www.flickr.com';
   static const String FLICKR_OAUTH_URL =
       'https://www.flickr.com/services/oauth/';
+
 //  Keep all the variables of the OAuth process.
   SplayTreeMap<String, String> authParamsMap = new SplayTreeMap()
     ..['oauth_nonce'] = Random().nextInt(2147483647).toString()
@@ -81,16 +82,7 @@ class FlickrOAuth {
     }
 
     String _generateKey() => '${app_key.secret}&$tokenSecret';
-    try {
-      var hmacSha1 = new Hmac(sha1, utf8.encode(_generateKey()));
-      print(_generateBaseString());
-      String signature = Uri.encodeComponent(base64
-          .encode(hmacSha1.convert(utf8.encode(_generateBaseString())).bytes));
-      return signature;
-    } catch (e) {
-      print(e);
-      throw FormatException('Generate Signature Error');
-    }
+    return SignUtils.hmacSha1Sign(_generateKey(), _generateBaseString());
   }
 
   Future<String> requestToken() async {

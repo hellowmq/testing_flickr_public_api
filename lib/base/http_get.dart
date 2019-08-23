@@ -4,19 +4,20 @@ import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
 
 class MQHttpRestGet {
-  static const String uri = 'https://www.flickr.com/services/rest/';
-  static const Map<String, String> requestSettings = {
+  static const String HOST = 'https://www.flickr.com/';
+  static const String HOST_REST = HOST + 'services/rest/';
+  static const Map<String, String> pubArguments = {
     'format': 'json',
     'nojsoncallback': '1',
     'api_key': key.apiKey
   };
 
   static getM(Map<String, dynamic> params, Function callback) async {
-    String fullUri = uri + '?';
+    String fullUri = HOST_REST + '?';
     params.forEach((key, value) {
       fullUri += "$key=" + value + "&";
     });
-    requestSettings.forEach((key, value) {
+    pubArguments.forEach((key, value) {
       fullUri += "$key=" + value + "&";
     });
 
@@ -40,5 +41,10 @@ class MQHttpRestGet {
       print('Connection Error: $e');
       rethrow;
     }
+  }
+
+  static getMSigned() {
+
+
   }
 }
