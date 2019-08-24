@@ -2,7 +2,6 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
-import 'dart:async';
 
 ///
 /// @Author hellowmq
@@ -22,6 +21,8 @@ const Map<String, String> pubArguments = {
 };
 
 class MQHttpRestGet {
+  static const String TAG = "MQHttpRestGet";
+
   static getM(Map<String, dynamic> params, Function callback) async {
     String fullUri = HOST_REST + '?';
     params.forEach((key, value) {
@@ -35,21 +36,19 @@ class MQHttpRestGet {
     http.Response response;
     try {
       response = await http.get(fullUri);
-
       if (response == null || response.statusCode != 200) {
-        throw Exception('Connection Error: ${response.statusCode}');
-      }
-      if (json.decode(response.body)['stat'] != 'ok') {
-        throw Exception('Flickr Api Error: ' + response.body);
-      }
-      try {
-        Function.apply(callback, [response]);
-      } catch (callbackError) {
-        throw Exception('Callback Function Error: $callbackError');
+        throw Exception('$TAG Connection Error: ${response.statusCode}');
+      } else if (json.decode(response.body)['stat'] != 'ok') {
+        throw Exception('$TAG Flickr Api Error: ' + response.body);
+      } else {
+        try {
+          Function.apply(callback, [response]);
+        } catch (callbackError) {
+          throw Exception('$TAG Callback Function Error: $callbackError');
+        }
       }
     } catch (e) {
-      print('Connection Error: $e');
-      rethrow;
+      print('$TAG Connection Error: $e');
     }
   }
 
@@ -81,8 +80,21 @@ class MQHttpRestGet {
   }
 }
 
-class MRestGet<T> {
-  getM<T>(Map<String, dynamic> params, MQSuccessCallback<T> callback) async {
+class MRestGet {
+  static const String TAG = "MRestGet";
+
+  MRestGet();
+
+  static MRestGet _instance;
+
+  factory MRestGet.getInstance() {
+    if (_instance != null) {
+      _instance = MRestGet();
+    }
+    return _instance;
+  }
+
+  getM(Map<String, dynamic> params, MQSuccessCallback callback) async {
     String fullUri = HOST_REST + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");
@@ -106,34 +118,34 @@ class MRestGet<T> {
     }
   }
 
-  getAnotherM<T>(Map<String, dynamic> params,
-      {MQSuccessCallback<T> onSuccess, MQErrorCallback onError}) async {
+  void getAnotherM(Map<String, dynamic> params,
+      {MQSuccessCallback onSuccess, MQErrorCallback onError}) async {
     String fullUri = HOST_REST + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");
     http.Response response;
-    T result;
     try {
       response = await http.get(fullUri);
       if (response == null || response.statusCode != 200) {
         throw Exception('Connection Error: ${response.statusCode}');
-      }
-      if (json.decode(response.body)['stat'] != 'ok') {
+      } else if (json.decode(response.body)['stat'] != 'ok') {
         throw Exception('Flickr Api Error: ' + response.body);
-      }
-      try {
-        if (onSuccess != null) {
-          result = onSuccess(response);
+      } else {
+        try {
+          if (onSuccess != null) {
+            onSuccess(response);
+          } else {
+            throw Exception('onSuccess callback is null');
+          }
+        } catch (callbackError) {
+          throw Exception('Callback Function Error: $callbackError');
         }
-      } catch (callbackError) {
-        throw Exception('Callback Function Error: $callbackError');
       }
-    } catch (e) {
+    } catch (exception) {
       if (onError != null) {
-        onError(e, response);
+        onError(exception, response);
       }
-      print('Connection Error: $e');
-      rethrow;
+      print('Connection Error: $exception');
     }
   }
 }

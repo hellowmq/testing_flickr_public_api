@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 
-import 'dart:async';
-import 'photo.dart';
+import 'base_tool.dart';
 
 class ViewBuilder {
   static List<Widget> buildPhotoCardList(List<Photo> photoList) {
@@ -40,9 +39,4 @@ class ViewBuilder {
   }
 }
 
-class MRefreshWidget extends RefreshIndicator{
-
-
-
-
-}
+class MRefreshWidget extends RefreshIndicator {}
