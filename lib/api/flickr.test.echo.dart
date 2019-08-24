@@ -9,9 +9,26 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 /// @Date 2019-8-24
 /// This is a api helper class of flickr.test.echo.
 ///
-///
+
+// {
+//    "method": {
+//        "_content": "flickr.test.echo"
+//    },
+//    "api_key": {
+//        "_content": "28b8ea4d523ed0bc1ce264306327c4c3"
+//    },
+//    "format": {
+//        "_content": "json"
+//    },
+//    "nojsoncallback": {
+//        "_content": "1"
+//    },
+//    "name": {
+//        "_content": "123"
+//    },
+//    "stat": "ok"
+//}
 class EchoTest {
-//  {"method":{"_content":"flickr.test.echo"},"api_key":{"_content":"28b8ea4d523ed0bc1ce264306327c4c3"},"format":{"_content":"json"},"nojsoncallback":{"_content":"1"},"name":{"_content":"123"},"stat":"ok"}
 
   EchoTest();
 
