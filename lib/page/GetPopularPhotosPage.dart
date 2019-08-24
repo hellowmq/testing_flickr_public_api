@@ -3,6 +3,10 @@ import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getPopular.dart
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class GetPopularPhotosPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return GetPopularPhotosPage();
+  }
+
   @override
   _GetPopularPhotosPageState createState() => _GetPopularPhotosPageState();
 }

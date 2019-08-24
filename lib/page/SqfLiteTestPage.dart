@@ -5,6 +5,10 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 const String TAG = "SqfLiteTestPage";
 
 class SqfLiteTestPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return SqfLiteTestPage();
+  }
+
   @override
   _SqfLiteTestPageState createState() => _SqfLiteTestPageState();
 }

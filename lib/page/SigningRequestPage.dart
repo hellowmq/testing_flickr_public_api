@@ -8,6 +8,10 @@ import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as app_key;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class SigningRequestPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return SigningRequestPage();
+  }
+
   @override
   _SigningRequestPageState createState() => _SigningRequestPageState();
 }
@@ -223,9 +227,9 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
                     .keys
                     .map(
                       (String name) => ListTile(
-                            title: Text(
-                                '$name: ${Uri.splitQueryString(tokenData)[name]}'),
-                          ),
+                        title: Text(
+                            '$name: ${Uri.splitQueryString(tokenData)[name]}'),
+                      ),
                     )
                     .toList(),
               ),

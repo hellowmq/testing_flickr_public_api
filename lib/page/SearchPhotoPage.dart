@@ -3,6 +3,9 @@ import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.search.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class SearchPhotosPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return SearchPhotosPage();
+  }
   @override
   _SearchPhotosPageState createState() => _SearchPhotosPageState();
 }

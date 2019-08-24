@@ -3,6 +3,10 @@ import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getRecent.dart'
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class GetRecentPhotosPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return GetRecentPhotosPage();
+  }
+
   @override
   _GetRecentPhotosPageState createState() => _GetRecentPhotosPageState();
 }

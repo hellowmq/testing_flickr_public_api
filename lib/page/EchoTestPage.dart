@@ -3,6 +3,10 @@ import 'package:wenmq_first_flickr_flutter_app/api/flickr.test.echo.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class EchoTestPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return EchoTestPage();
+  }
+
   @override
   _EchoTestPageState createState() => _EchoTestPageState();
 }

@@ -30,29 +30,29 @@ class PageIndex {
 }
 
 // All sub routes are stored in a PageIndex List.
-List<PageIndex> pageIndexList = <PageIndex>[
-  PageIndex(
+const List<PageIndex> pageIndexList = const <PageIndex>[
+  const PageIndex(
     title: 'flickr.test.echo',
     subtitle:
         "A testing method which echo's all parameters back in the response.",
     routeName: '/echo',
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.test.echo.html',
-    buildRoute: (context) => EchoTestPage(),
+    buildRoute: EchoTestPage.startPage,
   ),
-  PageIndex(
+  const PageIndex(
     title: 'request.token',
     subtitle: "signing request",
     routeName: '/signingRequest',
     documentationUrl: 'https://www.flickr.com/services/api/auth.oauth.html',
-    buildRoute: (context) => SigningRequestPage(),
+    buildRoute: SigningRequestPage.startPage,
   ),
-  PageIndex(
+  const PageIndex(
     title: 'auth.oauth',
     subtitle: "AuthOAuthTestPage",
     routeName: '/authOAuth',
     documentationUrl: 'https://www.flickr.com/services/api/auth.oauth.html',
-    buildRoute: (context) => AuthOAuthTestPage(),
+    buildRoute: AuthOAuthTestPage.startPage,
   ),
   PageIndex(
     title: 'flickr.photos.getRecent',
@@ -60,7 +60,7 @@ List<PageIndex> pageIndexList = <PageIndex>[
     routeName: '/getRecent',
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.photos.getRecent.html',
-    buildRoute: (context) => GetRecentPhotosPage(),
+    buildRoute: GetRecentPhotosPage.startPage,
   ),
   PageIndex(
     title: 'flickr.photos.search',
@@ -69,7 +69,7 @@ List<PageIndex> pageIndexList = <PageIndex>[
     routeName: '/search',
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.photos.search.html',
-    buildRoute: (context) => SearchPhotosPage(),
+    buildRoute: SearchPhotosPage.startPage,
   ),
   PageIndex(
     title: 'flickr.photos.getPopular',
@@ -77,7 +77,7 @@ List<PageIndex> pageIndexList = <PageIndex>[
     routeName: '/getPopular',
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.photos.getPopular.html',
-    buildRoute: (context) => GetPopularPhotosPage(),
+    buildRoute: GetPopularPhotosPage.startPage,
   ),
   PageIndex(
     title: 'sqflite test',
@@ -85,7 +85,7 @@ List<PageIndex> pageIndexList = <PageIndex>[
         "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
     routeName: '/testSqflite',
     documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
-    buildRoute: (context) => SqfLiteTestPage(),
+    buildRoute: SqfLiteTestPage.startPage,
   )
 ];
 
@@ -99,7 +99,7 @@ final Map<String, WidgetBuilder> routeMap =
 List<Widget> buildWidgetList(context) {
   List<Widget> pageEnterList = new List();
   pageIndexList.forEach((v) {
-    pageEnterList.add(new ListTile(
+    pageEnterList.add(ListTile(
       title: Text(v.title),
       subtitle: Text(v.subtitle),
       isThreeLine: true,

@@ -3,6 +3,10 @@ import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/auth.oauth.dart';
 
 class AuthOAuthTestPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return AuthOAuthTestPage();
+  }
+
   @override
   _AuthOAuthTestPageState createState() => _AuthOAuthTestPageState();
 }
