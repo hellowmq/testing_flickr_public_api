@@ -31,7 +31,7 @@ class PageIndex {
 
 // All sub routes are stored in a PageIndex List.
 const List<PageIndex> pageIndexList = const <PageIndex>[
-  const PageIndex(
+  PageIndex(
     title: 'flickr.test.echo',
     subtitle:
         "A testing method which echo's all parameters back in the response.",
@@ -40,14 +40,14 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
         'https://www.flickr.com/services/api/flickr.test.echo.html',
     buildRoute: EchoTestPage.startPage,
   ),
-  const PageIndex(
+  PageIndex(
     title: 'request.token',
     subtitle: "signing request",
     routeName: '/signingRequest',
     documentationUrl: 'https://www.flickr.com/services/api/auth.oauth.html',
     buildRoute: SigningRequestPage.startPage,
   ),
-  const PageIndex(
+  PageIndex(
     title: 'auth.oauth',
     subtitle: "AuthOAuthTestPage",
     routeName: '/authOAuth',
@@ -96,18 +96,13 @@ final Map<String, WidgetBuilder> routeMap =
       ..['/'] = (context) => MainPage();
 
 // create the enter for the sub page
-List<Widget> buildWidgetList(context) {
-  List<Widget> pageEnterList = new List();
-  pageIndexList.forEach((v) {
-    pageEnterList.add(ListTile(
-      title: Text(v.title),
-      subtitle: Text(v.subtitle),
-      isThreeLine: true,
-      onTap: () {
-        Navigator.pushNamed(context, v.routeName);
-      },
-    ));
-    pageEnterList.add(Divider());
-  });
-  return pageEnterList;
+List<Widget> buildPageIndexList(context) {
+  return pageIndexList.map((v)=>ListTile(
+    title: Text(v.title),
+    subtitle: Text(v.subtitle),
+    isThreeLine: true,
+    onTap: () {
+      Navigator.pushNamed(context, v.routeName);
+    },
+  )).toList();
 }

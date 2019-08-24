@@ -10,7 +10,7 @@ class MainPage extends StatelessWidget {
         title: const Text('test Flickr Api'),
       ),
       body: ListView(
-        children: page.buildWidgetList(context),
+        children: page.buildPageIndexList(context),
       ),
     );
   }
