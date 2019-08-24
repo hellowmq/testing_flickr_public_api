@@ -3,6 +3,9 @@ import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
 ///
 /// auth: hellowmq 2019/07/23
+/// This File include all indexes of the MainPage.
+/// Add a PageIndex to pageIndexList and then it will build the corresponding
+/// ListTile entrance and Material routeMap.
 ///
 
 // All sub page should be routed with a PageIndex.
@@ -97,12 +100,14 @@ final Map<String, WidgetBuilder> routeMap =
 
 // create the enter for the sub page
 List<Widget> buildPageIndexList(context) {
-  return pageIndexList.map((v)=>ListTile(
-    title: Text(v.title),
-    subtitle: Text(v.subtitle),
-    isThreeLine: true,
-    onTap: () {
-      Navigator.pushNamed(context, v.routeName);
-    },
-  )).toList();
+  return pageIndexList
+      .map((v) => ListTile(
+            title: Text(v.title),
+            subtitle: Text(v.subtitle),
+            isThreeLine: true,
+            onTap: () {
+              Navigator.pushNamed(context, v.routeName);
+            },
+          ))
+      .toList();
 }

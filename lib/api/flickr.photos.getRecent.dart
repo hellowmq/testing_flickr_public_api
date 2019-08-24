@@ -3,6 +3,12 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+///
+/// @Author hellowmq
+/// @Date 2019-8-24
+/// This is a api helper class of flickr.photos.getRecent.
+///
+///
 
 class GetRecentPhotos {
   GetRecentPhotos();

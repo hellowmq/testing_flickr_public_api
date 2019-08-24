@@ -3,6 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
 
+///
+/// @Author hellowmq
+/// @Date 2019-8-24
+/// This common rest of flickr api
+///
+/// 
+
 class MQHttpRestGet {
   static const String HOST = 'https://www.flickr.com/';
   static const String HOST_REST = HOST + 'services/rest/';

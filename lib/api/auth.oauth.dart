@@ -8,6 +8,12 @@ import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as app_key;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
+///
+/// Author hellowmq
+/// This is an example of oauth of Flickr API. It is highly integrated
+/// with page page content now. it will be refactor lately.
+///
+///
 // 请务必在每次需要传递 signature 时更新 signature（使用 HMAC-SHA1 加密）
 class FlickrOAuth {
 //  Use FlickrOAuth.getinstance() to get a FlickrOAuth Object
