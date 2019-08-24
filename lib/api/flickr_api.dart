@@ -8,6 +8,18 @@ typedef MapContentCallback = void Function(Map<String, String>);
 typedef ErrorCallCallback = void Function(Exception, http.Response);
 
 class MFlickrApi {
+  List<Photo> parseStringAsPhotoList(String data) {
+    try {
+      return json
+          .decode(data)['photos']['photo']
+          .map<Photo>((json) => Photo.fromJson(json))
+          .toList();
+    } catch (exception) {
+      print(exception);
+      return List<Photo>();
+    }
+  }
+
   void getRecent(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
@@ -15,10 +27,8 @@ class MFlickrApi {
     MRestGet.getInstance().getAnotherM(
       (params ?? new Map<String, dynamic>())
         ..['method'] = 'flickr.photos.getRecent',
-      onSuccess: (http.Response response) => onSuccess(json
-          .decode(response.body)['photos']['photo']
-          .map<Photo>((json) => Photo.fromJson(json))
-          .toList()),
+      onSuccess: (http.Response response) =>
+          onSuccess(parseStringAsPhotoList(response.body)),
       onError: onError,
     );
   }
@@ -30,10 +40,8 @@ class MFlickrApi {
     MRestGet.getInstance().getAnotherM(
       (params ?? new Map<String, dynamic>())
         ..['method'] = 'flickr.photos.getPopular',
-      onSuccess: (http.Response response) => onSuccess(json
-          .decode(response.body)['photos']['photo']
-          .map<Photo>((json) => Photo.fromJson(json))
-          .toList()),
+      onSuccess: (http.Response response) =>
+          onSuccess(parseStringAsPhotoList(response.body)),
       onError: onError,
     );
   }
@@ -45,10 +53,8 @@ class MFlickrApi {
     MRestGet.getInstance().getAnotherM(
         (params ?? new Map<String, dynamic>())
           ..['method'] = 'flickr.photos.getPopular',
-        onSuccess: (http.Response response) => onSuccess(json
-            .decode(response.body)['photos']['photo']
-            .map<Photo>((json) => Photo.fromJson(json))
-            .toList()),
+        onSuccess: (http.Response response) =>
+            onSuccess(parseStringAsPhotoList(response.body)),
         onError: onError);
   }
 
