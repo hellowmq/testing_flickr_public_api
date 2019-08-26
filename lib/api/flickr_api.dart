@@ -8,6 +8,8 @@ typedef MapContentCallback = void Function(Map<String, String>);
 typedef ErrorCallCallback = void Function(Exception, http.Response);
 
 class MFlickrApi {
+
+///  parse json as {List<Photo>}a
   List<Photo> parseStringAsPhotoList(String data) {
     try {
       return json
