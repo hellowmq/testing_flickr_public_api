@@ -6,7 +6,7 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 typedef PhotoListCallback = void Function(List<Photo>);
 typedef MapContentCallback = void Function(Map<String, String>);
 typedef ErrorCallCallback = void Function(Exception, http.Response);
-
+/// Create [MFlickrApi] to request a flickr-api request.
 class MFlickrApi {
   ///  parse json as {List<Photo>}
   List<Photo> parseStringAsPhotoList(String data) {
@@ -21,6 +21,7 @@ class MFlickrApi {
     }
   }
 
+  /// a echo can return a <String,Object> Map, this will parse as a <String,String> Map
   Map<String, String> parseStringAsMap(String data) {
     return (json.decode(data) as Map).map(
       (key, value) => MapEntry(
@@ -30,7 +31,10 @@ class MFlickrApi {
               : value),
     );
   }
-
+  ///
+  /// flickr.photos.getRecent
+  /// [https://www.flickr.com/services/api/flickr.photos.getRecent.html](https://www.flickr.com/services/api/flickr.photos.getRecent.html)
+  ///
   void getRecent(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
