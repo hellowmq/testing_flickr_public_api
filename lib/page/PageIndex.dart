@@ -68,7 +68,11 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
   PageIndex(
     title: 'flickr.photos.search',
     subtitle:
-        "Return a list of photos matching some criteria. Only photos visible to the calling user will be returned. To return private or semi-private photos, the caller must be authenticated with 'read' permissions, and have permission to view the photos. Unauthenticated calls will only return public photos.",
+        "Return a list of photos matching some criteria. Only photos visible to "
+            "the calling user will be returned. To return private or "
+            "semi-private photos, the caller must be authenticated with 'read' "
+            "permissions, and have permission to view the photos. "
+            "Unauthenticated calls will only return public photos.",
     routeName: '/search',
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.photos.search.html',

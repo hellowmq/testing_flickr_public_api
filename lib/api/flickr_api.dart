@@ -21,7 +21,8 @@ class MFlickrApi {
     }
   }
 
-  /// a echo can return a <String,Object> Map, this will parse as a <String,String> Map
+  /// a echo can return a <String,Object> Map, this will parse as a
+  /// <String,String> Map
   Map<String, String> parseStringAsMap(String data) {
     return (json.decode(data) as Map).map(
       (key, value) => MapEntry(
@@ -31,10 +32,15 @@ class MFlickrApi {
               : value),
     );
   }
+
   ///
   /// flickr.photos.getRecent
-  /// [https://www.flickr.com/services/api/flickr.photos.getRecent.html](https://www.flickr.com/services/api/flickr.photos.getRecent.html)
   ///
+  /// Returns a list of the latest public photos uploaded to flickr.
+  /// [flickr.photos.getRecent]
+  /// (https://www.flickr.com/services/api/flickr.photos.getRecent.html)
+  ///
+
   void getRecent(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
@@ -47,6 +53,14 @@ class MFlickrApi {
       onError: onError,
     );
   }
+
+  ///
+  /// flickr.photos.getPopular
+  ///
+  /// Returns a list of popular photos
+  /// [flickr.photos.getPopular]
+  /// (https://www.flickr.com/services/api/flickr.photos.getPopular.html)
+  ///
 
   void getPopular(
       {Map<String, dynamic> params,
@@ -61,6 +75,18 @@ class MFlickrApi {
     );
   }
 
+  ///
+  /// flickr.photos.search
+  ///
+  /// Return a list of photos matching some criteria. Only photos visible to the
+  /// calling user will be returned. To return private or semi-private photos,
+  /// the caller must be authenticated with 'read' permissions, and have
+  /// permission to view the photos. Unauthenticated calls will only return
+  /// public photos.
+  /// [flickr.photos.search]
+  /// (https://www.flickr.com/services/api/flickr.photos.search.html)
+  ///
+
   void searchPhotos(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
@@ -72,6 +98,14 @@ class MFlickrApi {
             onSuccess(parseStringAsPhotoList(response.body)),
         onError: onError);
   }
+
+  ///
+  /// flickr.test.testEcho
+  ///
+  /// A testing method which echo's all parameters back in the response.
+  /// [flickr.test.testEcho]
+  /// (https://www.flickr.com/services/api/flickr.test.echo.html)
+  ///
 
   void testEcho(
       {Map<String, dynamic> params,
