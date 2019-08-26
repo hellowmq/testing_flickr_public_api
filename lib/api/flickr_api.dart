@@ -8,8 +8,7 @@ typedef MapContentCallback = void Function(Map<String, String>);
 typedef ErrorCallCallback = void Function(Exception, http.Response);
 
 class MFlickrApi {
-
-///  parse json as {List<Photo>}a
+  ///  parse json as {List<Photo>}
   List<Photo> parseStringAsPhotoList(String data) {
     try {
       return json
@@ -20,6 +19,16 @@ class MFlickrApi {
       print(exception);
       return List<Photo>();
     }
+  }
+
+  Map<String, String> parseStringAsMap(String data) {
+    return (json.decode(data) as Map).map(
+      (key, value) => MapEntry(
+          key,
+          ((value is Map) && (value.containsKey('_content')))
+              ? value['_content']
+              : value),
+    );
   }
 
   void getRecent(
@@ -66,17 +75,8 @@ class MFlickrApi {
       ErrorCallCallback onError}) {
     MRestGet.getInstance().getAnotherM(
       (params ?? new Map<String, dynamic>())..['method'] = 'flickr.test.echo',
-      onSuccess: (http.Response response) {
-        onSuccess(
-          (json.decode(response.body) as Map).map(
-            (key, value) => MapEntry(
-                key,
-                ((value is Map) && (value.containsKey('_content')))
-                    ? value['_content']
-                    : value),
-          ),
-        );
-      },
+      onSuccess: (http.Response response) =>
+          onSuccess(parseStringAsMap(response.body)),
       onError: onError,
     );
   }

@@ -19,8 +19,7 @@ class FlickrOAuth {
 //  Use FlickrOAuth.getinstance() to get a FlickrOAuth Object
   static FlickrOAuth _instance;
   static const String FLICKR_HOST_URL = 'https://www.flickr.com';
-  static const String FLICKR_OAUTH_URL =
-      'https://www.flickr.com/services/oauth/';
+  static const String FLICKR_OAUTH_URL = FLICKR_HOST_URL + '/services/oauth/';
 
 //  Keep all the variables of the OAuth process.
   SplayTreeMap<String, String> authParamsMap = new SplayTreeMap()
