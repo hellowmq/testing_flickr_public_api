@@ -91,7 +91,7 @@ class MRestGet {
   static MRestGet _instance;
 
   factory MRestGet.getInstance() {
-    if (_instance != null) {
+    if (_instance == null) {
       _instance = MRestGet();
     }
     return _instance;
