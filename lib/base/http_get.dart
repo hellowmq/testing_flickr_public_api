@@ -20,6 +20,9 @@ const Map<String, String> pubArguments = {
   'api_key': key.apiKey
 };
 
+
+
+/// init commit of http get standard
 class MQHttpRestGet {
   static const String TAG = "MQHttpRestGet";
 
