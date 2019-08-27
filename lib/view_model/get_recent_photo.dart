@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
-import 'package:wenmq_first_flickr_flutter_app/api/flickr_api.dart';
+import 'package:wenmq_first_flickr_flutter_app/api/flickr_photo_api.dart';
 
 class GetRecentViewModel {
   int page = 0;
@@ -37,7 +37,7 @@ class GetRecentViewModel {
       print(e);
       page--;
     };
-    MFlickrApi().getRecent(
+    MFlickrPhotoApi().getRecent(
       params: params,
       onSuccess: onSuccess,
       onError: onError,

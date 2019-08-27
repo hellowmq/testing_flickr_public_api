@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
-
+import 'photo.dart';
 ///
 /// @Author hellowmq
 /// @Date 2019-8-24
@@ -11,7 +11,9 @@ import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
 ///
 typedef MQSuccessCallback<T> = T Function(http.Response);
 typedef MQErrorCallback = Function(Exception, http.Response);
-
+typedef PhotoListCallback = void Function(List<Photo>);
+typedef MapContentCallback = void Function(Map<String, String>);
+typedef ErrorCallCallback = void Function(Exception, http.Response);
 const String HOST = 'https://www.flickr.com/';
 const String HOST_REST = HOST + 'services/rest/';
 const Map<String, String> pubArguments = {
