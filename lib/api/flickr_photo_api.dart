@@ -18,6 +18,18 @@ class MFlickrPhotoApi {
     }
   }
 
+  /// Actually, all other method are the same except the method name.
+  void getPhotoList(String methodName,
+      {Map<String, dynamic> params,
+      PhotoListCallback onSuccess,
+      ErrorCallCallback onError}) {
+    MRestGet.getInstance().getAnotherM(
+      (params ?? new Map<String, dynamic>())..['method'] = methodName,
+      onSuccess: (http.Response response) =>
+          onSuccess(parseStringAsPhotoList(response.body)),
+      onError: onError,
+    );
+  }
 
   ///
   /// flickr.photos.getRecent
@@ -84,5 +96,4 @@ class MFlickrPhotoApi {
             onSuccess(parseStringAsPhotoList(response.body)),
         onError: onError);
   }
-
 }
