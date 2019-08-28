@@ -1,7 +1,7 @@
 import 'package:wenmq_first_flickr_flutter_app/api/flickr_photo_api.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
-class GetRecentViewModel {
+abstract class GetPhotoListViewModel {
   int page = 0;
   List<Photo> _photoList = new List();
 
@@ -31,10 +31,13 @@ class GetRecentViewModel {
       print(e);
       page--;
     };
-    MFlickrPhotoApi().getRecent(
+    MFlickrPhotoApi().getPhotoList(
+      getMethodName(),
       params: params,
       onSuccess: onSuccess,
       onError: onError,
     );
   }
+
+  String getMethodName();
 }

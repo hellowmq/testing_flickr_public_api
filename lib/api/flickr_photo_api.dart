@@ -18,6 +18,7 @@ class MFlickrPhotoApi {
     }
   }
 
+
   /// Actually, all other method are the same except the method name.
   void getPhotoList(String methodName,
       {Map<String, dynamic> params,
