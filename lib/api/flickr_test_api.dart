@@ -3,9 +3,20 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
+///
+/// [MFlickrTestApi] is a set of api with flcikr.test.*
+///
+/// use this template to request for a echo test.
+/// /**
+///   * MFlickr.testEcho();
+///   */
+///
+
 class MFlickrTestApi {
+  ///
   /// a echo can return a <String,Object> Map, this will parse as a
   /// <String,String> Map
+  ///
   Map<String, String> parseStringAsMap(String data) {
     return (json.decode(data) as Map).map(
       (key, value) => MapEntry(
