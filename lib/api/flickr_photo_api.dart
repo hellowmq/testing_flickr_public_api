@@ -18,7 +18,6 @@ class MFlickrPhotoApi {
     }
   }
 
-
   /// Actually, all other method are the same except the method name.
   void getPhotoList(String methodName,
       {Map<String, dynamic> params,
@@ -44,13 +43,8 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())
-        ..['method'] = 'flickr.photos.getRecent',
-      onSuccess: (http.Response response) =>
-          onSuccess(parseStringAsPhotoList(response.body)),
-      onError: onError,
-    );
+    getPhotoList('flickr.photos.getRecent',
+        params: params, onSuccess: onSuccess, onError: onError);
   }
 
   ///
@@ -65,13 +59,8 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())
-        ..['method'] = 'flickr.photos.getPopular',
-      onSuccess: (http.Response response) =>
-          onSuccess(parseStringAsPhotoList(response.body)),
-      onError: onError,
-    );
+    getPhotoList('flickr.photos.getPopular',
+        params: params, onSuccess: onSuccess, onError: onError);
   }
 
   ///
@@ -90,11 +79,8 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-        (params ?? new Map<String, dynamic>())
-          ..['method'] = 'flickr.photos.getPopular',
-        onSuccess: (http.Response response) =>
-            onSuccess(parseStringAsPhotoList(response.body)),
-        onError: onError);
+    getPhotoList('flickr.photos.search',
+        params: params, onSuccess: onSuccess, onError: onError);
+
   }
 }
