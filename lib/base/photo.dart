@@ -84,3 +84,21 @@ class Photo {
     return this.toDatabaseType().toString() + '\n';
   }
 }
+
+class Photos {
+  final List<Photo> photo;
+  final String page;
+  final String pages;
+  final String perpage;
+  final String total;
+
+  int get pageInt => int.parse(page);
+
+  int get pagesInt => int.parse(pages);
+
+  int get perpageInt => int.parse(perpage);
+
+  int get totalInt => int.parse(total);
+
+  Photos({this.page, this.pages, this.perpage, this.total, this.photo});
+}

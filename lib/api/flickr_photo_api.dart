@@ -81,6 +81,5 @@ class MFlickrPhotoApi {
       ErrorCallCallback onError}) {
     getPhotoList('flickr.photos.search',
         params: params, onSuccess: onSuccess, onError: onError);
-
   }
 }
