@@ -104,7 +104,7 @@ class Photos {
 
   factory Photos.fromJson(Map<String, dynamic> json) {
     List p = json["photo"] as List;
-    List<Photo> photoList = p.map((photo)=> Photo.fromJson(photo)).toList();
+    List<Photo> photoList = p.map((photo) => Photo.fromJson(photo)).toList();
     return Photos(
         page: json['page'].toString(),
         pages: json['pages'],
@@ -112,4 +112,12 @@ class Photos {
         total: json['total'],
         photo: photoList);
   }
+
+  Map<String, dynamic> toJson() => {
+        'page': this.page,
+        'pages': this.pages,
+        'perpage': this.perpage,
+        'total': this.total,
+        'photo': this.photo.map((p) => p.toJson()).toList(),
+      };
 }
