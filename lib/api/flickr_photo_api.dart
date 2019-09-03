@@ -5,7 +5,7 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 /// Create [MFlickrPhotoApi] to request a flickr-api request.
 class MFlickrPhotoApi {
-  ///  parse json as {List<Photo>}
+  ///  parse json as List of [Photo]
   List<Photo> parseStringAsPhotoList(String data) {
     try {
       return json
@@ -15,6 +15,16 @@ class MFlickrPhotoApi {
     } catch (exception) {
       print(exception);
       return List<Photo>();
+    }
+  }
+
+  ///  parse json as [Photos]
+  Photos parseStringAsPhotos(String data) {
+    try {
+      return Photos.fromJson(json.decode(data)['photos']);
+    } catch (exception) {
+      print(exception);
+      return Photos();
     }
   }
 
