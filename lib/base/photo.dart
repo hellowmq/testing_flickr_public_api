@@ -101,4 +101,15 @@ class Photos {
   int get totalInt => int.parse(total);
 
   Photos({this.page, this.pages, this.perpage, this.total, this.photo});
+
+  factory Photos.fromJson(Map<String, dynamic> json) {
+    List p = json["photo"] as List;
+    List<Photo> photoList = p.map((photo)=> Photo.fromJson(photo)).toList();
+    return Photos(
+        page: json['page'].toString(),
+        pages: json['pages'],
+        perpage: json['perpage'],
+        total: json['total'],
+        photo: photoList);
+  }
 }
