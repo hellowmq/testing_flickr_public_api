@@ -4,7 +4,6 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 abstract class GetPhotoListViewModel {
   int page = 0;
   List<Photo> _photoList = new List();
-
   List<Photo> get photoList => _photoList;
 
   /// This is a time-consuming operation.
@@ -41,3 +40,4 @@ abstract class GetPhotoListViewModel {
 
   String getMethodName();
 }
+
