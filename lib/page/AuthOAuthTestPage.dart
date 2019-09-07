@@ -14,7 +14,7 @@ class AuthOAuthTestPage extends StatefulWidget {
 class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   int currentStep = 0;
   static Map<String, String> pageContent = new Map<String, String>();
-  String authUrl = 'www.baidu.com';
+  String authUrl = 'www.wenmq.cn';
   String realTimeMapData = '';
   WebViewController controller;
 

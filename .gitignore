@@ -1,0 +1,12 @@
+lib/api/key.dart
+.idea/
+android/
+ios/
+build/
+.flutter-plugins
+.metadata
+.packages
+d
+flutter_01.log
+pubspec.lock
+testing_flickr_public_api.iml

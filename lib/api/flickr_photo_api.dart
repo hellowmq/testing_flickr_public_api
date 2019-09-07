@@ -5,7 +5,7 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 /// Create [MFlickrPhotoApi] to request a flickr-api request.
 class MFlickrPhotoApi {
-  ///  parse json as {List<Photo>}
+  ///  parse json as List of [Photo]
   List<Photo> parseStringAsPhotoList(String data) {
     try {
       return json
@@ -18,6 +18,15 @@ class MFlickrPhotoApi {
     }
   }
 
+  ///  parse json as [Photos]
+  Photos parseStringAsPhotos(String data) {
+    try {
+      return Photos.fromJson(json.decode(data)['photos']);
+    } catch (exception) {
+      print(exception);
+      return Photos();
+    }
+  }
 
   /// Actually, all other method are the same except the method name.
   void getPhotoList(String methodName,
@@ -44,13 +53,8 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())
-        ..['method'] = 'flickr.photos.getRecent',
-      onSuccess: (http.Response response) =>
-          onSuccess(parseStringAsPhotoList(response.body)),
-      onError: onError,
-    );
+    getPhotoList('flickr.photos.getRecent',
+        params: params, onSuccess: onSuccess, onError: onError);
   }
 
   ///
@@ -65,13 +69,8 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())
-        ..['method'] = 'flickr.photos.getPopular',
-      onSuccess: (http.Response response) =>
-          onSuccess(parseStringAsPhotoList(response.body)),
-      onError: onError,
-    );
+    getPhotoList('flickr.photos.getPopular',
+        params: params, onSuccess: onSuccess, onError: onError);
   }
 
   ///
@@ -90,11 +89,7 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-        (params ?? new Map<String, dynamic>())
-          ..['method'] = 'flickr.photos.getPopular',
-        onSuccess: (http.Response response) =>
-            onSuccess(parseStringAsPhotoList(response.body)),
-        onError: onError);
+    getPhotoList('flickr.photos.search',
+        params: params, onSuccess: onSuccess, onError: onError);
   }
 }
