@@ -1,10 +1,18 @@
 import 'package:wenmq_first_flickr_flutter_app/api/flickr_photo_api.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
-abstract class GetPhotoListViewModel {
+class GetPhotoListViewModel {
   int page = 0;
+  final int _perPage;
   List<Photo> _photoList = new List();
+
   List<Photo> get photoList => _photoList;
+
+  GetPhotoListViewModel._(this._methodName, this._perPage);
+
+  final String _methodName;
+
+  GetPhotoListViewModel.build(this._methodName, this._perPage);
 
   /// This is a time-consuming operation.
   /// remove all the Photo before and load one page.
@@ -18,7 +26,7 @@ abstract class GetPhotoListViewModel {
   /// Load another one page of ten photo.
   loadMorePhotoList() {
     page++;
-    int perPage = 10;
+    int perPage = _perPage;
     Map<String, String> params = new Map();
     params
       ..['per_page'] = perPage.toString()
@@ -31,13 +39,27 @@ abstract class GetPhotoListViewModel {
       page--;
     };
     MFlickrPhotoApi().getPhotoList(
-      getMethodName(),
+      _methodName,
       params: params,
       onSuccess: onSuccess,
       onError: onError,
     );
   }
-
-  String getMethodName();
 }
 
+class GetPhotoListViewModelBuilder {
+  String methodName;
+  int perPage;
+
+  GetPhotoListViewModelBuilder();
+
+  GetPhotoListViewModel build() {
+    if (methodName == null || methodName == '') {
+      throw Exception("GetPhotoListViewModelBuilder methodName is empty");
+    }
+    if (perPage <= 0) {
+      throw Exception("GetPhotoListViewModelBuilder perPage <= 0");
+    }
+    return GetPhotoListViewModel.build(methodName, perPage);
+  }
+}

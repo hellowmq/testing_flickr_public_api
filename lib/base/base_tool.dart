@@ -1,3 +1,4 @@
+library base;
 export 'http_get.dart';
 export 'http_oauth_get.dart';
 export 'photo.dart';
@@ -6,3 +7,4 @@ export 'sql_support.dart';
 export 'view.dart';
 export 'sign_tools.dart';
 export 'unique_typedef.dart';
+export 'cache.dart';
