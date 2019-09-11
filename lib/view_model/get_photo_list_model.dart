@@ -62,4 +62,11 @@ class GetPhotoListViewModelBuilder {
     }
     return GetPhotoListViewModel.build(methodName, perPage);
   }
+
+  static GetPhotoListViewModel getRecentViewModel() {
+    var model = new GetPhotoListViewModelBuilder()
+      ..perPage = 10
+      ..methodName = "flickr.photos.getRecent";
+    return model.build();
+  }
 }

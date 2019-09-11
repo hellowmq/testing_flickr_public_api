@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
-import 'package:wenmq_first_flickr_flutter_app/view_model/get_recent_photo.dart';
+import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
+
 class GetRecentPhotosPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
     return GetRecentPhotosPage();
@@ -12,7 +13,8 @@ class GetRecentPhotosPage extends StatefulWidget {
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  GetRecentViewModel _getRecentViewModel = new GetRecentViewModel();
+  GetPhotoListViewModel _getRecentViewModel =
+      GetPhotoListViewModelBuilder.getRecentViewModel();
   var dataList;
   var widgetList;
   var responseText = '未发送';
@@ -22,7 +24,6 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
       key: key,
       appBar: new AppBar(
@@ -41,20 +42,20 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
         children: ((dataList != null) && (!_isSending))
             ? widgetList
             : <Widget>[
-                 Column(
+                Column(
                   children: <Widget>[
-                     ListTile(
+                    ListTile(
                       title: new Text('点击按钮获取最近图片'),
                       subtitle: new Text('如果无效请使用代理'),
                     ),
-                     Container(
+                    Container(
                       padding: EdgeInsets.all(30.0),
                       height: 150.0,
                       width: 150.0,
                       child: new Center(
                         child: _isSending
                             ? CircularProgressIndicator()
-                            :  Container(
+                            : Container(
                                 child: Text(''),
                               ),
                       ),
