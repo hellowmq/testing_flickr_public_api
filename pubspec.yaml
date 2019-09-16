@@ -28,6 +28,9 @@ dependencies:
   sqflite: ^1.1.6
   path: ^1.6.2
   flutter_cache_manager: ^1.1.1
+  qr_flutter: ^3.0.1
+  qrcode_reader: ^0.4.4
+  extended_text: ^0.6.6
 
 
 

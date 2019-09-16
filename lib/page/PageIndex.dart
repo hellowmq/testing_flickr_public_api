@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wenmq_first_flickr_flutter_app/page/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
 ///
@@ -89,10 +90,18 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
   PageIndex(
     title: 'sqflite test',
     subtitle:
-        "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
+    "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
     routeName: '/testSqflite',
     documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
     buildRoute: SqfLiteTestPage.startPage,
+  ),
+  PageIndex(
+    title: 'QrCode test',
+    subtitle:
+    "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
+    routeName: '/testQrCode',
+    documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
+    buildRoute: QrCodePage.startPage,
   )
 ];
 
