@@ -3,7 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 import 'package:extended_text/extended_text.dart';
 
+/// This page use a Text to show what the qr code mean
 class QrCodePage extends StatefulWidget {
+  /// this method can be use as a [WidgetBuilder]
   static Widget startPage(BuildContext context) {
     return QrCodePage();
   }
