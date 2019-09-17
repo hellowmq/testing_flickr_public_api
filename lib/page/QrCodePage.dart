@@ -16,7 +16,26 @@ class QrCodePage extends StatefulWidget {
 
 class _QrCodePageState extends State<QrCodePage> {
   Future<String> _barcodeString;
-  var viewList = new List<Widget>();
+  var viewList = new List<String>();
+  var lsView = new ListView();
+
+  buildListView() {
+    setState(() {
+      lsView = new ListView.builder(
+        itemBuilder: (bc, index) {
+          return new ListTile(
+            title: ExtendedText(
+              viewList[index],
+              selectionEnabled: true,
+            ),
+            subtitle: Text(index.toString()),
+          );
+        },
+        itemCount: viewList.length,
+      );
+      print("-------------------");
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -24,21 +43,9 @@ class _QrCodePageState extends State<QrCodePage> {
       appBar: new AppBar(
         title: const Text('QRCode Reader Example'),
       ),
-      body: new Container(
-        child: new FutureBuilder<String>(
-          future: _barcodeString,
-          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-            viewList.add(
-              ExtendedText(
-                snapshot.data != null ? snapshot.data : '',
-                selectionEnabled: true,
-              ),
-            );
-            return ListView(
-              children: viewList,
-            );
-          },
-        ),
+      body: Container(
+        child: lsView,
+        color: Colors.red,
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
@@ -49,7 +56,15 @@ class _QrCodePageState extends State<QrCodePage> {
                 .setTorchEnabled(true)
                 .setHandlePermissions(true)
                 .setExecuteAfterPermissionGranted(true)
-                .scan();
+                .scan()
+                .then((v) {
+              viewList.add(
+                v != null ? v : '111',
+              );
+              print(viewList);
+              buildListView();
+              return;
+            });
           });
         },
         tooltip: 'Reader the QRCode',
