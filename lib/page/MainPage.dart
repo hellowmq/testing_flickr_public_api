@@ -7,7 +7,7 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: new AppBar(
-        title: const Text('test Flickr Api'),
+        title: const Text('This is our Flickr Api'),
       ),
       body: ListView(
         children: page.buildPageIndexList(context),

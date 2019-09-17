@@ -16,6 +16,7 @@ class QrCodePage extends StatefulWidget {
 
 class _QrCodePageState extends State<QrCodePage> {
   Future<String> _barcodeString;
+  var viewList = new List<Widget>();
 
   @override
   Widget build(BuildContext context) {
@@ -23,15 +24,22 @@ class _QrCodePageState extends State<QrCodePage> {
       appBar: new AppBar(
         title: const Text('QRCode Reader Example'),
       ),
-      body: new Center(
-          child: new FutureBuilder<String>(
-              future: _barcodeString,
-              builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
-                return ExtendedText(
-                  snapshot.data != null ? snapshot.data : '',
-                  selectionEnabled: true,
-                );
-              })),
+      body: new Container(
+        child: new FutureBuilder<String>(
+          future: _barcodeString,
+          builder: (BuildContext context, AsyncSnapshot<String> snapshot) {
+            viewList.add(
+              ExtendedText(
+                snapshot.data != null ? snapshot.data : '',
+                selectionEnabled: true,
+              ),
+            );
+            return ListView(
+              children: viewList,
+            );
+          },
+        ),
+      ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
           setState(() {
