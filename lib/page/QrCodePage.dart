@@ -15,7 +15,6 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
-  Future<String> _barcodeString;
   var viewList = new List<String>();
   var lsView = new ListView();
 
@@ -50,7 +49,7 @@ class _QrCodePageState extends State<QrCodePage> {
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
           setState(() {
-            _barcodeString = new QRCodeReader()
+            new QRCodeReader()
                 .setAutoFocusIntervalInMs(200)
                 .setForceAutoFocus(true)
                 .setTorchEnabled(true)
