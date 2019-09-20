@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 import 'package:extended_text/extended_text.dart';
+import 'package:qr_flutter/qr_flutter.dart';
 
 /// This page use a Text to show what the qr code mean
 class QrCodePage extends StatefulWidget {
@@ -28,12 +29,28 @@ class _QrCodePageState extends State<QrCodePage> {
               selectionEnabled: true,
             ),
             subtitle: Text(index.toString()),
+            onTap: showBigQrCodePic(viewList[index]),
           );
         },
         itemCount: viewList.length,
       );
       print("-------------------");
     });
+  }
+
+  showBigQrCodePic(String textContent) {
+    var qrCodeImage = Expanded(
+      child: Center(
+        child: Container(
+          width: 280,
+          child: QrImage(
+            data: textContent,
+            foregroundColor: Color(0xff03291c),
+            embeddedImage: AssetImage('assets/images/logo_yakka.png'),
+          ),
+        ),
+      ),
+    );
   }
 
   @override
