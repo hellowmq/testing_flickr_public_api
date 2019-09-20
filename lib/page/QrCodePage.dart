@@ -23,13 +23,31 @@ class _QrCodePageState extends State<QrCodePage> {
     setState(() {
       lsView = new ListView.builder(
         itemBuilder: (bc, index) {
-          return new ListTile(
-            title: ExtendedText(
-              viewList[index],
-              selectionEnabled: true,
+          return Card(
+            child: Column(
+              children: <Widget>[
+                new ListTile(
+                  title: ExtendedText(
+                    viewList[index],
+                    selectionEnabled: true,
+                  ),
+                  subtitle: Text(index.toString()),
+//                  onTap: () async {
+//                    showBigQrCodePic(context, viewList[index]);
+//                  },
+                ),
+                Center(
+                  child: Container(
+                    width: 280,
+                    child: QrImage(
+                      data: viewList[index],
+                      foregroundColor: Color(0xff03291c),
+                      embeddedImage: AssetImage('assets/images/logo_yakka.png'),
+                    ),
+                  ),
+                )
+              ],
             ),
-            subtitle: Text(index.toString()),
-            onTap: showBigQrCodePic(viewList[index]),
           );
         },
         itemCount: viewList.length,
@@ -38,18 +56,42 @@ class _QrCodePageState extends State<QrCodePage> {
     });
   }
 
-  showBigQrCodePic(String textContent) {
-    var qrCodeImage = Expanded(
-      child: Center(
-        child: Container(
-          width: 280,
-          child: QrImage(
-            data: textContent,
-            foregroundColor: Color(0xff03291c),
-            embeddedImage: AssetImage('assets/images/logo_yakka.png'),
-          ),
+  Future<void> showBigQrCodePic(BuildContext context, String textContent) {
+    final qrCodeImage = Center(
+      child: Container(
+        width: 280,
+        child: QrImage(
+          data: textContent,
+          foregroundColor: Color(0xff03291c),
+          embeddedImage: AssetImage('assets/images/logo_yakka.png'),
         ),
       ),
+    );
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Rewind and remember'),
+          content: SingleChildScrollView(
+            child: ListBody(
+              children: <Widget>[
+                qrCodeImage,
+//               Text('You will never be satisfied.'),
+//               Text('You\’re like me. I’m never satisfied.'),
+              ],
+            ),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Regret'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
     );
   }
 
@@ -61,7 +103,7 @@ class _QrCodePageState extends State<QrCodePage> {
       ),
       body: Container(
         child: lsView,
-        color: Colors.red,
+//        color: Colors.red,
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
