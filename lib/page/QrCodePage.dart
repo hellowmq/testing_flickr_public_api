@@ -23,7 +23,7 @@ class _QrCodePageState extends State<QrCodePage> {
   buildListView() {
     setState(() {
       lsView = new ListView.builder(
-        itemBuilder: (bc, index) {
+        itemBuilder: (buildContext, index) {
           return Card(
             child: Column(
               children: <Widget>[
@@ -33,9 +33,6 @@ class _QrCodePageState extends State<QrCodePage> {
                     selectionEnabled: true,
                   ),
                   subtitle: Text(index.toString()),
-//                  onTap: () async {
-//                    showBigQrCodePic(context, viewList[index]);
-//                  },
                 ),
                 Center(
                   child: Container(
@@ -43,7 +40,7 @@ class _QrCodePageState extends State<QrCodePage> {
                     child: QrImage(
                       data: urlList[index],
                       foregroundColor: Color(0xff03291c),
-                      embeddedImage: AssetImage('assets/images/logo_yakka.png'),
+                      embeddedImage: AssetImage('assets/images/genji.png'),
                     ),
                   ),
                 )
@@ -57,44 +54,6 @@ class _QrCodePageState extends State<QrCodePage> {
     });
   }
 
-  Future<void> showBigQrCodePic(BuildContext context, String textContent) {
-    final qrCodeImage = Center(
-      child: Container(
-        width: 280,
-        child: QrImage(
-          data: textContent,
-          foregroundColor: Color(0xff03291c),
-          embeddedImage: AssetImage('assets/images/logo_yakka.png'),
-        ),
-      ),
-    );
-    return showDialog<void>(
-      context: context,
-      barrierDismissible: false, // user must tap button!
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Rewind and remember'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                qrCodeImage,
-//               Text('You will never be satisfied.'),
-//               Text('You\’re like me. I’m never satisfied.'),
-              ],
-            ),
-          ),
-          actions: <Widget>[
-            FlatButton(
-              child: Text('Regret'),
-              onPressed: () {
-                Navigator.of(context).pop();
-              },
-            ),
-          ],
-        );
-      },
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -104,7 +63,6 @@ class _QrCodePageState extends State<QrCodePage> {
       ),
       body: Container(
         child: lsView,
-//        color: Colors.red,
       ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
