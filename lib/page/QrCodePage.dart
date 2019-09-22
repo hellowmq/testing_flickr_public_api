@@ -16,7 +16,8 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
-  var viewList = new List<String>();
+/// This variable store the list of url that transfer to Qrcode
+  var urlList = new List<String>();
   var lsView = new ListView();
 
   buildListView() {
@@ -28,7 +29,7 @@ class _QrCodePageState extends State<QrCodePage> {
               children: <Widget>[
                 new ListTile(
                   title: ExtendedText(
-                    viewList[index],
+                    urlList[index],
                     selectionEnabled: true,
                   ),
                   subtitle: Text(index.toString()),
@@ -40,7 +41,7 @@ class _QrCodePageState extends State<QrCodePage> {
                   child: Container(
                     width: 280,
                     child: QrImage(
-                      data: viewList[index],
+                      data: urlList[index],
                       foregroundColor: Color(0xff03291c),
                       embeddedImage: AssetImage('assets/images/logo_yakka.png'),
                     ),
@@ -50,7 +51,7 @@ class _QrCodePageState extends State<QrCodePage> {
             ),
           );
         },
-        itemCount: viewList.length,
+        itemCount: urlList.length,
       );
       print("-------------------");
     });
@@ -116,10 +117,10 @@ class _QrCodePageState extends State<QrCodePage> {
                 .setExecuteAfterPermissionGranted(true)
                 .scan()
                 .then((v) {
-              viewList.add(
+              urlList.add(
                 v != null ? v : '111',
               );
-              print(viewList);
+              print(urlList);
               buildListView();
               return;
             });
