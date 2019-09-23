@@ -1,4 +1,3 @@
-import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 import 'package:extended_text/extended_text.dart';
@@ -20,7 +19,7 @@ class _QrCodePageState extends State<QrCodePage> {
   var urlList = new List<String>();
   var lsView = new ListView();
 
-  buildListView() {
+  updateListView() {
     setState(() {
       lsView = new ListView.builder(
         itemBuilder: (buildContext, index) {
@@ -79,7 +78,7 @@ class _QrCodePageState extends State<QrCodePage> {
                 v != null ? v : '111',
               );
               print(urlList);
-              buildListView();
+              updateListView();
               return;
             });
           });

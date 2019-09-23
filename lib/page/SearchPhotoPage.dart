@@ -2,23 +2,26 @@ import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.search.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
+/// This page [SearchPhotosPage] show an example of search photos list with a
+/// key word.
 class SearchPhotosPage extends StatefulWidget {
+  /// a static method help to call this page as a [WidgetBuilder]
   static Widget startPage(BuildContext context) {
     return SearchPhotosPage();
   }
+
   @override
   _SearchPhotosPageState createState() => _SearchPhotosPageState();
 }
 
 class _SearchPhotosPageState extends State<SearchPhotosPage> {
+  /// Call a dialog ny a [GlobalKey] is not a good idea obviously.
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   var dataList;
   List<Widget> widgetList;
-  var responseText = '未发送';
+  /// keep a state of network to show loading.
   bool _isSending = false;
   static TextEditingController _controller = TextEditingController();
-
-//  bool _loadingDone = true;
 
   @override
   Widget build(BuildContext context) {
@@ -93,7 +96,6 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
         ShowMessage.showSnackBar(key, e);
       }
     }
-//    _loadingDone = true;
     setState(() {
       _isSending = false;
     });
