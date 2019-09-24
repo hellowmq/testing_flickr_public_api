@@ -2,7 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.test.echo.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
+/// This page [EchoTestPage] show an example of echo test with a word.
 class EchoTestPage extends StatefulWidget {
+  /// a static method help to call this page as a [WidgetBuilder]
   static Widget startPage(BuildContext context) {
     return EchoTestPage();
   }
@@ -14,15 +16,15 @@ class EchoTestPage extends StatefulWidget {
 class _EchoTestPageState extends State<EchoTestPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   String echoText = '未发送';
-  TextEditingController _controller = TextEditingController();
+  static TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar: new AppBar(
-        title: new Text('Echo'),
-        leading: new IconButton(
+      appBar: AppBar(
+        title: Text('Echo'),
+        leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
@@ -39,7 +41,7 @@ class _EchoTestPageState extends State<EchoTestPage> {
             child: Form(
               child: TextFormField(
                 controller: _controller,
-                decoration: InputDecoration(labelText: 'Send a message'),
+                decoration: const InputDecoration(labelText: 'Send a message'),
               ),
             ),
           ),
@@ -66,7 +68,6 @@ class _EchoTestPageState extends State<EchoTestPage> {
       }
       if (newText != null && newText.isNotEmpty) {
         setState(() {
-//        echoText;
           echoText = newText;
           print(echoText);
         });
