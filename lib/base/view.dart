@@ -37,6 +37,9 @@ class ViewBuilder {
         )
         .toList();
   }
-}
 
-class MRefreshWidget extends RefreshIndicator {}
+  static WidgetBuilder createWidgetBuilder(dynamic widget) {
+    assert(widget is Widget);
+    return (BuildContext context) => widget;
+  }
+}
