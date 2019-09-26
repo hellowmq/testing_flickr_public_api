@@ -27,9 +27,9 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar: new AppBar(
-        title: new Text('SearchPhoto'),
-        leading: new IconButton(
+      appBar: AppBar(
+        title: const Text('SearchPhoto'),
+        leading: IconButton(
             icon: Icon(Icons.arrow_back_ios),
             onPressed: () {
               Navigator.pop(context);
@@ -42,8 +42,10 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
       body: new ListView(
         children: <Widget>[
           Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 13.0),
+            padding: const EdgeInsets.symmetric(
+              vertical: 8.0,
+              horizontal: 13.0,
+            ),
             child: Form(
               child: TextFormField(
                 onFieldSubmitted: (str) {
@@ -52,7 +54,9 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
                 controller: _controller,
                 style: TextStyle(fontSize: 18),
                 decoration: InputDecoration(
-                    labelText: '输入user_id进行查看', hintText: '146621154@N02'),
+                  labelText: '输入user_id进行查看',
+                  hintText: '146621154@N02',
+                ),
               ),
             ),
           ),
@@ -71,7 +75,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
                       child: new Center(
                         child: _isSending
                             ? CircularProgressIndicator()
-                            : new Divider(),
+                            : const Divider(),
                       ),
                     ),
                   ],
@@ -93,7 +97,6 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
         dataList = await GetPopularPhotos().request();
       }
       widgetList = ViewBuilder.buildPhotoCardList(dataList);
-//    _loadingDone = true;
     } catch (e) {
       ShowMessage.showSnackBar(key, e);
     }
