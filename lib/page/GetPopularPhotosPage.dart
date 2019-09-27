@@ -15,13 +15,10 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   var dataList;
   List<Widget> widgetList;
-  var responseText = '未发送';
   bool _isSending = false;
   static TextEditingController _controller = TextEditingController(
     text: '46627222@N03',
   );
-
-//  bool _loadingDone = true;
 
   @override
   Widget build(BuildContext context) {
@@ -30,7 +27,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
       appBar: AppBar(
         title: const Text('SearchPhoto'),
         leading: IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: ViewBuilder.iconBack,
             onPressed: () {
               Navigator.pop(context);
             }),

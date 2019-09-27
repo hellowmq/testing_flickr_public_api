@@ -30,7 +30,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
       appBar: new AppBar(
         title: new Text('SearchPhoto'),
         leading: new IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: ViewBuilder.iconBack,
             onPressed: () {
               Navigator.pop(context);
             }),

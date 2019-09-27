@@ -29,7 +29,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
       appBar: new AppBar(
         title: new Text('GetRecent'),
         leading: new IconButton(
-            icon: Icon(Icons.arrow_back_ios),
+            icon: ViewBuilder.iconBack,
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -45,8 +45,8 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
                 Column(
                   children: <Widget>[
                     ListTile(
-                      title: new Text('点击按钮获取最近图片'),
-                      subtitle: new Text('如果无效请使用代理'),
+                      title: const Text('点击按钮获取最近图片'),
+                      subtitle: const Text('如果无效请使用代理'),
                     ),
                     Container(
                       padding: EdgeInsets.all(30.0),
@@ -55,9 +55,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
                       child: new Center(
                         child: _isSending
                             ? CircularProgressIndicator()
-                            : Container(
-                                child: Text(''),
-                              ),
+                            : Container(),
                       ),
                     ),
                   ],
@@ -75,7 +73,6 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
       await _getRecentViewModel.loadMorePhotoList();
       dataList = _getRecentViewModel.photoList;
       widgetList = ViewBuilder.buildPhotoCardList(dataList);
-//    _loadingDone = true;
     } catch (e) {
       ShowMessage.showSnackBar(key, e);
     }

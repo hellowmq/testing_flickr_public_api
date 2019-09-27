@@ -42,4 +42,6 @@ class ViewBuilder {
     assert(widget is Widget);
     return (BuildContext context) => widget;
   }
+
+  static const Icon iconBack =  Icon(Icons.arrow_back_ios);
 }
