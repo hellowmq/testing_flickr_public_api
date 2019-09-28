@@ -102,6 +102,14 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     routeName: '/testQrCode',
     documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
     buildRoute: QrCodePage.startPage,
+  ),
+  PageIndex(
+    title: 'Video test',
+    subtitle:
+    "A Flutter plugin for iOS and Android for playing back video on a Widget surface.",
+    routeName: '/videoTest',
+    documentationUrl: 'https://pub.dev/packages/video_player',
+    buildRoute: VideoTestPage.startPage,
   )
 ];
 
