@@ -2,6 +2,12 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
+///
+/// Actually, this page is the sample page of plugin: video_player.
+/// I found it cost a lot of time to prepare the video. Maybe I should find my
+/// way to solve it.
+///
+
 class VideoTestPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
     return VideoTestPage();
@@ -18,7 +24,7 @@ class _VideoTestPageState extends State<VideoTestPage> {
   void initState() {
     super.initState();
     _controller = VideoPlayerController.network(
-        'http://www.sample-videos.com/video123/mp4/720/big_buck_bunny_720p_20mb.mp4')
+        'http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4')
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even
         // before the play button has been pressed.
