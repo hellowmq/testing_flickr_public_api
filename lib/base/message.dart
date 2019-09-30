@@ -6,6 +6,7 @@ class ShowMessage {
         .showSnackBar(new SnackBar(content: Text(message.toString())));
   }
 
+  /// Actually a Logger with key-value structure and factory function class is needed.
   static List<String> logger = new List();
 
   static printLog(object, {String tag}) {
