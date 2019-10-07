@@ -1,4 +1,3 @@
-import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 
@@ -25,7 +24,6 @@ class _VideoTestPageState extends State<VideoTestPage> {
         setState(() {
           _controller.play();
         });
-//        _controller.pause();
       });
     _controller.setLooping(true);
   }
