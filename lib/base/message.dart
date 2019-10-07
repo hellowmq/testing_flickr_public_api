@@ -5,4 +5,14 @@ class ShowMessage {
     key.currentState
         .showSnackBar(new SnackBar(content: Text(message.toString())));
   }
+
+  /// Actually a Logger with key-value structure and factory function class is needed.
+  static List<String> logger = new List();
+
+  static printLog(object, {String tag}) {
+    if (tag == null) tag = "";
+    String log = "testing_flickr_public_api: tag=" + tag + object.toString();
+    print(log);
+    logger.add(log);
+  }
 }

@@ -20,7 +20,6 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   var responseText = '未发送';
   bool _isSending = false;
 
-//  bool _loadingDone = true;
 
   @override
   Widget build(BuildContext context) {
