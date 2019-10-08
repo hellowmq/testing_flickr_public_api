@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/string.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
@@ -59,7 +60,7 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     buildRoute: AuthOAuthTestPage.startPage,
   ),
   PageIndex(
-    title: 'flickr.photos.getRecent',
+    title: FlickrConstant.FLICKR_PHOTOS_GETRECENT,
     subtitle: "Returns a list of the latest public photos uploaded to flickr.",
     routeName: '/getRecent',
     documentationUrl:

@@ -8,3 +8,4 @@ export 'view.dart';
 export 'sign_tools.dart';
 export 'unique_typedef.dart';
 export 'cache.dart';
+export 'string.dart';

@@ -9,7 +9,7 @@ class MFlickrPhotoApi {
   List<Photo> parseStringAsPhotoList(String data) {
     try {
       return json
-          .decode(data)['photos']['photo']
+          .decode(data)[FlickrConstant.PHOTOS]['photo']
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     } catch (exception) {
@@ -21,7 +21,7 @@ class MFlickrPhotoApi {
   ///  parse json as [Photos]
   Photos parseStringAsPhotos(String data) {
     try {
-      return Photos.fromJson(json.decode(data)['photos']);
+      return Photos.fromJson(json.decode(data)[FlickrConstant.PHOTOS]);
     } catch (exception) {
       print(exception);
       return Photos();

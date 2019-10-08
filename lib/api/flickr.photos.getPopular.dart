@@ -17,7 +17,7 @@ class GetPopularPhotos {
   Future<List<Photo>> request(
       {Map<String, String> additionalParams = const {}}) async {
     Map<String, String> params = new Map();
-    params['method'] = 'flickr.photos.getPopular';
+    params[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_PHOTOS_GETPOPULAR;
     if (additionalParams != null) {
       params.addAll(additionalParams);
     }
@@ -32,7 +32,7 @@ class GetPopularPhotos {
         print(e.toString());
       }
       photoList = json
-          .decode(response.body)['photos']['photo']
+          .decode(response.body)[FlickrConstant.PHOTOS][FlickrConstant.PHOTO]
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     };

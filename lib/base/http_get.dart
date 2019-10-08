@@ -79,7 +79,7 @@ class MQHttpRestGet {
 }
 
 class MRestGet {
-  static const String TAG = "MRestGet";
+  final String TAG = "MRestGet";
 
   static MRestGet _instance;
 
@@ -97,7 +97,6 @@ class MRestGet {
   MRestGet._internal() {
     print(new DateTime.now());
   }
-
 
   factory MRestGet.getInstance() {
     if (_instance == null) {

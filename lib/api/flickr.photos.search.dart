@@ -31,7 +31,7 @@ class SearchPhotos {
         print(e.toString());
       }
       photoList = json
-          .decode(response.body)['photos']['photo']
+          .decode(response.body)[FlickrConstant.PHOTOS]['photo']
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     };

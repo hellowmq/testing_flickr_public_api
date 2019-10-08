@@ -41,17 +41,17 @@ class Photo {
     );
   }
 
-  factory Photo.fromDatabaseMap(Map<String, dynamic> json) {
+  factory Photo.fromDatabaseMap(Map<String, dynamic> item) {
     return Photo(
-      id: json['id'].toString(),
-      owner: json['owner'].toString(),
-      secret: json['secret'].toString(),
-      server: json['server'].toString(),
-      farm: json['farm'].toString(),
-      title: json['title'].toString(),
-      ispublic: json['ispublic'],
-      isfriend: json['isfriend'],
-      isfamily: json['isfamily'],
+      id: item['id'].toString(),
+      owner: item['owner'].toString(),
+      secret: item['secret'].toString(),
+      server: item['server'].toString(),
+      farm: item['farm'].toString(),
+      title: item['title'].toString(),
+      ispublic: item['ispublic'],
+      isfriend: item['isfriend'],
+      isfamily: item['isfamily'],
     );
   }
 
@@ -67,6 +67,10 @@ class Photo {
         'isfamily': isFamilyBool, // int
       };
 
+
+  /// TODO: Actually toDataBaseType is not used now
+  /// That means the database field should match json field identically.
+  /// It's not a good idea.
   Map<String, String> toDatabaseType() => {
         'id': id,
         'owner': owner,
@@ -79,10 +83,10 @@ class Photo {
         'isfamily': isfamily,
       };
 
-  @override
-  String toString() {
-    return this.toDatabaseType().toString() + '\n';
-  }
+//  @override
+//  String toString() {
+//    return this.toDatabaseType().toString() + '\n';
+//  }
 }
 
 class Photos {

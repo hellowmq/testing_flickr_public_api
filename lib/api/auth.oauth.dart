@@ -1,4 +1,5 @@
 import "dart:collection";
+import 'dart:convert';
 import 'dart:math';
 import 'dart:async';
 
@@ -18,6 +19,12 @@ class FlickrOAuth {
   static FlickrOAuth _instance;
   static const String FLICKR_HOST_URL = 'https://www.flickr.com';
   static const String FLICKR_OAUTH_URL = FLICKR_HOST_URL + '/services/oauth/';
+
+  static const String FORMAT = 'format';
+  static const String JSON = 'json';
+  static const String METHOD = 'method';
+  static const String NOJSONCALLBACK = 'nojsoncallback';
+
   static const String VALUE_OAUTH_VERSION = '1.0';
   static const String HMAC_SHA1 = 'HMAC-SHA1';
   static const String OAUTH_NONCE = 'oauth_nonce';
@@ -238,9 +245,9 @@ class FlickrOAuth {
   Future<String> testLogin() async {
     void _generateSignature() {
       SplayTreeMap<String, String> params = new SplayTreeMap()
-        ..['format'] = 'json'
-        ..['method'] = 'flickr.test.login'
-        ..['nojsoncallback'] = '1'
+        ..[FORMAT] = JSON
+        ..[METHOD] = 'flickr.test.login'
+        ..[NOJSONCALLBACK] = '1'
         ..[OAUTH_CONSUMER_KEY] = authParamsMap[OAUTH_CONSUMER_KEY]
         ..[OAUTH_NONCE] = authParamsMap[OAUTH_NONCE]
         ..[OAUTH_SIGNATURE_METHOD] = authParamsMap[OAUTH_SIGNATURE_METHOD]
