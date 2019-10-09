@@ -4,6 +4,8 @@ class FlickrConstant {
       '/services/oauth/request_token';
   static const String FLICKR_OAUTH_ACCESS_TOKEN_PATH =
       '/services/oauth/access_token';
+  static const String FLICKR_OAUTH_AUTHORIZE_PATH =
+      '/services/oauth/authorize';
   static const String FLICKR_REST_PATH = '/services/rest';
 
 //  static const String FLICKR_OAUTH_URL = FLICKR_HOST + FLICKR_OAUTH_PATH;

@@ -248,7 +248,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   _requestToken() {
     FlickrOAuth.getInstance().requestToken()
       ..then((result) {
-        pageContent['oauth_callback_confirmed'] = result;
+        pageContent[QueryKeyConstant.OAUTH_CALLBACK_CONFIRMED] = result;
       })
       ..catchError((error) =>
           throw Exception('FlickrOAuth Instance.requestToken onError $error'));
@@ -257,7 +257,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   _generateAuthorizeUrl() {
     setState(() {
       authUrl =
-          '${FlickrConstant.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
+          '${FlickrConstant.FLICKR_OAUTH_AUTHORIZE_PATH}?${QueryKeyConstant.OAUTH_TOKEN}=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
     });
     print('authUrl = $authUrl');
     setState(() {
@@ -268,13 +268,13 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   _accessToken() {
     try {
       FlickrOAuth.getInstance().authParamsMap['oauth_verifier'] =
-          pageContent['oauth_verifier'];
+          pageContent[QueryKeyConstant.OAUTH_VERIFIER];
       print('Update FlickrOAuth instance authParamsMap["oauth_verifier"]');
     } catch (e) {
       print('_accessToken Add oauth_verifier Error');
     }
     FlickrOAuth.getInstance().accessToken()
-      ..then((result) => pageContent['oauth_token_secret'] = result)
+      ..then((result) => pageContent[QueryKeyConstant.OAUTH_TOKEN_SECRET] = result)
       ..catchError((error) => throw Exception(
           'FlickrOAuth Instance()._accessToken onError $error'));
   }

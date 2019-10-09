@@ -19,7 +19,7 @@ class FlickrOAuth {
   static FlickrOAuth _instance;
   static const String FLICKR_HOST_URL = FlickrConstant.FLICKR_HOST;
 
-//  static const String FLICKR_OAUTH_URL = FlickrConstant.FLICKR_OAUTH_URL;
+//  static const String FLICKR_OAUTH_URL = FlickrConstant.FLICKR_OAUTH_URL;：
 
   static const String HMAC_SHA1 = QueryValueConstant.HMAC_SHA1;
   static const String VALUE_OAUTH_VERSION =
