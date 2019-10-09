@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/auth.oauth.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class AuthOAuthTestPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
@@ -256,7 +257,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   _generateAuthorizeUrl() {
     setState(() {
       authUrl =
-          '${FlickrOAuth.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
+          '${FlickrConstant.FLICKR_OAUTH_URL}authorize?oauth_token=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
     });
     print('authUrl = $authUrl');
     setState(() {

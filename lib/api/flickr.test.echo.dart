@@ -29,12 +29,11 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 //    "stat": "ok"
 //}
 class EchoTest {
-
   EchoTest();
 
   Future<String> request(String echoText) async {
     Map<String, String> params = new Map();
-    params['method'] = 'flickr.test.echo';
+    params[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_TEST_ECHO;
     params['name'] = echoText;
     String text;
     Function parseResponse = (value) {
@@ -48,7 +47,8 @@ class EchoTest {
       } catch (e) {
         print(e.toString());
       }
-      print('get Echo from flickr.test.echo: ${response.body}');
+      print(
+          'get Echo from ${FlickrConstant.FLICKR_TEST_ECHO} ${response.body}');
       text = name;
     };
     await MQHttpRestGet.getM(params, parseResponse);

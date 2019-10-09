@@ -17,27 +17,31 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 class FlickrOAuth {
 //  Use FlickrOAuth.getinstance() to get a FlickrOAuth Object
   static FlickrOAuth _instance;
-  static const String FLICKR_HOST_URL = 'https://www.flickr.com';
-  static const String FLICKR_OAUTH_URL = FLICKR_HOST_URL + '/services/oauth/';
+  static const String FLICKR_HOST_URL = FlickrConstant.FLICKR_HOST;
 
-  static const String FORMAT = 'format';
-  static const String JSON = 'json';
-  static const String METHOD = 'method';
-  static const String NOJSONCALLBACK = 'nojsoncallback';
+//  static const String FLICKR_OAUTH_URL = FlickrConstant.FLICKR_OAUTH_URL;
 
-  static const String VALUE_OAUTH_VERSION = '1.0';
-  static const String HMAC_SHA1 = 'HMAC-SHA1';
-  static const String OAUTH_NONCE = 'oauth_nonce';
-  static const String OAUTH_TIMESTAMP = 'oauth_timestamp';
-  static const String OAUTH_CONSUMER_KEY = 'oauth_consumer_key';
-  static const String OAUTH_SIGNATURE_METHOD = 'oauth_signature_method';
-  static const String OAUTH_VERSION = 'oauth_version';
-  static const String OAUTH_CALLBACK = 'oauth_callback';
-  static const String OAUTH_TOKEN_SECRET = 'oauth_token_secret';
-  static const String OAUTH_VERIFIER = 'oauth_verifier';
-  static const String OAUTH_SIGNATURE = 'oauth_signature';
-  static const String OAUTH_TOKEN = 'oauth_token';
-  static const String OAUTH_CALLBACK_CONFIRMED = 'oauth_callback_confirmed';
+  static const String HMAC_SHA1 = QueryValueConstant.HMAC_SHA1;
+  static const String VALUE_OAUTH_VERSION =
+      QueryValueConstant.VALUE_OAUTH_VERSION;
+  static const String FORMAT = QueryKeyConstant.FORMAT;
+  static const String METHOD = QueryKeyConstant.METHOD;
+  static const String JSON = QueryValueConstant.JSON;
+
+  static const String NOJSONCALLBACK = QueryKeyConstant.NO_JSON_CALLBACK;
+  static const String OAUTH_CALLBACK = QueryKeyConstant.OAUTH_CALLBACK;
+  static const String OAUTH_CALLBACK_CONFIRMED =
+      QueryKeyConstant.OAUTH_CALLBACK_CONFIRMED;
+  static const String OAUTH_CONSUMER_KEY = QueryKeyConstant.OAUTH_CONSUMER_KEY;
+  static const String OAUTH_NONCE = QueryKeyConstant.OAUTH_NONCE;
+  static const String OAUTH_SIGNATURE = QueryKeyConstant.OAUTH_SIGNATURE;
+  static const String OAUTH_SIGNATURE_METHOD =
+      QueryKeyConstant.OAUTH_SIGNATURE_METHOD;
+  static const String OAUTH_TIMESTAMP = QueryKeyConstant.OAUTH_TIMESTAMP;
+  static const String OAUTH_TOKEN = QueryKeyConstant.OAUTH_TOKEN;
+  static const String OAUTH_TOKEN_SECRET = QueryKeyConstant.OAUTH_TOKEN_SECRET;
+  static const String OAUTH_VERIFIER = QueryKeyConstant.OAUTH_VERIFIER;
+  static const String OAUTH_VERSION = QueryKeyConstant.OAUTH_VERSION;
 
 //  Keep all the variables of the OAuth process.
   SplayTreeMap<String, String> authParamsMap = new SplayTreeMap()
@@ -87,18 +91,18 @@ class FlickrOAuth {
   }
 
   static String _getSignature(
-      {String httpVerb = 'GET',
-      String requestUrl = '/services/oauth/request_token',
+      {String httpVerb = HttpVerb.GET,
+      String requestPath = FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH,
       SplayTreeMap<String, String> params,
       String tokenSecret}) {
     assert(httpVerb != null);
-    assert(requestUrl != null);
+    assert(requestPath != null);
     assert(params != null);
     assert(tokenSecret != null);
 
     String _generateBaseString() {
       String requestUrlString =
-          Uri.encodeComponent(FLICKR_HOST_URL + requestUrl);
+          Uri.encodeComponent(FLICKR_HOST_URL + requestPath);
       String paramsString = Uri.encodeComponent(
           params.keys.map((key) => '$key=${params[key]}').toList().join('&'));
       return '$httpVerb&$requestUrlString&$paramsString';
@@ -121,8 +125,8 @@ class FlickrOAuth {
       String tokenSecret = authParamsMap[string];
 
       authParamsMap[OAUTH_SIGNATURE] = FlickrOAuth._getSignature(
-          httpVerb: 'GET',
-          requestUrl: '/services/oauth/request_token',
+          httpVerb: HttpVerb.GET,
+          requestPath: FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH,
           params: params,
           tokenSecret: tokenSecret);
     }
@@ -143,7 +147,7 @@ class FlickrOAuth {
           .map((key) => '$key=${authParamsMap[key]}')
           .toList()
           .join('&');
-      return '${FLICKR_OAUTH_URL}request_token?$paramsString';
+      return '${FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH}?$paramsString';
     }
 
     parseRequestToken(value) {
@@ -194,8 +198,8 @@ class FlickrOAuth {
         ..[OAUTH_TOKEN] = authParamsMap[OAUTH_TOKEN];
       String tokenSecret = authParamsMap[OAUTH_TOKEN_SECRET];
       authParamsMap[OAUTH_SIGNATURE] = FlickrOAuth._getSignature(
-          httpVerb: 'GET',
-          requestUrl: '/services/oauth/access_token',
+          httpVerb: HttpVerb.GET,
+          requestPath: FlickrConstant.FLICKR_OAUTH_ACCESS_TOKEN_PATH,
           params: params,
           tokenSecret: tokenSecret);
     }
@@ -216,7 +220,7 @@ class FlickrOAuth {
           .map((key) => '$key=${authParamsMap[key]}')
           .toList()
           .join('&');
-      return '${FLICKR_OAUTH_URL}access_token?$paramsString';
+      return '${FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_OAUTH_ACCESS_TOKEN_PATH}?$paramsString';
     }
 
     parseAccessToken(value) {
@@ -246,7 +250,7 @@ class FlickrOAuth {
     void _generateSignature() {
       SplayTreeMap<String, String> params = new SplayTreeMap()
         ..[FORMAT] = JSON
-        ..[METHOD] = 'flickr.test.login'
+        ..[METHOD] = FlickrConstant.FLICKR_TEST_LOGIN
         ..[NOJSONCALLBACK] = '1'
         ..[OAUTH_CONSUMER_KEY] = authParamsMap[OAUTH_CONSUMER_KEY]
         ..[OAUTH_NONCE] = authParamsMap[OAUTH_NONCE]
@@ -257,8 +261,8 @@ class FlickrOAuth {
         ..[OAUTH_VERSION] = authParamsMap[OAUTH_VERSION];
       String tokenSecret = authParamsMap[OAUTH_TOKEN_SECRET];
       authParamsMap[OAUTH_SIGNATURE] = FlickrOAuth._getSignature(
-          httpVerb: 'GET',
-          requestUrl: '/services/rest',
+          httpVerb: HttpVerb.GET,
+          requestPath: FlickrConstant.FLICKR_REST_PATH,
           params: params,
           tokenSecret: tokenSecret);
     }

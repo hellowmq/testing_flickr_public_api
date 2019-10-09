@@ -17,7 +17,7 @@ class GetPopularPhotos {
   Future<List<Photo>> request(
       {Map<String, String> additionalParams = const {}}) async {
     Map<String, String> params = new Map();
-    params[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_PHOTOS_GETPOPULAR;
+    params[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_PHOTOS_GET_POPULAR;
     if (additionalParams != null) {
       params.addAll(additionalParams);
     }

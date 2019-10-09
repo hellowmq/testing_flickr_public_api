@@ -16,7 +16,7 @@ class GetRecentPhotos {
   Future<List<Photo>> request(
       {Map<String, String> additionalParams = const {}}) async {
     Map<String, String> params = new Map();
-    params['method'] = FlickrConstant.FLICKR_PHOTOS_GETRECENT;
+    params['method'] = FlickrConstant.FLICKR_PHOTOS_GET_RECENT;
     if (additionalParams != null) {
       params.addAll(additionalParams);
     }

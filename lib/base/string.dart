@@ -1,18 +1,25 @@
 class FlickrConstant {
-  static const String FLICKR_HOST_URL = 'https://www.flickr.com';
-  static const String FLICKR_OAUTH_URL = FLICKR_HOST_URL + '/services/oauth/';
-  static const String FLICKR_PHOTOS_GETRECENT ='flickr.photos.getRecent';
-  static const String FLICKR_PHOTOS_GETPOPULAR ='flickr.photos.getRecent';
-  static const String FLICKR_PHOTOS_SEARCH ='flickr.photos.getRecent';
+  static const String FLICKR_HOST = 'https://www.flickr.com';
+  static const String FLICKR_OAUTH_REQUEST_TOKEN_PATH =
+      '/services/oauth/request_token';
+  static const String FLICKR_OAUTH_ACCESS_TOKEN_PATH =
+      '/services/oauth/access_token';
+  static const String FLICKR_REST_PATH = '/services/rest';
+
+//  static const String FLICKR_OAUTH_URL = FLICKR_HOST + FLICKR_OAUTH_PATH;
+  static const String FLICKR_PHOTOS_GET_RECENT = 'flickr.photos.getRecent';
+  static const String FLICKR_PHOTOS_GET_POPULAR = 'flickr.photos.getRecent';
+  static const String FLICKR_PHOTOS_SEARCH = 'flickr.photos.search';
+  static const String FLICKR_TEST_ECHO = 'flickr.test.echo';
+  static const String FLICKR_TEST_LOGIN = 'flickr.test.login';
   static const String PHOTO = 'photo';
   static const String PHOTOS = 'photos';
-
 }
 
 class QueryKeyConstant {
   static const String FORMAT = 'format';
   static const String METHOD = 'method';
-  static const String NOJSONCALLBACK = 'nojsoncallback';
+  static const String NO_JSON_CALLBACK = 'nojsoncallback';
   static const String OAUTH_CALLBACK = 'oauth_callback';
   static const String OAUTH_CALLBACK_CONFIRMED = 'oauth_callback_confirmed';
   static const String OAUTH_CONSUMER_KEY = 'oauth_consumer_key';
@@ -26,10 +33,13 @@ class QueryKeyConstant {
   static const String OAUTH_VERSION = 'oauth_version';
 }
 
-class QueryValueConstant{
+class QueryValueConstant {
   static const String JSON = 'json';
   static const String VALUE_OAUTH_VERSION = '1.0';
   static const String HMAC_SHA1 = 'HMAC-SHA1';
+}
 
-
+class HttpVerb {
+  static const String GET = "GET";
+  static const String POST = "POST";
 }

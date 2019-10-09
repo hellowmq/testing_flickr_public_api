@@ -60,7 +60,7 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     buildRoute: AuthOAuthTestPage.startPage,
   ),
   PageIndex(
-    title: FlickrConstant.FLICKR_PHOTOS_GETRECENT,
+    title: FlickrConstant.FLICKR_PHOTOS_GET_RECENT,
     subtitle: "Returns a list of the latest public photos uploaded to flickr.",
     routeName: '/getRecent',
     documentationUrl:
@@ -68,7 +68,7 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     buildRoute: GetRecentPhotosPage.startPage,
   ),
   PageIndex(
-    title: 'flickr.photos.search',
+    title: FlickrConstant.FLICKR_PHOTOS_SEARCH,
     subtitle:
         "Return a list of photos matching some criteria. Only photos visible to "
             "the calling user will be returned. To return private or "

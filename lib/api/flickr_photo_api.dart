@@ -9,7 +9,7 @@ class MFlickrPhotoApi {
   List<Photo> parseStringAsPhotoList(String data) {
     try {
       return json
-          .decode(data)[FlickrConstant.PHOTOS]['photo']
+          .decode(data)[FlickrConstant.PHOTOS][FlickrConstant.PHOTO]
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     } catch (exception) {
@@ -34,7 +34,8 @@ class MFlickrPhotoApi {
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
     MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())..['method'] = methodName,
+      (params ?? new Map<String, dynamic>())
+        ..[QueryKeyConstant.METHOD] = methodName,
       onSuccess: (http.Response response) =>
           onSuccess(parseStringAsPhotoList(response.body)),
       onError: onError,
@@ -53,7 +54,7 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    getPhotoList('flickr.photos.getRecent',
+    getPhotoList(FlickrConstant.FLICKR_PHOTOS_GET_RECENT,
         params: params, onSuccess: onSuccess, onError: onError);
   }
 
@@ -69,7 +70,7 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    getPhotoList('flickr.photos.getPopular',
+    getPhotoList(FlickrConstant.FLICKR_PHOTOS_GET_POPULAR,
         params: params, onSuccess: onSuccess, onError: onError);
   }
 
@@ -89,7 +90,7 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallCallback onError}) {
-    getPhotoList('flickr.photos.search',
+    getPhotoList(FlickrConstant.FLICKR_PHOTOS_SEARCH,
         params: params, onSuccess: onSuccess, onError: onError);
   }
 }

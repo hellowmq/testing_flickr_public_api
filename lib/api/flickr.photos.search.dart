@@ -16,7 +16,7 @@ class SearchPhotos {
   Future<List<Photo>> request(
       {Map<String, String> additionalParams = const {}}) async {
     Map<String, String> params = new Map();
-    params['method'] = 'flickr.photos.search';
+    params['method'] = FlickrConstant.FLICKR_PHOTOS_SEARCH;
     if (additionalParams != null) {
       params.addAll(additionalParams);
     }
