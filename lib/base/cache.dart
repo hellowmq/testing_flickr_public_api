@@ -4,7 +4,7 @@ import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
 class CustomCacheManager extends BaseCacheManager {
-  static const key = "customCache";
+  static const CacheKey = "customCache";
 
   static CustomCacheManager _instance;
 
@@ -16,14 +16,14 @@ class CustomCacheManager extends BaseCacheManager {
   }
 
   CustomCacheManager._()
-      : super(key,
+      : super(CacheKey,
             maxAgeCacheObject: Duration(days: 7),
             maxNrOfCacheObjects: 20,
             fileFetcher: _customHttpGetter);
 
   Future<String> getFilePath() async {
     var directory = await getTemporaryDirectory();
-    return p.join(directory.path, key);
+    return p.join(directory.path, CacheKey);
   }
 
   static Future<FileFetcherResponse> _customHttpGetter(String url,

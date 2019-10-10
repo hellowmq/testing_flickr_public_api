@@ -91,7 +91,7 @@ class FlickrOAuth {
   }
 
   static String _getSignature(
-      {String httpVerb = HttpVerb.GET,
+      {String httpVerb = HttpString.GET,
       String requestPath = FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH,
       SplayTreeMap<String, String> params,
       String tokenSecret}) {
@@ -125,7 +125,7 @@ class FlickrOAuth {
       String tokenSecret = authParamsMap[string];
 
       authParamsMap[OAUTH_SIGNATURE] = FlickrOAuth._getSignature(
-          httpVerb: HttpVerb.GET,
+          httpVerb: HttpString.GET,
           requestPath: FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH,
           params: params,
           tokenSecret: tokenSecret);
@@ -198,7 +198,7 @@ class FlickrOAuth {
         ..[OAUTH_TOKEN] = authParamsMap[OAUTH_TOKEN];
       String tokenSecret = authParamsMap[OAUTH_TOKEN_SECRET];
       authParamsMap[OAUTH_SIGNATURE] = FlickrOAuth._getSignature(
-          httpVerb: HttpVerb.GET,
+          httpVerb: HttpString.GET,
           requestPath: FlickrConstant.FLICKR_OAUTH_ACCESS_TOKEN_PATH,
           params: params,
           tokenSecret: tokenSecret);
@@ -261,7 +261,7 @@ class FlickrOAuth {
         ..[OAUTH_VERSION] = authParamsMap[OAUTH_VERSION];
       String tokenSecret = authParamsMap[OAUTH_TOKEN_SECRET];
       authParamsMap[OAUTH_SIGNATURE] = FlickrOAuth._getSignature(
-          httpVerb: HttpVerb.GET,
+          httpVerb: HttpString.GET,
           requestPath: FlickrConstant.FLICKR_REST_PATH,
           params: params,
           tokenSecret: tokenSecret);

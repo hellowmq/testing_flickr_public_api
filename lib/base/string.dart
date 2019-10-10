@@ -41,7 +41,7 @@ class QueryValueConstant {
   static const String HMAC_SHA1 = 'HMAC-SHA1';
 }
 
-class HttpVerb {
+class HttpString {
   static const String GET = "GET";
   static const String POST = "POST";
 }

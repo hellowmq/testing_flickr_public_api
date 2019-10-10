@@ -16,7 +16,7 @@ class SearchPhotos {
   Future<List<Photo>> request(
       {Map<String, String> additionalParams = const {}}) async {
     Map<String, String> params = new Map();
-    params['method'] = FlickrConstant.FLICKR_PHOTOS_SEARCH;
+    params[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_PHOTOS_SEARCH;
     if (additionalParams != null) {
       params.addAll(additionalParams);
     }
@@ -31,7 +31,7 @@ class SearchPhotos {
         print(e.toString());
       }
       photoList = json
-          .decode(response.body)[FlickrConstant.PHOTOS]['photo']
+          .decode(response.body)[FlickrConstant.PHOTOS][FlickrConstant.PHOTO]
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     };

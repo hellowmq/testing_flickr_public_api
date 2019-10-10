@@ -24,36 +24,34 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
   var callback = '';
 
   static const List<String> oauthKeys = [
-    'oauth_callback_confirmed',
-    'oauth_token',
-    'oauth_token_secret'
+    QueryKeyConstant.OAUTH_CALLBACK_CONFIRMED,
+    QueryKeyConstant.OAUTH_TOKEN,
+    QueryKeyConstant.OAUTH_TOKEN_SECRET
   ];
-  static const String URL =
-      'https://www.flickr.com/services/oauth/request_token';
   Map<String, String> signingParamsMap = new SplayTreeMap()
-    ..['oauth_nonce'] = '123123'
-    ..['oauth_timestamp'] =
+    ..[QueryKeyConstant.OAUTH_NONCE] = '123123'
+    ..[QueryKeyConstant.OAUTH_TIMESTAMP] =
         ((new DateTime.now().millisecondsSinceEpoch / 1000).floor()).toString()
-    ..['oauth_consumer_key'] = '82c6bf925a8bf9823d980b7a3785d4b3'
-    ..['oauth_signature_method'] = 'HMAC-SHA1'
-    ..['oauth_version'] = '1.0'
-    ..['oauth_callback'] = 'http%3A%2F%2Fwww.example.com';
+    ..[QueryKeyConstant.OAUTH_CONSUMER_KEY] = app_key.apiKey
+    ..[QueryKeyConstant.OAUTH_SIGNATURE_METHOD] = QueryValueConstant.HMAC_SHA1
+    ..[QueryKeyConstant.OAUTH_VERSION] = QueryValueConstant.VALUE_OAUTH_VERSION
+    ..[QueryKeyConstant.OAUTH_CALLBACK] = 'http%3A%2F%2Fwww.example.com';
 
   String _generateBaseString() {
     Map<String, String> baseParamsMap = new SplayTreeMap()
-      ..['oauth_nonce'] = '123123'
-      ..['oauth_timestamp'] =
+      ..[QueryKeyConstant.OAUTH_NONCE] = '123123'
+      ..[QueryKeyConstant.OAUTH_TIMESTAMP] =
           ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
               .toString()
-      ..['oauth_consumer_key'] = '82c6bf925a8bf9823d980b7a3785d4b3'
-      ..['oauth_signature_method'] = 'HMAC-SHA1'
-      ..['oauth_version'] = '1.0'
-      ..['oauth_callback'] = 'http%3A%2F%2Fwww.example.com';
+      ..[QueryKeyConstant.OAUTH_CONSUMER_KEY] = app_key.apiKey
+      ..[QueryKeyConstant.OAUTH_SIGNATURE_METHOD] = QueryValueConstant.HMAC_SHA1
+      ..[QueryKeyConstant.OAUTH_VERSION] = QueryValueConstant.VALUE_OAUTH_VERSION
+      ..[QueryKeyConstant.OAUTH_CALLBACK] = 'http%3A%2F%2Fwww.example.com';
     String paramString = baseParamsMap.keys
         .map((name) => '$name=${baseParamsMap[name]}')
         .toList()
         .join('&');
-    return 'GET&${Uri.encodeComponent(URL)}&${Uri.encodeComponent(paramString)}';
+    return '${HttpString.GET}&${Uri.encodeComponent(FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH)}&${Uri.encodeComponent(paramString)}';
   }
 
   String _generateKey() {
@@ -76,20 +74,20 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
   _getRequestToken() async {
     String _getRequestTokenUrl() {
       Map<String, String> signingParamsMap = new SplayTreeMap()
-        ..['oauth_nonce'] = '123123'
-        ..['oauth_timestamp'] =
+        ..[QueryKeyConstant.OAUTH_NONCE] = '123123'
+        ..[QueryKeyConstant.OAUTH_TIMESTAMP] =
             ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
                 .toString()
-        ..['oauth_consumer_key'] = '82c6bf925a8bf9823d980b7a3785d4b3'
-        ..['oauth_signature_method'] = 'HMAC-SHA1'
-        ..['oauth_version'] = '1.0'
-        ..['oauth_callback'] = 'http%3A%2F%2Fwww.example.com'
-        ..['oauth_signature'] = signature;
+        ..[QueryKeyConstant.OAUTH_CONSUMER_KEY] = app_key.apiKey
+        ..[QueryKeyConstant.OAUTH_SIGNATURE_METHOD] = QueryValueConstant.HMAC_SHA1
+        ..[QueryKeyConstant.OAUTH_VERSION] = QueryValueConstant.VALUE_OAUTH_VERSION
+        ..[QueryKeyConstant.OAUTH_CALLBACK] = 'http%3A%2F%2Fwww.example.com'
+        ..[QueryKeyConstant.OAUTH_SIGNATURE] = signature;
       String paramString = signingParamsMap.keys
           .map((name) => '$name=${signingParamsMap[name]}')
           .toList()
           .join('&');
-      return 'https://www.flickr.com/services/oauth/request_token' +
+      return FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH +
           '?' +
           paramString;
     }
@@ -114,7 +112,7 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
 //  Getting the User Authorization
   _getUserAuthorization() async {
     String _getUserAuthorization() =>
-        'https://www.flickr.com/services/oauth/authorize?oauth_token=${Uri.splitQueryString(tokenData)['oauth_token']}';
+        '${FlickrConstant.FLICKR_OAUTH_AUTHORIZE_PATH}?${QueryKeyConstant.OAUTH_TOKEN}=${Uri.splitQueryString(tokenData)['oauth_token']}';
 
     Function parseUserAuthorization = (value) {
       final response = value as http.Response;
@@ -139,7 +137,7 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
       Map<String, String> getAccessTokenParamsMap = new SplayTreeMap()
         ..addAll(signingParamsMap);
 
-      return 'https://www.flickr.com/services/oauth/access_token?' +
+      return '${FlickrConstant.FLICKR_OAUTH_ACCESS_TOKEN_PATH}?' +
           getAccessTokenParamsMap.keys
               .map((name) => '$name=${getAccessTokenParamsMap[name]}')
               .toList()
