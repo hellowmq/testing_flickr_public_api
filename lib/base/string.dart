@@ -1,4 +1,6 @@
 class FlickrConstant {
+
+  /// FLICKR PATH splice
   static const String FLICKR_HOST = 'https://www.flickr.com';
   static const String FLICKR_OAUTH_REQUEST_TOKEN_PATH =
       '/services/oauth/request_token';
@@ -8,17 +10,24 @@ class FlickrConstant {
       '/services/oauth/authorize';
   static const String FLICKR_REST_PATH = '/services/rest';
 
-//  static const String FLICKR_OAUTH_URL = FLICKR_HOST + FLICKR_OAUTH_PATH;
+  /// FLICKR METHOD　NAME
   static const String FLICKR_PHOTOS_GET_RECENT = 'flickr.photos.getRecent';
   static const String FLICKR_PHOTOS_GET_POPULAR = 'flickr.photos.getRecent';
   static const String FLICKR_PHOTOS_SEARCH = 'flickr.photos.search';
   static const String FLICKR_TEST_ECHO = 'flickr.test.echo';
   static const String FLICKR_TEST_LOGIN = 'flickr.test.login';
+
+
+  /// FLCIKR RESPONSE JSON KEY
+  static const String PAGE = 'page';
+  static const String PER_PAGE = 'per_page';
   static const String PHOTO = 'photo';
   static const String PHOTOS = 'photos';
 }
 
 class QueryKeyConstant {
+  /// FLCIKR REST QUERY KEY
+  static const String API_KEY = 'api_key';
   static const String FORMAT = 'format';
   static const String METHOD = 'method';
   static const String NO_JSON_CALLBACK = 'nojsoncallback';
@@ -36,9 +45,10 @@ class QueryKeyConstant {
 }
 
 class QueryValueConstant {
+  /// FLCIKR REST QUERY SPECIFIC VALUE
+  static const String HMAC_SHA1 = 'HMAC-SHA1';
   static const String JSON = 'json';
   static const String VALUE_OAUTH_VERSION = '1.0';
-  static const String HMAC_SHA1 = 'HMAC-SHA1';
 }
 
 class HttpString {

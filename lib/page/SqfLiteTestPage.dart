@@ -40,8 +40,8 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
             Photo photo = await GetRecentPhotos()
                 .request(
                     additionalParams: new Map<String, String>()
-                      ..['per_page'] = '5'
-                      ..['page'] = '1')
+                      ..[FlickrConstant.PER_PAGE] = '5'
+                      ..[FlickrConstant.PAGE] = '1')
                 .then((v) => v[0]);
             this._photos = await LocalDataBase.getPhotos();
             print(

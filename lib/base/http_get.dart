@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
 import 'unique_typedef.dart';
+import 'string.dart';
 
 ///
 /// @Author hellowmq
@@ -11,12 +12,10 @@ import 'unique_typedef.dart';
 ///
 ///
 
-const String HOST = 'https://www.flickr.com/';
-const String HOST_REST = HOST + 'services/rest/';
 const Map<String, String> pubArguments = {
-  'format': 'json',
-  'nojsoncallback': '1',
-  'api_key': key.apiKey
+  QueryKeyConstant.FORMAT: 'json',
+  QueryKeyConstant.NO_JSON_CALLBACK: '1',
+  QueryKeyConstant.API_KEY: key.apiKey
 };
 
 /// init commit of http get standard
@@ -24,7 +23,7 @@ class MQHttpRestGet {
   static const String TAG = "MQHttpRestGet";
 
   static getM(Map<String, dynamic> params, Function callback) async {
-    String fullUri = HOST_REST + '?';
+    String fullUri = FlickrConstant.FLICKR_REST_PATH + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) {
       fullUri += "$key=" + value + "&";
     });
@@ -54,7 +53,7 @@ class MQHttpRestGet {
 
   static restGetM<T>(
       Map<String, dynamic> params, MQSuccessCallback<T> callback) async {
-    String fullUri = HOST_REST + '?';
+    String fullUri = FlickrConstant.FLICKR_REST_PATH + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");
     http.Response response;
@@ -107,7 +106,7 @@ class MRestGet {
 
   void getAnotherM(Map<String, dynamic> params,
       {MQSuccessCallback onSuccess, MQErrorCallback onError}) async {
-    String fullUri = HOST_REST + '?';
+    String fullUri = FlickrConstant.FLICKR_REST_PATH + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");
     http.Response response;

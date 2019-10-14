@@ -18,12 +18,13 @@ class VideoTestPage extends StatefulWidget {
 
 class _VideoTestPageState extends State<VideoTestPage> {
   VideoPlayerController _controller;
+  static const String testVideoUrl =
+      'http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4';
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(
-        'http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4')
+    _controller = VideoPlayerController.network(testVideoUrl)
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even
         // before the play button has been pressed.
