@@ -32,6 +32,8 @@ dependencies:
   qrcode_reader: ^0.4.4
   extended_text: ^0.6.6
   video_player: ^0.10.2+1
+# A mixture between dependency injection (DI) and state management, built with widgets for widgets.
+  provider: ^3.1.0+1
 
 
 
