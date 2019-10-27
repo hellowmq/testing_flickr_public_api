@@ -22,12 +22,13 @@ class ViewBuilder {
                         ' secret:' +
                         photo.secret),
                   ),
-                  new Padding(
+                  Padding(
                     padding: EdgeInsets.all(5.0),
-                    child: FadeInImage.memoryNetwork(
-                      placeholder: kTransparentImage,
-                      image:
-                          'https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg',
+                    child: Stack(
+                      children: <Widget>[
+                        Center(child: buildFadeInImage(photo)),
+//                    buildFadeInImage(photo),
+                      ],
                     ),
                   ),
                 ],
@@ -36,6 +37,26 @@ class ViewBuilder {
           ),
         )
         .toList();
+  }`
+
+  static String createImageUrl(Photo photo) =>
+      'https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg';
+
+  static FadeInImage buildFadeInImage(Photo photo) {
+    return FadeInImage(
+      placeholder: AssetImage('assets/images/genji.jpg'),
+      image: NetworkImage(createImageUrl(photo)),
+      fit: BoxFit.fill,
+
+    );
+  }
+
+  static Image buildNetworkImage(Photo photo) {
+    return Image(
+      image: NetworkImage(
+        createImageUrl(photo),
+      ),
+    );
   }
 
   static WidgetBuilder createWidgetBuilder(dynamic widget) {
@@ -43,5 +64,5 @@ class ViewBuilder {
     return (BuildContext context) => widget;
   }
 
-  static const Icon iconBack =  Icon(Icons.arrow_back_ios);
+  static const Icon iconBack = Icon(Icons.arrow_back_ios);
 }
