@@ -13,8 +13,8 @@ import 'string.dart';
 ///
 
 const Map<String, String> pubArguments = {
-  QueryKeyConstant.FORMAT: 'json',
-  QueryKeyConstant.NO_JSON_CALLBACK: '1',
+  QueryKeyConstant.FORMAT: QueryValueConstant.JSON,
+  QueryKeyConstant.NO_JSON_CALLBACK: QueryValueConstant.VALUE_NO_JSON_CALLBACK,
   QueryKeyConstant.API_KEY: key.apiKey
 };
 
