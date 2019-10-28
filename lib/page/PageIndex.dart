@@ -30,8 +30,9 @@ class PageIndex {
 
   @override
   String toString() {
-    return '$runtimeType($title $routeName)';
+    return 'PageIndex{title: $title, subtitle: $subtitle, routeName: $routeName, buildRoute: $buildRoute, documentationUrl: $documentationUrl}';
   }
+
 }
 
 // All sub routes are stored in a PageIndex List.

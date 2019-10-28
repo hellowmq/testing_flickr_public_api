@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:transparent_image/transparent_image.dart';
 
 import 'base_tool.dart';
 
@@ -37,7 +36,7 @@ class ViewBuilder {
           ),
         )
         .toList();
-  }`
+  }
 
   static String createImageUrl(Photo photo) =>
       'https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg';

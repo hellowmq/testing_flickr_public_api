@@ -28,7 +28,7 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
     QueryKeyConstant.OAUTH_TOKEN,
     QueryKeyConstant.OAUTH_TOKEN_SECRET
   ];
-  Map<String, String> signingParamsMap = new SplayTreeMap()
+  Map<String, String> signingParamsMap = SplayTreeMap()
     ..[QueryKeyConstant.OAUTH_NONCE] = '123123'
     ..[QueryKeyConstant.OAUTH_TIMESTAMP] =
         ((new DateTime.now().millisecondsSinceEpoch / 1000).floor()).toString()
@@ -38,14 +38,15 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
     ..[QueryKeyConstant.OAUTH_CALLBACK] = 'http%3A%2F%2Fwww.example.com';
 
   String _generateBaseString() {
-    Map<String, String> baseParamsMap = new SplayTreeMap()
+    Map<String, String> baseParamsMap = SplayTreeMap()
       ..[QueryKeyConstant.OAUTH_NONCE] = '123123'
       ..[QueryKeyConstant.OAUTH_TIMESTAMP] =
           ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
               .toString()
       ..[QueryKeyConstant.OAUTH_CONSUMER_KEY] = app_key.apiKey
       ..[QueryKeyConstant.OAUTH_SIGNATURE_METHOD] = QueryValueConstant.HMAC_SHA1
-      ..[QueryKeyConstant.OAUTH_VERSION] = QueryValueConstant.VALUE_OAUTH_VERSION
+      ..[QueryKeyConstant.OAUTH_VERSION] =
+          QueryValueConstant.VALUE_OAUTH_VERSION
       ..[QueryKeyConstant.OAUTH_CALLBACK] = 'http%3A%2F%2Fwww.example.com';
     String paramString = baseParamsMap.keys
         .map((name) => '$name=${baseParamsMap[name]}')
@@ -73,23 +74,23 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
 // Getting a Request Token
   _getRequestToken() async {
     String _getRequestTokenUrl() {
-      Map<String, String> signingParamsMap = new SplayTreeMap()
+      Map<String, String> signingParamsMap = SplayTreeMap()
         ..[QueryKeyConstant.OAUTH_NONCE] = '123123'
         ..[QueryKeyConstant.OAUTH_TIMESTAMP] =
             ((new DateTime.now().millisecondsSinceEpoch / 1000).floor())
                 .toString()
         ..[QueryKeyConstant.OAUTH_CONSUMER_KEY] = app_key.apiKey
-        ..[QueryKeyConstant.OAUTH_SIGNATURE_METHOD] = QueryValueConstant.HMAC_SHA1
-        ..[QueryKeyConstant.OAUTH_VERSION] = QueryValueConstant.VALUE_OAUTH_VERSION
+        ..[QueryKeyConstant.OAUTH_SIGNATURE_METHOD] =
+            QueryValueConstant.HMAC_SHA1
+        ..[QueryKeyConstant.OAUTH_VERSION] =
+            QueryValueConstant.VALUE_OAUTH_VERSION
         ..[QueryKeyConstant.OAUTH_CALLBACK] = 'http%3A%2F%2Fwww.example.com'
         ..[QueryKeyConstant.OAUTH_SIGNATURE] = signature;
       String paramString = signingParamsMap.keys
           .map((name) => '$name=${signingParamsMap[name]}')
           .toList()
           .join('&');
-      return FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH +
-          '?' +
-          paramString;
+      return FlickrConstant.FLICKR_OAUTH_REQUEST_TOKEN_PATH + '?' + paramString;
     }
 
     Function parseToken = (value) {
@@ -163,17 +164,17 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
 
   @override
   Widget build(BuildContext context) {
-    return new Scaffold(
+    return Scaffold(
       key: key,
-      appBar: new AppBar(
+      appBar: AppBar(
         title: Text('Signing Request'),
       ),
-      body: new ListView(
+      body: ListView(
         children: <Widget>[
           Padding(
             padding: EdgeInsets.all(5.0),
             child: Card(
-              child: new Column(
+              child: Column(
                 children: [
                   ListTile(
                     title: Text(_generateBaseString()),
@@ -220,7 +221,7 @@ class _SigningRequestPageState extends State<SigningRequestPage> {
           Padding(
             padding: EdgeInsets.all(5.0),
             child: Card(
-              child: new Column(
+              child: Column(
                 children: Uri.splitQueryString(tokenData)
                     .keys
                     .map(

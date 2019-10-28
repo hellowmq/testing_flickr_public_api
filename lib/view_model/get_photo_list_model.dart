@@ -4,7 +4,7 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 class GetPhotoListViewModel {
   int page = 0;
   final int _perPage;
-  List<Photo> _photoList = new List();
+  List<Photo> _photoList = List();
 
   List<Photo> get photoList => _photoList;
 
@@ -27,7 +27,7 @@ class GetPhotoListViewModel {
   loadMorePhotoList() {
     page++;
     int perPage = _perPage;
-    Map<String, String> params = new Map();
+    Map<String, String> params = Map();
     params
       ..['per_page'] = perPage.toString()
       ..['page'] = page.toString();
@@ -64,13 +64,14 @@ class GetPhotoListViewModelBuilder {
   }
 
   static GetPhotoListViewModel getRecentViewModel() {
-    var model = new GetPhotoListViewModelBuilder()
+    var model = GetPhotoListViewModelBuilder()
       ..perPage = 10
       ..methodName = "flickr.photos.getRecent";
     return model.build();
   }
+
   static GetPhotoListViewModel getPopularViewModel() {
-    var model = new GetPhotoListViewModelBuilder()
+    var model = GetPhotoListViewModelBuilder()
       ..perPage = 10
       ..methodName = "flickr.photos.getPopular";
     return model.build();

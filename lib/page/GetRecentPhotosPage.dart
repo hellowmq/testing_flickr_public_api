@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
+import 'package:provider/provider.dart';
 
 class GetRecentPhotosPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
@@ -20,20 +21,19 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   var responseText = '未发送';
   bool _isSending = false;
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       key: key,
-      appBar: new AppBar(
-        title: new Text('GetRecent'),
-        leading: new IconButton(
+      appBar: AppBar(
+        title: Text('GetRecent'),
+        leading: IconButton(
             icon: ViewBuilder.iconBack,
             onPressed: () {
               Navigator.pop(context);
             }),
       ),
-      floatingActionButton: new FloatingActionButton(
+      floatingActionButton: FloatingActionButton(
         onPressed: _sendMessage,
         child: Icon(Icons.send),
       ),
@@ -51,7 +51,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
                       padding: EdgeInsets.all(30.0),
                       height: 150.0,
                       width: 150.0,
-                      child: new Center(
+                      child: Center(
                         child: _isSending
                             ? CircularProgressIndicator()
                             : Container(),
