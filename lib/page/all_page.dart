@@ -9,3 +9,4 @@ export 'SigningRequestPage.dart';
 export 'SqfLiteTestPage.dart';
 export 'QrCodePage.dart';
 export 'VideoTestPage.dart';
+export 'ProviderSamplePage.dart';

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path/path.dart' as prefix0;
 import 'package:wenmq_first_flickr_flutter_app/base/string.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
@@ -32,7 +33,6 @@ class PageIndex {
   String toString() {
     return 'PageIndex{title: $title, subtitle: $subtitle, routeName: $routeName, buildRoute: $buildRoute, documentationUrl: $documentationUrl}';
   }
-
 }
 
 // All sub routes are stored in a PageIndex List.
@@ -72,10 +72,10 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     title: FlickrConstant.FLICKR_PHOTOS_SEARCH,
     subtitle:
         "Return a list of photos matching some criteria. Only photos visible to "
-            "the calling user will be returned. To return private or "
-            "semi-private photos, the caller must be authenticated with 'read' "
-            "permissions, and have permission to view the photos. "
-            "Unauthenticated calls will only return public photos.",
+        "the calling user will be returned. To return private or "
+        "semi-private photos, the caller must be authenticated with 'read' "
+        "permissions, and have permission to view the photos. "
+        "Unauthenticated calls will only return public photos.",
     routeName: '/search',
     documentationUrl:
         'https://www.flickr.com/services/api/flickr.photos.search.html',
@@ -92,7 +92,7 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
   PageIndex(
     title: 'sqflite test',
     subtitle:
-    "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
+        "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
     routeName: '/testSqflite',
     documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
     buildRoute: SqfLiteTestPage.startPage,
@@ -100,7 +100,7 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
   PageIndex(
     title: 'QrCode test',
     subtitle:
-    "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
+        "sqflite # SQLite plugin for Flutter. Supports both iOS and Android.",
     routeName: '/testQrCode',
     documentationUrl: 'https://pub.dev/packages/sqflite#-readme-tab-',
     buildRoute: QrCodePage.startPage,
@@ -108,18 +108,26 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
   PageIndex(
     title: 'Video test',
     subtitle:
-    "A Flutter plugin for iOS and Android for playing back video on a Widget surface.",
+        "A Flutter plugin for iOS and Android for playing back video on a Widget surface.",
     routeName: '/videoTest',
     documentationUrl: 'https://pub.dev/packages/video_player',
     buildRoute: VideoTestPage.startPage,
-  )
+  ),
+  PageIndex(
+    title: 'Provider Sample',
+    subtitle:
+        "A mixture between dependency injection (DI) and state management, built with widgets for widgets.",
+    routeName: '/providerSample',
+    documentationUrl: 'https://pub.dev/packages/provider',
+    buildRoute: MultiScreensPage.startPage,
+  ),
 ];
 
 // a routeMap should be submit to MaterialApp as a route
 final Map<String, WidgetBuilder> routeMap =
-    new Map<String, WidgetBuilder>.fromIterable(pageIndexList,
-        key: (v) => v.routeName, value: (v) => v.buildRoute)
-      ..['/'] = (context) => MainPage();
+    (new Map<String, WidgetBuilder>.fromIterable(pageIndexList,
+        key: (v) => v.routeName, value: (v) => v.buildRoute))
+      ..['/'] = ((context) => MainPage());
 
 // create the enter for the sub page
 List<Widget> buildPageIndexList(context) {
