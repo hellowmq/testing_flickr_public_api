@@ -25,6 +25,14 @@ class MultiScreensPage extends StatelessWidget {
               SecondPage(),
               FirstScreen(),
               SecondPage(),
+              FirstScreen(),
+              SecondPage(),
+              FirstScreen(),
+              SecondPage(),
+              FirstScreen(),
+              SecondPage(),
+              FirstScreen(),
+              SecondPage(),
             ],
           ),
         ),
@@ -77,30 +85,36 @@ class SecondPage extends StatelessWidget {
 
         Consumer2<CounterModel, int>(
           builder: (context, CounterModel counter, int textSize, _) => Center(
-            child: Text(
-              'Value: ${counter.value}',
-              style: TextStyle(
-                fontSize: textSize.toDouble(),
+            child: Padding(
+              padding: const EdgeInsets.fromLTRB(8.0,80.0,8.0,80.0),
+              child: Text(
+                'Value: ${counter.value}',
+                style: TextStyle(
+                  fontSize: textSize.toDouble(),
+                ),
               ),
             ),
           ),
         ),
         Consumer<CounterModel>(
-          builder: (context, CounterModel counter, child) => ButtonBar(
-            alignment: MainAxisAlignment.center,
-            children: <Widget>[
-              FlatButton(
-                color: Colors.blue,
-                onPressed: counter.decrement,
-                child: new Icon(Icons.thumb_down),
+          builder: (context, CounterModel counter, child) => Padding(
+            padding: const EdgeInsets.fromLTRB(8.0,80.0,8.0,80.0),
+            child: ButtonBar(
+              alignment: MainAxisAlignment.center,
+              children: <Widget>[
+                FlatButton(
+                  color: Colors.blue,
+                  onPressed: counter.decrement,
+                  child: new Icon(Icons.thumb_down),
 
-              ),
-              FlatButton(
-                color: Colors.red,
-                onPressed: counter.increment,
-                child:  new Icon(Icons.thumb_up),
-              ),
-            ],
+                ),
+                FlatButton(
+                  color: Colors.red,
+                  onPressed: counter.increment,
+                  child:  new Icon(Icons.thumb_up),
+                ),
+              ],
+            ),
           ),
           child: Icon(Icons.add),
         ),
