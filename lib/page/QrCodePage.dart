@@ -18,7 +18,6 @@ class _QrCodePageState extends State<QrCodePage> {
   /// This variable store the list of url that transfer to Qrcode
   var urlList = new List<String>();
   var lsView = new ListView();
-  String barcode = '';
 
   updateListView() {
     setState(() {
@@ -75,11 +74,13 @@ class _QrCodePageState extends State<QrCodePage> {
     try {
       String barcode = await BarcodeScanner.scan();
       setState(() {
-        return this.barcode = barcode;
+        urlList.add(barcode);
+        return;
       });
+      updateListView();
     } on Exception catch (e) {
       setState(() {
-        return this.barcode = 'Unknown error: $e';
+        return 'Unknown error: $e';
       });
     }
   }
