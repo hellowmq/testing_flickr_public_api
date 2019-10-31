@@ -4,6 +4,7 @@ import 'package:provider/provider.dart';
 class MultiScreensPage extends StatelessWidget {
   static final counter = CounterModel();
   static final textSize = 48;
+
   static Widget startPage(BuildContext context) {
     return MultiScreensPage();
   }
@@ -19,21 +20,10 @@ class MultiScreensPage extends StatelessWidget {
       child: ChangeNotifierProvider.value(
         value: counter,
         child: Scaffold(
-          body: ListView(
-            children: <Widget>[
-              FirstScreen(),
-              SecondPage(),
-              FirstScreen(),
-              SecondPage(),
-              FirstScreen(),
-              SecondPage(),
-              FirstScreen(),
-              SecondPage(),
-              FirstScreen(),
-              SecondPage(),
-              FirstScreen(),
-              SecondPage(),
-            ],
+          body: ListView.builder(
+            itemBuilder: (context, index) =>
+                (index % 2 == 0) ? FirstScreen() : SecondPage(),
+            itemCount: 30,
           ),
         ),
       ),
@@ -43,6 +33,7 @@ class MultiScreensPage extends StatelessWidget {
 
 class CounterModel with ChangeNotifier {
   int _count = 0;
+
   int get value => _count;
 
   void increment() {
@@ -50,8 +41,8 @@ class CounterModel with ChangeNotifier {
     notifyListeners();
   }
 
-  void decrement(){
-    _count --;
+  void decrement() {
+    _count--;
     notifyListeners();
   }
 }
@@ -82,11 +73,10 @@ class SecondPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Card(
       child: Column(children: <Widget>[
-
         Consumer2<CounterModel, int>(
           builder: (context, CounterModel counter, int textSize, _) => Center(
             child: Padding(
-              padding: const EdgeInsets.fromLTRB(8.0,80.0,8.0,80.0),
+              padding: const EdgeInsets.fromLTRB(8.0, 80.0, 8.0, 80.0),
               child: Text(
                 'Value: ${counter.value}',
                 style: TextStyle(
@@ -98,7 +88,7 @@ class SecondPage extends StatelessWidget {
         ),
         Consumer<CounterModel>(
           builder: (context, CounterModel counter, child) => Padding(
-            padding: const EdgeInsets.fromLTRB(8.0,80.0,8.0,80.0),
+            padding: const EdgeInsets.fromLTRB(8.0, 80.0, 8.0, 80.0),
             child: ButtonBar(
               alignment: MainAxisAlignment.center,
               children: <Widget>[
@@ -106,12 +96,11 @@ class SecondPage extends StatelessWidget {
                   color: Colors.blue,
                   onPressed: counter.decrement,
                   child: new Icon(Icons.thumb_down),
-
                 ),
                 FlatButton(
                   color: Colors.red,
                   onPressed: counter.increment,
-                  child:  new Icon(Icons.thumb_up),
+                  child: new Icon(Icons.thumb_up),
                 ),
               ],
             ),
