@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:qrcode_reader/qrcode_reader.dart';
+import 'package:barcode_scan/barcode_scan.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:qr_flutter/qr_flutter.dart';
 
@@ -15,9 +15,10 @@ class QrCodePage extends StatefulWidget {
 }
 
 class _QrCodePageState extends State<QrCodePage> {
-/// This variable store the list of url that transfer to Qrcode
+  /// This variable store the list of url that transfer to Qrcode
   var urlList = new List<String>();
   var lsView = new ListView();
+  String barcode = '';
 
   updateListView() {
     setState(() {
@@ -53,7 +54,6 @@ class _QrCodePageState extends State<QrCodePage> {
     });
   }
 
-
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
@@ -64,28 +64,23 @@ class _QrCodePageState extends State<QrCodePage> {
         child: lsView,
       ),
       floatingActionButton: new FloatingActionButton(
-        onPressed: () {
-          setState(() {
-            new QRCodeReader()
-                .setAutoFocusIntervalInMs(200)
-                .setForceAutoFocus(true)
-                .setTorchEnabled(true)
-                .setHandlePermissions(true)
-                .setExecuteAfterPermissionGranted(true)
-                .scan()
-                .then((v) {
-              urlList.add(
-                v != null ? v : '111',
-              );
-              print(urlList);
-              updateListView();
-              return;
-            });
-          });
-        },
+        onPressed: scan,
         tooltip: 'Reader the QRCode',
         child: new Icon(Icons.add_a_photo),
       ),
     );
+  }
+
+  Future scan() async {
+    try {
+      String barcode = await BarcodeScanner.scan();
+      setState(() {
+        return this.barcode = barcode;
+      });
+    } on Exception catch (e) {
+      setState(() {
+        return this.barcode = 'Unknown error: $e';
+      });
+    }
   }
 }

@@ -29,12 +29,12 @@ dependencies:
   path: ^1.6.2
   flutter_cache_manager: ^1.1.1
   qr_flutter: ^3.0.1
-  qrcode_reader: ^0.4.4
+#  qrcode_reader: ^0.4.4
+  barcode_scan: ^1.0.0
   extended_text: ^0.6.6
   video_player: ^0.10.2+1
 # A mixture between dependency injection (DI) and state management, built with widgets for widgets.
   provider: ^3.1.0+1
-
 
 
 
