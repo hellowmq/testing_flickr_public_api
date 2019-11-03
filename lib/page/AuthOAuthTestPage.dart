@@ -78,10 +78,6 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-//      appBar: AppBar(
-//        title: Text("透過 Flickr 使用 OAuth"),
-//        elevation: 0.0,
-//      ),
       floatingActionButton: new FloatingActionButton(
         onPressed: () {
           print(authUrl);
@@ -257,7 +253,7 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
   _generateAuthorizeUrl() {
     setState(() {
       authUrl =
-          '${FlickrConstant.FLICKR_OAUTH_AUTHORIZE_PATH}?${QueryKeyConstant.OAUTH_TOKEN}=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
+          '${FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_OAUTH_AUTHORIZE_PATH}?${QueryKeyConstant.OAUTH_TOKEN}=${FlickrOAuth.getInstance().generateAuthorizeUrl()}';
     });
     print('authUrl = $authUrl');
     setState(() {
@@ -274,7 +270,8 @@ class _AuthOAuthTestPageState extends State<AuthOAuthTestPage> {
       print('_accessToken Add oauth_verifier Error');
     }
     FlickrOAuth.getInstance().accessToken()
-      ..then((result) => pageContent[QueryKeyConstant.OAUTH_TOKEN_SECRET] = result)
+      ..then(
+          (result) => pageContent[QueryKeyConstant.OAUTH_TOKEN_SECRET] = result)
       ..catchError((error) => throw Exception(
           'FlickrOAuth Instance()._accessToken onError $error'));
   }
