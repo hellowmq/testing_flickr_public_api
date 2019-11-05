@@ -23,7 +23,8 @@ class MQHttpRestGet {
   static const String TAG = "MQHttpRestGet";
 
   static getM(Map<String, dynamic> params, Function callback) async {
-    String fullUri = FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
+    String fullUri =
+        FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) {
       fullUri += "$key=" + value + "&";
     });
@@ -53,7 +54,8 @@ class MQHttpRestGet {
 
   static restGetM<T>(
       Map<String, dynamic> params, MQSuccessCallback<T> callback) async {
-    String fullUri = FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
+    String fullUri =
+        FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");
     http.Response response;
@@ -78,7 +80,7 @@ class MQHttpRestGet {
 }
 
 class MRestGet {
-  final String TAG = "MRestGet";
+  static const String TAG = "MRestGet";
 
   static MRestGet _instance;
 
@@ -106,7 +108,8 @@ class MRestGet {
 
   void getAnotherM(Map<String, dynamic> params,
       {MQSuccessCallback onSuccess, ErrorCallback onError}) async {
-    String fullUri = FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
+    String fullUri =
+        FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");
     http.Response response;

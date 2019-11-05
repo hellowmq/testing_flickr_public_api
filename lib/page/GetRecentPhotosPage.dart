@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
-import 'package:provider/provider.dart';
 
 class GetRecentPhotosPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {

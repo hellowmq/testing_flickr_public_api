@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:extended_text/extended_text.dart';
 import 'package:qr_flutter/qr_flutter.dart';
+import 'dart:async';
 
 /// This page use a Text to show what the qr code mean
 class QrCodePage extends StatefulWidget {

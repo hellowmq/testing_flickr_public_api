@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:path/path.dart' as prefix0;
 import 'package:wenmq_first_flickr_flutter_app/base/string.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
