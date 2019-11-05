@@ -5,6 +5,20 @@ class ShowMessage {
     key.currentState
         .showSnackBar(new SnackBar(content: Text(message.toString())));
   }
+  /// A sample to pass the context as a parameter. THe context of Scaffold
+  /// can not be used as the context of a child of Scaffold.
+//
+//        floatingActionButton: Builder(
+//        builder: (context) => FloatingActionButton(
+//          onPressed: () {
+//            _sendMessage(context);
+//          },
+//          child: Icon(Icons.send),
+//        ),
+
+  static showSnackBarWithContext(BuildContext context, dynamic message) {
+    Scaffold.of(context).showSnackBar(new SnackBar(content: Text(message.toString())));
+  }
 
   /// Actually a Logger with key-value structure and factory function class is needed.
   static List<String> logger = new List();

@@ -31,9 +31,13 @@ class _EchoTestPageState extends State<EchoTestPage> {
               Navigator.pop(context);
             }),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _sendMessage,
-        child: Icon(Icons.send),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () {
+            _sendMessage(context);
+          },
+          child: Icon(Icons.send),
+        ),
       ),
       body: ListView(
         children: <Widget>[
