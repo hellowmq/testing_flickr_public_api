@@ -21,7 +21,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
   List<Widget> widgetList;
   /// keep a state of network to show loading.
   bool _isSending = false;
-  static TextEditingController _controller = TextEditingController();
+  TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {

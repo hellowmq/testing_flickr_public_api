@@ -105,7 +105,7 @@ class MRestGet {
   }
 
   void getAnotherM(Map<String, dynamic> params,
-      {MQSuccessCallback onSuccess, MQErrorCallback onError}) async {
+      {MQSuccessCallback onSuccess, ErrorCallback onError}) async {
     String fullUri = FlickrConstant.FLICKR_HOST + FlickrConstant.FLICKR_REST_PATH + '?';
     params.forEach((key, value) => fullUri += "$key=$value&");
     pubArguments.forEach((key, value) => fullUri += "$key=$value&");

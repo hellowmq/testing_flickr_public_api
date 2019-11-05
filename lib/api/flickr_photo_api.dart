@@ -32,7 +32,7 @@ class MFlickrPhotoApi {
   void getPhotoList(String methodName,
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
-      ErrorCallCallback onError}) {
+      ErrorCallback onError}) {
     MRestGet.getInstance().getAnotherM(
       (params ?? new Map<String, dynamic>())
         ..[QueryKeyConstant.METHOD] = methodName,
@@ -53,7 +53,7 @@ class MFlickrPhotoApi {
   void getRecent(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
-      ErrorCallCallback onError}) {
+      ErrorCallback onError}) {
     getPhotoList(FlickrConstant.FLICKR_PHOTOS_GET_RECENT,
         params: params, onSuccess: onSuccess, onError: onError);
   }
@@ -69,7 +69,7 @@ class MFlickrPhotoApi {
   void getPopular(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
-      ErrorCallCallback onError}) {
+      ErrorCallback onError}) {
     getPhotoList(FlickrConstant.FLICKR_PHOTOS_GET_POPULAR,
         params: params, onSuccess: onSuccess, onError: onError);
   }
@@ -89,7 +89,7 @@ class MFlickrPhotoApi {
   void searchPhotos(
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
-      ErrorCallCallback onError}) {
+      ErrorCallback onError}) {
     getPhotoList(FlickrConstant.FLICKR_PHOTOS_SEARCH,
         params: params, onSuccess: onSuccess, onError: onError);
   }

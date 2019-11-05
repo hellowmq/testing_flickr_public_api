@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.test.echo.dart';
+import 'package:wenmq_first_flickr_flutter_app/api/flickr_test_api.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 /// This page [EchoTestPage] show an example of echo test with a word.
@@ -58,20 +59,18 @@ class _EchoTestPageState extends State<EchoTestPage> {
     );
   }
 
-  _sendMessage() async {
+  _sendMessage(BuildContext context) async {
     if (_controller.text.isNotEmpty) {
-      String newText;
-      try {
-        newText = await EchoTest().request(_controller.text);
-      } catch (e) {
-        ShowMessage.showSnackBar(key, e);
-      }
-      if (newText != null && newText.isNotEmpty) {
-        setState(() {
-          echoText = newText;
-          print(echoText);
-        });
-      } else {}
+      EchoTest().newRequest(_controller.text, onSuccess: (newText) {
+        if (newText != null && newText.isNotEmpty) {
+          setState(() {
+            echoText = newText;
+            print(echoText);
+          });
+        }
+      }, onError: (e, r) {
+        ShowMessage.showSnackBarWithContext(context, e);
+      });
     }
   }
 }

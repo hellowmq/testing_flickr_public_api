@@ -3,6 +3,7 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+import 'flickr_test_api.dart';
 
 ///
 /// @Author hellowmq
@@ -53,5 +54,15 @@ class EchoTest {
     };
     await MQHttpRestGet.getM(params, parseResponse);
     return text;
+  }
+
+  void newRequest(String echoText,
+      {Function(String) onSuccess, ErrorCallback onError}) {
+    Map<String, String> params = new Map();
+    params['name'] = echoText;
+    MFlickrTestApi().testEcho(
+        params: params,
+        onSuccess: (Map<String, String> params) => onSuccess(params['name']),
+        onError: onError);
   }
 }

@@ -38,7 +38,7 @@ class MFlickrTestApi {
   void testEcho(
       {Map<String, dynamic> params,
       MapContentCallback onSuccess,
-      ErrorCallCallback onError}) {
+      ErrorCallback onError}) {
     MRestGet.getInstance().getAnotherM(
       (params ?? new Map<String, dynamic>())..[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_TEST_ECHO,
       onSuccess: (http.Response response) =>

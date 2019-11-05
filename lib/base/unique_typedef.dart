@@ -5,4 +5,4 @@ typedef MQSuccessCallback<T> = T Function(http.Response);
 typedef MQErrorCallback = Function(Exception, http.Response);
 typedef PhotoListCallback = void Function(List<Photo>);
 typedef MapContentCallback = void Function(Map<String, String>);
-typedef ErrorCallCallback = void Function(Exception, http.Response);
+typedef ErrorCallback = void Function(Exception, http.Response);
