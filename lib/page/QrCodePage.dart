@@ -40,7 +40,7 @@ class _QrCodePageState extends State<QrCodePage> {
                     child: QrImage(
                       data: urlList[index],
                       foregroundColor: Color(0xff03291c),
-                      embeddedImage: AssetImage('assets/images/genji.png'),
+//                      embeddedImage: AssetImage('assets/images/genji.png'),
                     ),
                   ),
                 )
