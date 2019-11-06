@@ -13,10 +13,11 @@ class GetRecentPhotosPage extends StatefulWidget {
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  GetPhotoListViewModel _getRecentViewModel =
-      GetPhotoListViewModelBuilder.getRecentViewModel();
-  var dataList;
-  var widgetList;
+  GetPhotoListViewModel _getRecentViewModel = (GetPhotoListViewModelBuilder()
+        ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_RECENT
+        ..perPage = 10)
+      .build();
+  List<Widget> widgetList = new List();
   var responseText = '未发送';
   bool _isSending = false;
 
@@ -32,51 +33,56 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
               Navigator.pop(context);
             }),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _sendMessage,
-        child: Icon(Icons.send),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () => _sendMessage(context),
+          child: Icon(Icons.send),
+        ),
       ),
-      body: ListView(
-        children: ((dataList != null) && (!_isSending))
-            ? widgetList
-            : <Widget>[
-                Column(
-                  children: <Widget>[
-                    ListTile(
-                      title: const Text('点击按钮获取最近图片'),
-                      subtitle: const Text('如果无效请使用代理'),
-                    ),
-                    Container(
-                      padding: EdgeInsets.all(30.0),
-                      height: 150.0,
-                      width: 150.0,
-                      child: Center(
-                        child: _isSending
-                            ? CircularProgressIndicator()
-                            : Container(),
-                      ),
-                    ),
-                  ],
+      body: Stack(
+        children: <Widget>[
+          ListView(
+            children: widgetList,
+          ),
+          _isSending
+              ? Center(
+                  child: CircularProgressIndicator(),
                 )
-              ],
+              : Container(
+                  child: Text(""),
+                ),
+        ],
       ),
     );
   }
 
-  _sendMessage() async {
+  _sendMessage(BuildContext context) async {
     setState(() {
       _isSending = true;
     });
-    try {
-      await _getRecentViewModel.loadMorePhotoList();
-      dataList = _getRecentViewModel.photoList;
-      widgetList = ViewBuilder.buildPhotoCardList(dataList);
-    } catch (e) {
-      ShowMessage.showSnackBar(key, e);
-    }
-
-    setState(() {
-      _isSending = false;
+    _getRecentViewModel.loadMorePhotoListWithCallback(
+        onSuccessCallback: (List<Photo> photoList) {
+      print(_getRecentViewModel.photoList.length);
+      widgetList =
+          ViewBuilder.buildPhotoCardList(_getRecentViewModel.photoList);
+      setState(() {
+        _isSending = false;
+      });
+    }, onErrorCallback: (e, response) {
+      print(e.toString());
+      ShowMessage.showSnackBarWithContext(context, e.toString());
     });
+
+//    try {
+//      await _getRecentViewModel.loadMorePhotoList();
+//      dataList = _getRecentViewModel.photoList;
+//      widgetList = ViewBuilder.buildPhotoCardList(dataList);
+//    } catch (e) {
+//      ShowMessage.showSnackBar(key, e);
+//    }
+//
+//    setState(() {
+//      _isSending = false;
+//    });
   }
 }

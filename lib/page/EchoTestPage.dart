@@ -32,9 +32,7 @@ class _EchoTestPageState extends State<EchoTestPage> {
       ),
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
-          onPressed: () {
-            _sendMessage(context);
-          },
+          onPressed: () => _sendMessage(context),
           child: Icon(Icons.send),
         ),
       ),

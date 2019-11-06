@@ -26,6 +26,7 @@ class GetPhotoListViewModel {
   /// Load another one page of ten photo.
   loadMorePhotoList() {
     page++;
+
     int perPage = _perPage;
     Map<String, String> params = Map();
     params
@@ -43,6 +44,34 @@ class GetPhotoListViewModel {
       params: params,
       onSuccess: onSuccess,
       onError: onError,
+    );
+  }
+
+  loadMorePhotoListWithCallback({PhotoListCallback onSuccessCallback,ErrorCallback onErrorCallback}) {
+    page++;
+
+    int perPage = _perPage;
+    Map<String, String> params = Map();
+    params
+      ..['per_page'] = perPage.toString()
+      ..['page'] = page.toString();
+
+    MFlickrPhotoApi().getPhotoList(
+      _methodName,
+      params: params,
+      onSuccess: (List<Photo> photoList) {
+        _photoList.addAll(photoList);
+        if (onErrorCallback != null) {
+          onSuccessCallback(photoList);
+        }
+      },
+      onError: (Exception e, response) {
+        print(e);
+        page--;
+        if (onErrorCallback != null) {
+          onErrorCallback(e, response);
+        }
+      },
     );
   }
 }
@@ -63,12 +92,14 @@ class GetPhotoListViewModelBuilder {
     return GetPhotoListViewModel.build(methodName, perPage);
   }
 
-  static GetPhotoListViewModel getRecentViewModel() {
-    var model = GetPhotoListViewModelBuilder()
-      ..perPage = 10
-      ..methodName = "flickr.photos.getRecent";
-    return model.build();
-  }
+
+
+//  static GetPhotoListViewModel getRecentViewModel() {
+//    var model = GetPhotoListViewModelBuilder()
+//      ..perPage = 10
+//      ..methodName = "flickr.photos.getRecent";
+//    return model.build();
+//  }
 
   static GetPhotoListViewModel getPopularViewModel() {
     var model = GetPhotoListViewModelBuilder()
