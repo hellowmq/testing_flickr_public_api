@@ -54,7 +54,7 @@ class GetPhotoListViewModelBuilder {
   GetPhotoListViewModelBuilder();
 
   GetPhotoListViewModel build() {
-    if (methodName == null || methodName == '') {
+    if (methodName == null || methodName.isEmpty) {
       throw Exception("GetPhotoListViewModelBuilder methodName is empty");
     }
     if (perPage <= 0) {
