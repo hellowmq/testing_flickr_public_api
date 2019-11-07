@@ -32,9 +32,11 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
               Navigator.pop(context);
             }),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _searchPhoto,
-        child: Icon(Icons.search),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () => _searchPhoto(context),
+          child: Icon(Icons.search),
+        ),
       ),
       body: new ListView(
         children: <Widget>[
@@ -44,15 +46,17 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
               horizontal: 13.0,
             ),
             child: Form(
-              child: TextFormField(
-                onFieldSubmitted: (str) {
-                  _searchPhoto();
-                },
-                controller: _controller,
-                style: TextStyle(fontSize: 18),
-                decoration: InputDecoration(
-                  labelText: '输入user_id进行查看',
-                  hintText: '146621154@N02',
+              child: Builder(
+                builder: (context) => TextFormField(
+                  onFieldSubmitted: (str) {
+                    _searchPhoto(context);
+                  },
+                  controller: _controller,
+                  style: TextStyle(fontSize: 18),
+                  decoration: InputDecoration(
+                    labelText: '输入user_id进行查看',
+                    hintText: '146621154@N02',
+                  ),
                 ),
               ),
             ),
@@ -82,7 +86,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
     );
   }
 
-  _searchPhoto() async {
+  _searchPhoto(BuildContext context) async {
     setState(() {
       _isSending = true;
     });
@@ -95,7 +99,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
       }
       widgetList = ViewBuilder.buildPhotoCardList(dataList);
     } catch (e) {
-      ShowMessage.showSnackBar(key, e);
+      ShowMessage.showSnackBarWithContext(context, e);
     }
     setState(() {
       _isSending = false;
