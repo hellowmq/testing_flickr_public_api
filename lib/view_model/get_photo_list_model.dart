@@ -47,14 +47,18 @@ class GetPhotoListViewModel {
     );
   }
 
-  loadMorePhotoListWithCallback({PhotoListCallback onSuccessCallback,ErrorCallback onErrorCallback}) {
+  loadMorePhotoListWithCallback(
+      {Map<String, String> additionalParams,
+      PhotoListCallback onSuccessCallback,
+      ErrorCallback onErrorCallback}) {
     page++;
 
     int perPage = _perPage;
     Map<String, String> params = Map();
     params
       ..['per_page'] = perPage.toString()
-      ..['page'] = page.toString();
+      ..['page'] = page.toString()
+      ..addAll(additionalParams ?? {});
 
     MFlickrPhotoApi().getPhotoList(
       _methodName,
@@ -91,8 +95,6 @@ class GetPhotoListViewModelBuilder {
     }
     return GetPhotoListViewModel.build(methodName, perPage);
   }
-
-
 
 //  static GetPhotoListViewModel getRecentViewModel() {
 //    var model = GetPhotoListViewModelBuilder()

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getPopular.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
 
 class GetPopularPhotosPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
@@ -13,9 +13,12 @@ class GetPopularPhotosPage extends StatefulWidget {
 
 class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  var dataList;
   List<Widget> widgetList;
   bool _isSending = false;
+  GetPhotoListViewModel _photoListViewModel = (GetPhotoListViewModelBuilder()
+        ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_POPULAR
+        ..perPage = 10)
+      .build();
   static TextEditingController _controller = TextEditingController(
     text: '46627222@N03',
   );
@@ -27,10 +30,9 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
       appBar: AppBar(
         title: const Text('SearchPhoto'),
         leading: IconButton(
-            icon: ViewBuilder.iconBack,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+          icon: ViewBuilder.iconBack,
+          onPressed: () => Navigator.pop(context),
+        ),
       ),
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
@@ -62,11 +64,11 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
             ),
           ),
           Column(
-            children: ((dataList != null) && (!_isSending))
-                ? widgetList
+            children: (!_isSending)
+                ? widgetList ?? []
                 : <Widget>[
                     new ListTile(
-                      title: new Text('点击按钮搜索相关图片'),
+                      title: new Text('正在获取热门图片'),
                       subtitle: new Text('如果无效请使用代理'),
                     ),
                     new Container(
@@ -74,9 +76,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
                       height: 150.0,
                       width: 150.0,
                       child: new Center(
-                        child: _isSending
-                            ? CircularProgressIndicator()
-                            : const Divider(),
+                        child: CircularProgressIndicator(),
                       ),
                     ),
                   ],
@@ -87,22 +87,24 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   }
 
   _searchPhoto(BuildContext context) async {
+    showLoading(true);
+    _photoListViewModel.loadMorePhotoListWithCallback(
+        additionalParams: {'user_id': _controller.text},
+        onSuccessCallback: (List<Photo> dataList) {
+          widgetList = ViewBuilder.buildPhotoCardList(dataList);
+          setState(() {
+            _isSending = false;
+          });
+        },
+        onErrorCallback: (Exception e, response) {
+          ShowMessage.showSnackBarWithContext(context, e);
+          showLoading(false);
+        });
+  }
+
+  void showLoading(bool visible) {
     setState(() {
-      _isSending = true;
-    });
-    try {
-      if (_controller.text.isNotEmpty) {
-        dataList = await GetPopularPhotos()
-            .request(additionalParams: {'user_id': _controller.text});
-      } else {
-        dataList = await GetPopularPhotos().request();
-      }
-      widgetList = ViewBuilder.buildPhotoCardList(dataList);
-    } catch (e) {
-      ShowMessage.showSnackBarWithContext(context, e);
-    }
-    setState(() {
-      _isSending = false;
+      _isSending = visible;
     });
   }
 }
