@@ -39,6 +39,7 @@ class QueryKeyConstant {
   static const String OAUTH_TOKEN_SECRET = 'oauth_token_secret';
   static const String OAUTH_VERIFIER = 'oauth_verifier';
   static const String OAUTH_VERSION = 'oauth_version';
+  static const String  USER_ID = 'user_id';
 }
 
 class QueryValueConstant {

@@ -12,13 +12,12 @@ class GetPopularPhotosPage extends StatefulWidget {
 }
 
 class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  List<Widget> widgetList;
-  bool _isSending = false;
   GetPhotoListViewModel _photoListViewModel = (GetPhotoListViewModelBuilder()
         ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_POPULAR
         ..perPage = 10)
       .build();
+  List<Widget> widgetList = new List();
+  bool _isSending = false;
   static TextEditingController _controller = TextEditingController(
     text: '46627222@N03',
   );
@@ -26,7 +25,6 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
       appBar: AppBar(
         title: const Text('SearchPhoto'),
         leading: IconButton(
@@ -89,17 +87,20 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
   _searchPhoto(BuildContext context) async {
     showLoading(true);
     _photoListViewModel.loadMorePhotoListWithCallback(
-        additionalParams: {'user_id': _controller.text},
-        onSuccessCallback: (List<Photo> dataList) {
-          widgetList = ViewBuilder.buildPhotoCardList(dataList);
-          setState(() {
-            _isSending = false;
-          });
-        },
-        onErrorCallback: (Exception e, response) {
-          ShowMessage.showSnackBarWithContext(context, e);
-          showLoading(false);
-        });
+        additionalParams: {QueryKeyConstant.USER_ID: _controller.text},
+        onSuccessCallback: onSearchPhotoSuccess,
+        onErrorCallback: (Exception e, response) =>
+            onSearchPhotoError(context, e));
+  }
+
+  void onSearchPhotoSuccess(List<Photo> dataList) {
+    widgetList = ViewBuilder.buildPhotoCardList(dataList);
+    showLoading(false);
+  }
+
+  void onSearchPhotoError(BuildContext context, Exception e) {
+    ShowMessage.showSnackBarWithContext(context, e);
+    showLoading(false);
   }
 
   void showLoading(bool visible) {

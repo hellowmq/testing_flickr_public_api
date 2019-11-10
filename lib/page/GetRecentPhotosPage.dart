@@ -12,19 +12,16 @@ class GetRecentPhotosPage extends StatefulWidget {
 }
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   GetPhotoListViewModel _getRecentViewModel = (GetPhotoListViewModelBuilder()
         ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_RECENT
         ..perPage = 10)
       .build();
   List<Widget> widgetList = new List();
-  var responseText = '未发送';
   bool _isSending = false;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
       appBar: AppBar(
         title: Text('GetRecent'),
         leading: IconButton(
@@ -56,33 +53,23 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
     );
   }
 
-  _sendMessage(BuildContext context) async {
-    setState(() {
-      _isSending = true;
-    });
+  _sendMessage(BuildContext context) {
+    showLoading(true);
     _getRecentViewModel.loadMorePhotoListWithCallback(
         onSuccessCallback: (List<Photo> photoList) {
       print(_getRecentViewModel.photoList.length);
       widgetList =
           ViewBuilder.buildPhotoCardList(_getRecentViewModel.photoList);
-      setState(() {
-        _isSending = false;
-      });
+      showLoading(false);
     }, onErrorCallback: (e, response) {
       print(e.toString());
       ShowMessage.showSnackBarWithContext(context, e.toString());
     });
+  }
 
-//    try {
-//      await _getRecentViewModel.loadMorePhotoList();
-//      dataList = _getRecentViewModel.photoList;
-//      widgetList = ViewBuilder.buildPhotoCardList(dataList);
-//    } catch (e) {
-//      ShowMessage.showSnackBar(key, e);
-//    }
-//
-//    setState(() {
-//      _isSending = false;
-//    });
+  void showLoading(bool isVisible) {
+    setState(() {
+      _isSending = isVisible;
+    });
   }
 }
