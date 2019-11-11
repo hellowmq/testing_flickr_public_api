@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.search.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
 
 /// This page [SearchPhotosPage] show an example of search photos list with a
 /// key word.
@@ -15,10 +16,16 @@ class SearchPhotosPage extends StatefulWidget {
 }
 
 class _SearchPhotosPageState extends State<SearchPhotosPage> {
+  GetPhotoListViewModel _getRecentViewModel = (GetPhotoListViewModelBuilder()
+        ..methodName = FlickrConstant.FLICKR_PHOTOS_SEARCH
+        ..perPage = 10)
+      .build();
+
   /// Call a dialog ny a [GlobalKey] is not a good idea obviously.
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
   var dataList;
   List<Widget> widgetList;
+
   /// keep a state of network to show loading.
   bool _isSending = false;
   TextEditingController _controller = TextEditingController();
@@ -83,10 +90,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
   }
 
   _searchPhoto() async {
-    setState(() {
-      _isSending = true;
-    });
-
+    showLoading(true);
     if (_controller.text.isNotEmpty) {
       try {
         dataList = await SearchPhotos()
@@ -96,8 +100,12 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
         ShowMessage.showSnackBar(key, e);
       }
     }
+    showLoading(false);
+  }
+
+  void showLoading(bool isVisible) {
     setState(() {
-      _isSending = false;
+      _isSending = isVisible;
     });
   }
 }
