@@ -23,7 +23,8 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
 
   /// Call a dialog ny a [GlobalKey] is not a good idea obviously.
   final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
-  var dataList;
+
+//  var dataList;
   List<Widget> widgetList;
 
   /// keep a state of network to show loading.
@@ -65,7 +66,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
             ),
           ),
           Column(
-            children: ((dataList != null) && (!_isSending))
+            children: (!_isSending)
                 ? widgetList
                 : <Widget>[
                     new ListTile(
@@ -89,18 +90,18 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
     );
   }
 
-  _searchPhoto() async {
-    showLoading(true);
+  _searchPhoto() {
     if (_controller.text.isNotEmpty) {
-      try {
-        dataList = await SearchPhotos()
-            .request(additionalParams: {'text': _controller.text});
-        widgetList = ViewBuilder.buildPhotoCardList(dataList);
-      } catch (e) {
-        ShowMessage.showSnackBar(key, e);
-      }
+      showLoading(true);
+      _getRecentViewModel.loadMorePhotoListWithCallback(
+        additionalParams: {'text': _controller.text},
+        onSuccessCallback: (List<Photo> dataList) =>
+            widgetList = ViewBuilder.buildPhotoCardList(dataList),
+        onErrorCallback: (Exception e, response) =>
+            ShowMessage.showSnackBar(key, e),
+      );
+      showLoading(false);
     }
-    showLoading(false);
   }
 
   void showLoading(bool isVisible) {
