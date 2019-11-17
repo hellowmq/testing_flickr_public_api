@@ -50,7 +50,7 @@ class FlickrOAuth {
     ..[OAUTH_CONSUMER_KEY] = app_key.apiKey
     ..[OAUTH_SIGNATURE_METHOD] = HMAC_SHA1
     ..[OAUTH_VERSION] = VALUE_OAUTH_VERSION
-    ..[OAUTH_CALLBACK] = 'https%3A%2F%2Fhellowmq.github.io'
+    ..[OAUTH_CALLBACK] = QueryValueConstant.VALUE_OAUTH_CALLBACK
     ..[OAUTH_TOKEN_SECRET] = '';
 
 //  Get A FlickrOAuth Object. if null create one.
@@ -65,7 +65,7 @@ class FlickrOAuth {
         ..[OAUTH_CONSUMER_KEY] = app_key.apiKey
         ..[OAUTH_SIGNATURE_METHOD] = HMAC_SHA1
         ..[OAUTH_VERSION] = VALUE_OAUTH_VERSION
-        ..[OAUTH_CALLBACK] = 'https%3A%2F%2Fhellowmq.github.io'
+        ..[OAUTH_CALLBACK] = QueryValueConstant.VALUE_OAUTH_CALLBACK
         ..[OAUTH_TOKEN_SECRET] = '';
     }
     return _instance;
@@ -84,7 +84,7 @@ class FlickrOAuth {
       ..[OAUTH_CONSUMER_KEY] = app_key.apiKey
       ..[OAUTH_SIGNATURE_METHOD] = HMAC_SHA1
       ..[OAUTH_VERSION] = VALUE_OAUTH_VERSION
-      ..[OAUTH_CALLBACK] = 'https%3A%2F%2Fhellowmq.github.io'
+      ..[OAUTH_CALLBACK] = QueryValueConstant.VALUE_OAUTH_CALLBACK
       ..[OAUTH_TOKEN_SECRET] = '';
     return _instance;
   }
@@ -162,7 +162,7 @@ class FlickrOAuth {
       print('before addAll: $authParamsMap');
       authParamsMap.addAll(Uri.splitQueryString(response.body));
       print('after addAll : $authParamsMap');
-      if (authParamsMap[OAUTH_CALLBACK_CONFIRMED] != 'true') {
+      if (authParamsMap[OAUTH_CALLBACK_CONFIRMED] != QueryValueConstant.FALSE) {
         throw Exception('oauth_callback_confirmed == false');
       }
     }

@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.search.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
 
@@ -16,62 +15,63 @@ class SearchPhotosPage extends StatefulWidget {
 }
 
 class _SearchPhotosPageState extends State<SearchPhotosPage> {
+
+  /// A [GetPhotoListViewModel] will auto load more photos in [List] if build
+  /// with a specific method name and page size.
   GetPhotoListViewModel _getRecentViewModel = (GetPhotoListViewModelBuilder()
         ..methodName = FlickrConstant.FLICKR_PHOTOS_SEARCH
         ..perPage = 10)
       .build();
 
-  /// Call a dialog ny a [GlobalKey] is not a good idea obviously.
-  final GlobalKey<ScaffoldState> key = GlobalKey<ScaffoldState>();
+  /// Keep the photo in this page.
+  List<Widget> _widgetList;
 
-//  var dataList;
-  List<Widget> widgetList;
-
-  /// keep a state of network to show loading.
+  /// Keep a state of network to show loading.
   bool _isSending = false;
+
+  /// Detect user input event.
   TextEditingController _controller = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      key: key,
-      appBar: new AppBar(
-        title: new Text('SearchPhoto'),
-        leading: new IconButton(
+      appBar: AppBar(
+        title: const Text('SearchPhoto'),
+        leading: IconButton(
             icon: ViewBuilder.iconBack,
-            onPressed: () {
-              Navigator.pop(context);
-            }),
+            onPressed: () => Navigator.pop(context)),
       ),
-      floatingActionButton: new FloatingActionButton(
-        onPressed: _searchPhoto,
-        child: Icon(Icons.search),
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          onPressed: () => _searchPhoto(context),
+          child: Icon(Icons.search),
+        ),
       ),
-      body: new ListView(
+      body: ListView(
         children: <Widget>[
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 8.0, horizontal: 13.0),
             child: Form(
-              child: TextFormField(
-                onFieldSubmitted: (str) {
-                  _searchPhoto();
-                },
-                controller: _controller,
-                style: TextStyle(fontSize: 18),
-                decoration: InputDecoration(
-                  labelText: '输入关键字进行检索',
+              child: Builder(
+                builder: (context) => TextFormField(
+                  onFieldSubmitted: (str) => _searchPhoto(context),
+                  controller: _controller,
+                  style: TextStyle(fontSize: 18),
+                  decoration: const InputDecoration(
+                    labelText: '输入关键字进行检索',
+                  ),
                 ),
               ),
             ),
           ),
           Column(
             children: (!_isSending)
-                ? widgetList
+                ? _widgetList
                 : <Widget>[
-                    new ListTile(
-                      title: new Text('点击按钮搜索相关图片'),
-                      subtitle: new Text('如果无效请使用代理'),
+                    const ListTile(
+                      title: Text('点击按钮搜索相关图片'),
+                      subtitle: Text('如果无效请使用代理'),
                     ),
                     new Container(
                       padding: EdgeInsets.all(30.0),
@@ -80,7 +80,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
                       child: new Center(
                         child: _isSending
                             ? CircularProgressIndicator()
-                            : new Divider(),
+                            : Divider(),
                       ),
                     ),
                   ],
@@ -90,20 +90,23 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
     );
   }
 
-  _searchPhoto() {
+  /// A searchPhoto network method with updatePage on Success and Error handle
+  /// on Error.
+  void _searchPhoto(BuildContext context) {
     if (_controller.text.isNotEmpty) {
       showLoading(true);
       _getRecentViewModel.loadMorePhotoListWithCallback(
-        additionalParams: {'text': _controller.text},
+        additionalParams: {QueryKeyConstant.TEXT: _controller.text},
         onSuccessCallback: (List<Photo> dataList) =>
-            widgetList = ViewBuilder.buildPhotoCardList(dataList),
+            _widgetList = ViewBuilder.buildPhotoCardList(dataList),
         onErrorCallback: (Exception e, response) =>
-            ShowMessage.showSnackBar(key, e),
+            ShowMessage.showSnackBarWithContext(context, e),
       );
       showLoading(false);
     }
   }
 
+  /// Change the loading state and notify state.
   void showLoading(bool isVisible) {
     setState(() {
       _isSending = isVisible;

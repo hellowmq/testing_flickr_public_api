@@ -32,6 +32,7 @@ class QueryKeyConstant {
   static const String OAUTH_CALLBACK_CONFIRMED = 'oauth_callback_confirmed';
   static const String OAUTH_CONSUMER_KEY = 'oauth_consumer_key';
   static const String OAUTH_NONCE = 'oauth_nonce';
+  static const String OAUTH_PROBLEM = 'oauth_problem';
   static const String OAUTH_SIGNATURE = 'oauth_signature';
   static const String OAUTH_SIGNATURE_METHOD = 'oauth_signature_method';
   static const String OAUTH_TIMESTAMP = 'oauth_timestamp';
@@ -39,13 +40,17 @@ class QueryKeyConstant {
   static const String OAUTH_TOKEN_SECRET = 'oauth_token_secret';
   static const String OAUTH_VERIFIER = 'oauth_verifier';
   static const String OAUTH_VERSION = 'oauth_version';
-  static const String  USER_ID = 'user_id';
+  static const String TEXT = 'text';
+  static const String USER_ID = 'user_id';
 }
 
 class QueryValueConstant {
   /// FLCIKR REST QUERY SPECIFIC VALUE
+  static const String FALSE = 'false';
   static const String HMAC_SHA1 = 'HMAC-SHA1';
   static const String JSON = 'json';
+  static const String TRUE = 'true';
+  static const String VALUE_OAUTH_CALLBACK = 'https%3A%2F%2Fhellowmq.github.io';
   static const String VALUE_OAUTH_VERSION = '1.0';
   static const String VALUE_NO_JSON_CALLBACK = "1";
 }
