@@ -120,6 +120,12 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     documentationUrl: 'https://pub.dev/packages/provider',
     buildRoute: MultiScreensPage.startPage,
   ),
+  PageIndex(
+    title: 'My ListView Sample',
+    subtitle: 'rewrite a listview class',
+    routeName: '/testMyListView',
+    buildRoute: TestMyListViewPage.startPage,
+  )
 ];
 
 // a routeMap should be submit to MaterialApp as a route

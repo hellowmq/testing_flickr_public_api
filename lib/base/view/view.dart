@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'base_tool.dart';
+import '../base_tool.dart';
 
 class CommonBuilder {
   static List<Widget> buildPhotoCardList(List<Photo> photoList) {

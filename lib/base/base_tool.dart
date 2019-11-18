@@ -4,7 +4,7 @@ export 'http_oauth_get.dart';
 export 'photo.dart';
 export 'message.dart';
 export 'sql_support.dart';
-export 'view.dart';
+export 'view/view.dart';
 export 'sign_tools.dart';
 export 'unique_typedef.dart';
 export 'cache.dart';
