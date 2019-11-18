@@ -12,7 +12,7 @@ class GetRecentPhotosPage extends StatefulWidget {
 }
 
 class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
-  GetPhotoListViewModel _getRecentViewModel = (GetPhotoListViewModelBuilder()
+  GetPhotoListViewModel _mViewModel = (GetPhotoListViewModelBuilder()
         ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_RECENT
         ..perPage = 10)
       .build();
@@ -25,7 +25,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
       appBar: AppBar(
         title: Text('GetRecent'),
         leading: IconButton(
-            icon: ViewBuilder.iconBack,
+            icon: CommonBuilder.iconBack,
             onPressed: () {
               Navigator.pop(context);
             }),
@@ -53,13 +53,11 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
     );
   }
 
-  _sendMessage(BuildContext context) {
+  void _sendMessage(BuildContext context) {
     showLoading(true);
-    _getRecentViewModel.loadMorePhotoListWithCallback(
+    _mViewModel.loadMorePhotoListWithCallback(
         onSuccessCallback: (List<Photo> photoList) {
-      print(_getRecentViewModel.photoList.length);
-      widgetList =
-          ViewBuilder.buildPhotoCardList(_getRecentViewModel.photoList);
+      widgetList = CommonBuilder.buildPhotoCardList(_mViewModel.photoList);
       showLoading(false);
     }, onErrorCallback: (e, response) {
       print(e.toString());

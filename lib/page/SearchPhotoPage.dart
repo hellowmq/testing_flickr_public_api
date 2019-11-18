@@ -15,7 +15,6 @@ class SearchPhotosPage extends StatefulWidget {
 }
 
 class _SearchPhotosPageState extends State<SearchPhotosPage> {
-
   /// A [GetPhotoListViewModel] will auto load more photos in [List] if build
   /// with a specific method name and page size.
   GetPhotoListViewModel _getRecentViewModel = (GetPhotoListViewModelBuilder()
@@ -38,24 +37,23 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
       appBar: AppBar(
         title: const Text('SearchPhoto'),
         leading: IconButton(
-            icon: ViewBuilder.iconBack,
+            icon: CommonBuilder.iconBack,
             onPressed: () => Navigator.pop(context)),
       ),
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
-          onPressed: () => _searchPhoto(context),
+          onPressed: () => _searchPhoto(context, _controller.text),
           child: Icon(Icons.search),
         ),
       ),
       body: ListView(
         children: <Widget>[
           Padding(
-            padding:
-                const EdgeInsets.symmetric(vertical: 8.0, horizontal: 13.0),
+            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 13.0),
             child: Form(
               child: Builder(
                 builder: (context) => TextFormField(
-                  onFieldSubmitted: (str) => _searchPhoto(context),
+                  onFieldSubmitted: (str) => _searchPhoto(context, str),
                   controller: _controller,
                   style: TextStyle(fontSize: 18),
                   decoration: const InputDecoration(
@@ -66,7 +64,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
             ),
           ),
           Column(
-            children: (!_isSending)
+            children: ((!_isSending)
                 ? _widgetList
                 : <Widget>[
                     const ListTile(
@@ -77,13 +75,9 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
                       padding: EdgeInsets.all(30.0),
                       height: 150.0,
                       width: 150.0,
-                      child: new Center(
-                        child: _isSending
-                            ? CircularProgressIndicator()
-                            : Divider(),
-                      ),
+                      child: Divider(),
                     ),
-                  ],
+                  ]),
           ),
         ],
       ),
@@ -92,17 +86,20 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
 
   /// A searchPhoto network method with updatePage on Success and Error handle
   /// on Error.
-  void _searchPhoto(BuildContext context) {
-    if (_controller.text.isNotEmpty) {
+  void _searchPhoto(BuildContext context, String text) {
+    if (text.isNotEmpty) {
       showLoading(true);
       _getRecentViewModel.loadMorePhotoListWithCallback(
-        additionalParams: {QueryKeyConstant.TEXT: _controller.text},
-        onSuccessCallback: (List<Photo> dataList) =>
-            _widgetList = ViewBuilder.buildPhotoCardList(dataList),
-        onErrorCallback: (Exception e, response) =>
-            ShowMessage.showSnackBarWithContext(context, e),
+        additionalParams: {QueryKeyConstant.TEXT: text},
+        onSuccessCallback: (List<Photo> dataList) {
+          _widgetList = CommonBuilder.buildPhotoCardList(dataList);
+          showLoading(false);
+        },
+        onErrorCallback: (Exception e, response) {
+          ShowMessage.showSnackBarWithContext(context, e);
+          showLoading(false);
+        },
       );
-      showLoading(false);
     }
   }
 

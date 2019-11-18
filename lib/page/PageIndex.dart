@@ -20,10 +20,10 @@ class PageIndex {
 
   const PageIndex({
     @required this.title,
-    this.subtitle,
     @required this.routeName,
-    this.documentationUrl,
     @required this.buildRoute,
+    this.subtitle,
+    this.documentationUrl,
   })  : assert(title != null),
         assert(routeName != null),
         assert(buildRoute != null);
@@ -124,20 +124,18 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
 
 // a routeMap should be submit to MaterialApp as a route
 final Map<String, WidgetBuilder> routeMap =
-    (new Map<String, WidgetBuilder>.fromIterable(pageIndexList,
+    (Map<String, WidgetBuilder>.fromIterable(pageIndexList,
         key: (v) => v.routeName, value: (v) => v.buildRoute))
       ..['/'] = ((context) => MainPage());
 
 // create the enter for the sub page
-List<Widget> buildPageIndexList(context) {
+List<Widget> buildPageIndexWidgetList(context) {
   return pageIndexList
-      .map((v) => ListTile(
-            title: Text(v.title),
-            subtitle: Text(v.subtitle),
+      .map((page) => ListTile(
+            title: Text(page.title),
+            subtitle: Text(page.subtitle),
             isThreeLine: true,
-            onTap: () {
-              Navigator.pushNamed(context, v.routeName);
-            },
+            onTap: () => Navigator.pushNamed(context, page.routeName),
           ))
       .toList();
 }

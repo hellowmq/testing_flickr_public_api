@@ -20,7 +20,7 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
 
   void updateWidgetList() {
     setState(() {
-      _widgetList = ViewBuilder.buildPhotoCardList(_photos);
+      _widgetList = CommonBuilder.buildPhotoCardList(_photos);
     });
   }
 

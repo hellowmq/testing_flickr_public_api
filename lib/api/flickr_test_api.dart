@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 ///
@@ -39,10 +38,11 @@ class MFlickrTestApi {
       {Map<String, dynamic> params,
       MapContentCallback onSuccess,
       ErrorCallback onError}) {
+    var paramsMap = (params ?? new Map<String, dynamic>());
+    paramsMap[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_TEST_ECHO;
     MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())..[QueryKeyConstant.METHOD] = FlickrConstant.FLICKR_TEST_ECHO,
-      onSuccess: (http.Response response) =>
-          onSuccess(parseStringAsMap(response.body)),
+      paramsMap,
+      onSuccess: (response) => onSuccess(parseStringAsMap(response.body)),
       onError: onError,
     );
   }

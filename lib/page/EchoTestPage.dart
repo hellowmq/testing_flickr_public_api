@@ -25,7 +25,7 @@ class _EchoTestPageState extends State<EchoTestPage> {
       appBar: AppBar(
         title: Text('Echo'),
         leading: IconButton(
-            icon: ViewBuilder.iconBack,
+            icon: CommonBuilder.iconBack,
             onPressed: () {
               Navigator.pop(context);
             }),

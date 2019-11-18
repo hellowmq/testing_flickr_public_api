@@ -6,11 +6,11 @@ class MainPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return new Scaffold(
-      appBar: new AppBar(
+      appBar: AppBar(
         title: const Text('This is our Flickr Api'),
       ),
       body: ListView(
-        children: page.buildPageIndexList(context),
+        children: page.buildPageIndexWidgetList(context),
       ),
     );
   }

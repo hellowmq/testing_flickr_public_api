@@ -10,11 +10,11 @@ class Photo {
   final String isfriend; // int 1/0
   final String isfamily; // int 1/0
 
-  get isPublicBool => int.parse(ispublic ?? "0");
+  get isPublicBool => int.parse(ispublic ?? '0');
 
-  get isFriendBool => int.parse(isfriend ?? "0");
+  get isFriendBool => int.parse(isfriend ?? '0');
 
-  get isFamilyBool => int.parse(isfamily ?? "0");
+  get isFamilyBool => int.parse(isfamily ?? '0');
 
   Photo(
       {this.id,
@@ -109,7 +109,7 @@ class Photos {
   Photos({this.page, this.pages, this.perpage, this.total, this.photo});
 
   factory Photos.fromJson(Map<String, dynamic> json) {
-    List p = json["photo"] as List;
+    List p = json['photo'] as List;
     List<Photo> photoList = p.map((photo) => Photo.fromJson(photo)).toList();
     return Photos(
         page: json['page'].toString(),
@@ -126,4 +126,11 @@ class Photos {
         'total': this.total,
         'photo': this.photo.map((p) => p.toJson()).toList(),
       };
+
+  @override
+  String toString() {
+    return 'Photos{photo: $photo, page: $page, pages: $pages, perpage: $perpage, total: $total}';
+  }
+
+
 }

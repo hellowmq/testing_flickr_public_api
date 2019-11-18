@@ -30,17 +30,16 @@ class MFlickrPhotoApi {
 
   /// Actually, all other method are the same except the method name.
   void getPhotoList(String methodName,
-      {Map<String, dynamic> params,
-      PhotoListCallback onSuccess,
-      ErrorCallback onError}) {
-    MRestGet.getInstance().getAnotherM(
-      (params ?? new Map<String, dynamic>())
-        ..[QueryKeyConstant.METHOD] = methodName,
-      onSuccess: (http.Response response) =>
-          onSuccess(parseStringAsPhotoList(response.body)),
-      onError: onError,
-    );
-  }
+          {Map<String, dynamic> params,
+          PhotoListCallback onSuccess,
+          ErrorCallback onError}) =>
+      MRestGet.getInstance().getAnotherM(
+        (params ?? new Map<String, dynamic>())
+          ..[QueryKeyConstant.METHOD] = methodName,
+        onSuccess: (http.Response response) =>
+            onSuccess(parseStringAsPhotoList(response.body)),
+        onError: onError,
+      );
 
   ///
   /// flickr.photos.getRecent
@@ -54,8 +53,12 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallback onError}) {
-    getPhotoList(FlickrConstant.FLICKR_PHOTOS_GET_RECENT,
-        params: params, onSuccess: onSuccess, onError: onError);
+    getPhotoList(
+      FlickrConstant.FLICKR_PHOTOS_GET_RECENT,
+      params: params,
+      onSuccess: onSuccess,
+      onError: onError,
+    );
   }
 
   ///
@@ -70,8 +73,12 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallback onError}) {
-    getPhotoList(FlickrConstant.FLICKR_PHOTOS_GET_POPULAR,
-        params: params, onSuccess: onSuccess, onError: onError);
+    getPhotoList(
+      FlickrConstant.FLICKR_PHOTOS_GET_POPULAR,
+      params: params,
+      onSuccess: onSuccess,
+      onError: onError,
+    );
   }
 
   ///
@@ -90,7 +97,11 @@ class MFlickrPhotoApi {
       {Map<String, dynamic> params,
       PhotoListCallback onSuccess,
       ErrorCallback onError}) {
-    getPhotoList(FlickrConstant.FLICKR_PHOTOS_SEARCH,
-        params: params, onSuccess: onSuccess, onError: onError);
+    getPhotoList(
+      FlickrConstant.FLICKR_PHOTOS_SEARCH,
+      params: params,
+      onSuccess: onSuccess,
+      onError: onError,
+    );
   }
 }

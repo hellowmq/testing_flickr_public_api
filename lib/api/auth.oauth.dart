@@ -233,9 +233,9 @@ class FlickrOAuth {
         print('accessToken.parseAccessToken' + e.toString());
       }
       authParamsMap.addAll(Uri.splitQueryString(response.body));
-      if (authParamsMap.containsKey('oauth_problem')) {
+      if (authParamsMap.containsKey(QueryKeyConstant.OAUTH_PROBLEM)) {
         throw Exception(
-            'FlickrOAuth.Authorize authParamsMap["oauth_problem"] == ${authParamsMap["oauth_problem"]}');
+            'FlickrOAuth.Authorize authParamsMap["oauth_problem"] == ${authParamsMap[QueryKeyConstant.OAUTH_PROBLEM]}');
       }
     }
 

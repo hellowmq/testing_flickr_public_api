@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
-//      The routeMap og the whole application
+//      The routeMap of the whole application
       routes: page.routeMap,
     );
   }

@@ -28,13 +28,13 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
       appBar: AppBar(
         title: const Text('SearchPhoto'),
         leading: IconButton(
-          icon: ViewBuilder.iconBack,
+          icon: CommonBuilder.iconBack,
           onPressed: () => Navigator.pop(context),
         ),
       ),
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
-          onPressed: () => _searchPhoto(context),
+          onPressed: () => _searchPhoto(context, _controller.text),
           child: Icon(Icons.search),
         ),
       ),
@@ -49,7 +49,7 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
               child: Builder(
                 builder: (context) => TextFormField(
                   onFieldSubmitted: (str) {
-                    _searchPhoto(context);
+                    _searchPhoto(context, str);
                   },
                   controller: _controller,
                   style: TextStyle(fontSize: 18),
@@ -62,45 +62,40 @@ class _GetPopularPhotosPageState extends State<GetPopularPhotosPage> {
             ),
           ),
           Column(
-            children: (!_isSending)
+            children: ((!_isSending)
                 ? widgetList ?? []
                 : <Widget>[
-                    new ListTile(
-                      title: new Text('正在获取热门图片'),
-                      subtitle: new Text('如果无效请使用代理'),
+                    ListTile(
+                      title: Text('正在获取热门图片'),
+                      subtitle: Text('如果无效请使用代理'),
                     ),
-                    new Container(
+                    Container(
                       padding: EdgeInsets.all(30.0),
                       height: 150.0,
                       width: 150.0,
-                      child: new Center(
+                      child: Center(
                         child: CircularProgressIndicator(),
                       ),
                     ),
-                  ],
+                  ]),
           ),
         ],
       ),
     );
   }
 
-  _searchPhoto(BuildContext context) async {
+  _searchPhoto(BuildContext context, String text) {
     showLoading(true);
     _photoListViewModel.loadMorePhotoListWithCallback(
-        additionalParams: {QueryKeyConstant.USER_ID: _controller.text},
-        onSuccessCallback: onSearchPhotoSuccess,
-        onErrorCallback: (Exception e, response) =>
-            onSearchPhotoError(context, e));
-  }
-
-  void onSearchPhotoSuccess(List<Photo> dataList) {
-    widgetList = ViewBuilder.buildPhotoCardList(dataList);
-    showLoading(false);
-  }
-
-  void onSearchPhotoError(BuildContext context, Exception e) {
-    ShowMessage.showSnackBarWithContext(context, e);
-    showLoading(false);
+        additionalParams: {QueryKeyConstant.USER_ID: text},
+        onSuccessCallback: (List<Photo> dataList) {
+          widgetList = CommonBuilder.buildPhotoCardList(dataList);
+          showLoading(false);
+        },
+        onErrorCallback: (Exception e, response) {
+          ShowMessage.showSnackBarWithContext(context, e);
+          showLoading(false);
+        });
   }
 
   void showLoading(bool visible) {

@@ -137,13 +137,4 @@ class _StepperTestPageState extends State<StepperTestPage> {
       },
     );
   }
-
-  Widget test() {
-    return Container(
-      margin: const EdgeInsets.all(10.0),
-      color: const Color(0xFF00FF00),
-      width: 48.0,
-      height: 48.0,
-    );
-  }
 }
