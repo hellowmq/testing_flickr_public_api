@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
-import '../base_tool.dart';
+import 'dart:math' as math;
+import 'package:wenmq_first_flickr_flutter_app/base/photo.dart';
 
 class CommonBuilder {
   static List<Widget> buildPhotoCardList(List<Photo> photoList) {
@@ -61,4 +62,11 @@ class CommonBuilder {
   }
 
   static const Icon iconBack = Icon(Icons.arrow_back_ios);
+
+  static Color getRandomColor() => Color.fromARGB(
+        127,
+        math.Random().nextInt(255),
+        math.Random().nextInt(255),
+        math.Random().nextInt(255),
+      );
 }
