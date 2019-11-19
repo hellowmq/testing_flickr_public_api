@@ -148,7 +148,6 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
       if(status == AnimationStatus.dismissed){
         controller.forward();
       }
-      print(status);
     });
     controller.forward(); //放在这里开启动画 ，打开页面就播放动画
   }
