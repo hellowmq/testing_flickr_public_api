@@ -36,25 +36,26 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
             isVertical = !isVertical;
             direction = (isVertical) ? Axis.vertical : Axis.horizontal;
             scrollPhysics =
-            (isVertical) ? MyScrollPhysics() : ClampingScrollPhysics();
+                (isVertical) ? MyScrollPhysics() : ClampingScrollPhysics();
           });
         },
       ),
       body: MyListView.builder(
         controller: ScrollController(debugLabel: "MyScrollControllerRR"),
-        itemBuilder: (_, index) =>
-            Container(
-              height: 100.0,
-              width: 100.0,
-              color: CommonBuilder.getRandomColor(),
-              child: Center(
-                child: MyFadeTest(title: "",),
+        itemBuilder: (_, index) => Container(
+          height: 100.0,
+          width: 100.0,
+          color: CommonBuilder.getRandomColor(),
+          child: Center(
+            child: MyFadeTest(
+              title: "",
+            ),
 //                Foo(
 //                  text: index.toString(),
 //                  duration: new Duration(seconds: 5),
 //                ),
-              ),
-            ),
+          ),
+        ),
         itemCount: 60,
         scrollDirection: direction,
         physics: scrollPhysics,
@@ -90,7 +91,7 @@ class _FooState extends State<Foo> with SingleTickerProviderStateMixin {
       duration: widget.duration,
     );
     curvedAnimation =
-    new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+        new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
     controller.forward();
   }
 
@@ -119,7 +120,6 @@ class _FooState extends State<Foo> with SingleTickerProviderStateMixin {
   }
 }
 
-
 class MyFadeTest extends StatefulWidget {
   MyFadeTest({Key key, this.title}) : super(key: key);
   final String title;
@@ -138,10 +138,19 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
     //初始化，当当前widget被插入到树中时调用
     super.initState();
     controller = new AnimationController(
-        vsync: this, duration: const Duration(seconds: 3));
+        vsync: this, duration: const Duration(seconds: 5));
     curved = new CurvedAnimation(
         parent: controller, curve: Curves.bounceOut); //模仿小球自由落体运动轨迹
-    controller.forward();//放在这里开启动画 ，打开页面就播放动画
+    controller.addStatusListener((AnimationStatus status) {
+      if(status == AnimationStatus.completed){
+        controller.reverse();
+      }
+      if(status == AnimationStatus.dismissed){
+        controller.forward();
+      }
+      print(status);
+    });
+    controller.forward(); //放在这里开启动画 ，打开页面就播放动画
   }
 
   @override
@@ -160,7 +169,8 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
 //            size: 200.0,
 //          ),
 //        ),
-      child: new RotationTransition( //旋转动画
+      child: new RotationTransition(
+        //旋转动画
         turns: curved,
         child: new FlutterLogo(
           size: 40.0,
