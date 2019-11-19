@@ -69,4 +69,6 @@ class CommonBuilder {
         math.Random().nextInt(255),
         math.Random().nextInt(255),
       );
+
+  RotationTransition a;
 }

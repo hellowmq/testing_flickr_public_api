@@ -86,7 +86,7 @@ class MyScrollPhysics extends ScrollPhysics {
         trailingExtent: position.maxScrollExtent,
         tolerance: tolerance,
       ));
-      print("MyScrollPhysics" + bouncingScrollSimulation.toString());
+//      print("MyScrollPhysics" + bouncingScrollSimulation.toString());
       return bouncingScrollSimulation;
     }
     return null;
