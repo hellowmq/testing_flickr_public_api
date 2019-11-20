@@ -1,6 +1,5 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 import 'package:wenmq_first_flickr_flutter_app/base/view/MyListView.dart';
@@ -44,11 +43,11 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
         controller: ScrollController(debugLabel: "MyScrollControllerRR"),
         itemBuilder: (_, index) => Container(
           height: 100.0,
-          width: 100.0,
+          padding: EdgeInsets.symmetric(vertical: 30.0),
           color: CommonBuilder.getRandomColor(),
           child: Center(
             child: MyFadeTest(
-              title: "",
+              title: index.toString(),
             ),
 //                Foo(
 //                  text: index.toString(),
@@ -91,7 +90,7 @@ class _FooState extends State<Foo> with SingleTickerProviderStateMixin {
       duration: widget.duration,
     );
     curvedAnimation =
-        new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
+        new CurvedAnimation(parent: controller, curve: Curves.ease);
     controller.forward();
   }
 
@@ -125,27 +124,29 @@ class MyFadeTest extends StatefulWidget {
   final String title;
 
   @override
-  State createState() => new _MyFadeTest();
+  State createState() => new _MyFadeTest(title);
 }
 
 class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   AnimationController controller; //动画控制器
   CurvedAnimation curved; //曲线动画，动画插值，
   bool forward = true;
+  String title;
+
+  _MyFadeTest(this.title);
 
   @override
   void initState() {
-    //初始化，当当前widget被插入到树中时调用
     super.initState();
     controller = new AnimationController(
-        vsync: this, duration: const Duration(seconds: 5));
+        vsync: this, duration: const Duration(seconds: 2));
     curved = new CurvedAnimation(
-        parent: controller, curve: Curves.bounceOut); //模仿小球自由落体运动轨迹
+        parent: controller, curve: Curves.ease);
     controller.addStatusListener((AnimationStatus status) {
       if(status == AnimationStatus.completed){
         controller.reverse();
       }
-      if(status == AnimationStatus.dismissed){
+      if (status == AnimationStatus.dismissed) {
         controller.forward();
       }
     });
@@ -171,8 +172,11 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
       child: new RotationTransition(
         //旋转动画
         turns: curved,
-        child: new FlutterLogo(
-          size: 40.0,
+        child: Container(
+          color: CommonBuilder.getRandomColor(),
+          child: Center(
+            child: new Text(title),
+          ),
         ),
       ),
     );
