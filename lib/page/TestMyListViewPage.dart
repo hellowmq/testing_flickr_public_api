@@ -43,23 +43,18 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
         controller: ScrollController(debugLabel: "MyScrollControllerRR"),
         itemBuilder: (_, index) => Container(
           height: 100.0,
-          padding: EdgeInsets.symmetric(vertical: 30.0),
           color: CommonBuilder.getRandomColor(),
           child: Center(
             child: MyFadeTest(
               title: index.toString(),
             ),
-//                Foo(
-//                  text: index.toString(),
-//                  duration: new Duration(seconds: 5),
-//                ),
           ),
         ),
-        itemCount: 60,
+        itemCount: 100,
         scrollDirection: direction,
         physics: scrollPhysics,
         dragStartBehavior: DragStartBehavior.start,
-        itemExtent: 100.0,
+        itemExtent: 50.0,
       ),
     );
   }
@@ -143,9 +138,9 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
     curved = new CurvedAnimation(
         parent: controller, curve: Curves.ease);
     controller.addStatusListener((AnimationStatus status) {
-      if(status == AnimationStatus.completed){
-        controller.reverse();
-      }
+//      if(status == AnimationStatus.completed){
+//        controller.reverse();
+//      }
       if (status == AnimationStatus.dismissed) {
         controller.forward();
       }
