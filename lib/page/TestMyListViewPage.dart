@@ -54,7 +54,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
         scrollDirection: direction,
         physics: scrollPhysics,
         dragStartBehavior: DragStartBehavior.start,
-        itemExtent: 50.0,
+        itemExtent: 100.0,
       ),
     );
   }
@@ -135,12 +135,8 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
     super.initState();
     controller = new AnimationController(
         vsync: this, duration: const Duration(seconds: 2));
-    curved = new CurvedAnimation(
-        parent: controller, curve: Curves.ease);
+    curved = new CurvedAnimation(parent: controller, curve: Curves.ease);
     controller.addStatusListener((AnimationStatus status) {
-//      if(status == AnimationStatus.completed){
-//        controller.reverse();
-//      }
       if (status == AnimationStatus.dismissed) {
         controller.forward();
       }
@@ -155,6 +151,10 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
     super.dispose();
   }
 
+  var rectTween = new RelativeRectTween(
+      begin: RelativeRect.fromLTRB(100.0, 100.0, 100.0, 100.0),
+      end: RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0));
+
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -164,13 +164,16 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
 //            size: 200.0,
 //          ),
 //        ),
-      child: new RotationTransition(
-        //旋转动画
-        turns: curved,
-        child: Container(
-          color: CommonBuilder.getRandomColor(),
-          child: Center(
-            child: new Text(title),
+      child: new PositionedTransition(
+        rect: rectTween.animate(controller),
+        child: new RotationTransition(
+          //旋转动画
+          turns: curved,
+          child: Container(
+            color: CommonBuilder.getRandomColor(),
+            child: Center(
+              child: new Text(title),
+            ),
           ),
         ),
       ),
