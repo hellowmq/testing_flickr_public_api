@@ -5,12 +5,6 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/view/MyListView.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/view/MyScrollPhysics.dart';
 
-///
-/// Actually, this page is the sample page of plugin: video_player.
-/// I found it cost a lot of time to prepare the video. Maybe I should find my
-/// way to solve it.
-///
-
 class TestMyListViewPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
     return TestMyListViewPage();
@@ -60,60 +54,6 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
   }
 }
 
-class Foo extends StatefulWidget {
-  Foo({Key key, this.duration, this.text}) : super(key: key);
-
-  final Duration duration;
-  final String text;
-
-  @override
-  _FooState createState() => _FooState(text);
-}
-
-class _FooState extends State<Foo> with SingleTickerProviderStateMixin {
-  AnimationController controller;
-  CurvedAnimation curvedAnimation;
-  String text;
-
-  _FooState(this.text);
-
-  @override
-  void initState() {
-    super.initState();
-    controller = AnimationController(
-      vsync: this, // the SingleTickerProviderStateMixin
-      duration: widget.duration,
-    );
-    curvedAnimation =
-        new CurvedAnimation(parent: controller, curve: Curves.ease);
-    controller.forward();
-  }
-
-  @override
-  void didUpdateWidget(Foo oldWidget) {
-    super.didUpdateWidget(oldWidget);
-    controller.duration = widget.duration;
-  }
-
-  @override
-  void dispose() {
-    controller.dispose();
-    super.dispose();
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      padding: EdgeInsets.all(5.0),
-      color: CommonBuilder.getRandomColor(),
-      child: RotationTransition(
-        turns: curvedAnimation,
-        child: Text(text),
-      ),
-    ); // ...
-  }
-}
-
 class MyFadeTest extends StatefulWidget {
   MyFadeTest({Key key, this.title}) : super(key: key);
   final String title;
@@ -151,29 +91,16 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  var rectTween = new RelativeRectTween(
-      begin: RelativeRect.fromLTRB(100.0, 100.0, 100.0, 100.0),
-      end: RelativeRect.fromLTRB(0.0, 0.0, 0.0, 0.0));
 
   @override
   Widget build(BuildContext context) {
     return Center(
-//        child: new FadeTransition(//透明度动画
-//          opacity: curved,//将动画传入不同的动画widget
-//          child: new FlutterLogo(//创建一个小部件，用于绘制Flutter徽标
-//            size: 200.0,
-//          ),
-//        ),
-      child: new PositionedTransition(
-        rect: rectTween.animate(controller),
-        child: new RotationTransition(
-          //旋转动画
-          turns: curved,
-          child: Container(
-            color: CommonBuilder.getRandomColor(),
-            child: Center(
-              child: new Text(title),
-            ),
+      child: new RotationTransition(
+        turns: curved,
+        child: Container(
+          color: CommonBuilder.getRandomColor(),
+          child: Center(
+            child: new Text(title),
           ),
         ),
       ),
