@@ -84,7 +84,7 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = new AnimationController(
-        vsync: this, duration: const Duration(seconds: 2));
+        vsync: this, duration: const Duration(seconds: 5));
     curved = new CurvedAnimation(parent: controller, curve: Curves.ease);
     controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.dismissed) {
@@ -96,7 +96,6 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     super.dispose();
   }
