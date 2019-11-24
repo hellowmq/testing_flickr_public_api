@@ -41,10 +41,15 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
           child: Center(
             child: MyFadeTest(
               title: Container(
-                padding: EdgeInsets.symmetric(vertical: 25.0,horizontal:5.0 ),
+                decoration: new BoxDecoration(
+                  color: CommonBuilder.getRandomColor(),
+                  borderRadius: new BorderRadius.all(Radius.circular(5.0)),
+                ),
+                padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
                 child: MyFadeTest(
                   title: Container(
-                    padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 5.0),
+                    padding:
+                        EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
                     child: MyFadeTest(
                       title: Text(index.toString()),
                     ),
