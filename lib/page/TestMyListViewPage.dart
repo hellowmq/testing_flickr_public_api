@@ -40,7 +40,17 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
           color: CommonBuilder.getRandomColor(),
           child: Center(
             child: MyFadeTest(
-              title: index.toString(),
+              title: Container(
+                padding: EdgeInsets.symmetric(vertical: 25.0,horizontal:5.0 ),
+                child: MyFadeTest(
+                  title: Container(
+                    padding: EdgeInsets.symmetric(vertical: 25.0,horizontal: 5.0),
+                    child: MyFadeTest(
+                      title: Text(index.toString()),
+                    ),
+                  ),
+                ),
+              ),
             ),
           ),
         ),
@@ -56,7 +66,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
 
 class MyFadeTest extends StatefulWidget {
   MyFadeTest({Key key, this.title}) : super(key: key);
-  final String title;
+  final Widget title;
 
   @override
   State createState() => new _MyFadeTest(title);
@@ -66,7 +76,7 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   AnimationController controller; //动画控制器
   CurvedAnimation curved; //曲线动画，动画插值，
   bool forward = true;
-  String title;
+  Widget title;
 
   _MyFadeTest(this.title);
 
@@ -91,7 +101,6 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Center(
@@ -100,7 +109,7 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
         child: Container(
           color: CommonBuilder.getRandomColor(),
           child: Center(
-            child: new Text(title),
+            child: title,
           ),
         ),
       ),
