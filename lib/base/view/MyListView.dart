@@ -1693,3 +1693,13 @@ class MyGridView extends BoxScrollView {
     );
   }
 }
+
+class MyBoxScrollView extends BoxScrollView{
+
+
+  @override
+  Widget buildChildLayout(BuildContext context) {
+    // TODO: implement buildChildLayout
+    return null;
+  }
+}

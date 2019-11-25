@@ -121,10 +121,10 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     buildRoute: MultiScreensPage.startPage,
   ),
   PageIndex(
-    title: 'My ListView Sample',
-    subtitle: 'rewrite a listview class',
-    routeName: '/testMyListView',
-    buildRoute: TestMyListViewPage.startPage,
+    title: 'My Animation Sample',
+    subtitle: 'use some anition',
+    routeName: '/testMyAnimation',
+    buildRoute: TestMyAnimationPage.startPage,
   ),
   PageIndex(
     title: 'My Listener Sample',

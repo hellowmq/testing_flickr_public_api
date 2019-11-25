@@ -10,4 +10,5 @@ export 'common_test/ProviderSamplePage.dart';
 export 'common_test/QrCodePage.dart';
 export 'common_test/SearchPhotoPage.dart';
 export 'common_test/TestMyListViewPage.dart';
+export 'common_test/TestMyAnimationPage.dart';
 export 'common_test/VideoTestPage.dart';
