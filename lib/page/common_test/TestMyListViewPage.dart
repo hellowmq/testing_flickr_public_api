@@ -33,37 +33,44 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
           });
         },
       ),
-      body: MyListView.builder(
+      body: MyGridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 20.0,
+          crossAxisSpacing: 3.0,
+          childAspectRatio: 9 / 16.0,
+        ),
         controller: ScrollController(debugLabel: "MyScrollControllerRR"),
         itemBuilder: (_, index) => Container(
           height: 100.0,
+          padding:EdgeInsets.all(10.0),
           color: CommonBuilder.getRandomColor(),
           child: Center(
             child: MyFadeTest(
-              title: Container(
-                decoration: new BoxDecoration(
-                  color: CommonBuilder.getRandomColor(),
-                  borderRadius: new BorderRadius.all(Radius.circular(5.0)),
-                ),
-                padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
-                child: MyFadeTest(
-                  title: Container(
-                    padding:
-                        EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
-                    child: MyFadeTest(
-                      title: Text(index.toString()),
-                    ),
-                  ),
-                ),
-              ),
+//              title: Container(
+//                decoration: new BoxDecoration(
+//                  color: CommonBuilder.getRandomColor(),
+//                  borderRadius: new BorderRadius.all(Radius.circular(5.0)),
+//                ),
+//                padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
+//                child: MyFadeTest(
+//                  title: Container(
+//                    padding:
+//                        EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
+//                    child: MyFadeTest(
+              title: Text(index.toString()),
+//                    ),
+//                  ),
+//                ),
+//              ),
             ),
           ),
         ),
         itemCount: 100,
         scrollDirection: direction,
         physics: scrollPhysics,
-        dragStartBehavior: DragStartBehavior.start,
-        itemExtent: 100.0,
+//        dragStartBehavior: DragStartBehavior.start,
+//        itemExtent: 100.0,
       ),
     );
   }
@@ -81,7 +88,7 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   AnimationController controller; //动画控制器
   CurvedAnimation curved; //曲线动画，动画插值，
   bool forward = true;
-  Widget title;
+  final Widget title;
 
   _MyFadeTest(this.title);
 
@@ -108,13 +115,30 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: new RotationTransition(
-        turns: curved,
-        child: Container(
-          color: CommonBuilder.getRandomColor(),
-          child: Center(
-            child: title,
-          ),
+      child: buildFadeTransition(),
+    );
+  }
+
+  RotationTransition buildRotationTransition() {
+    return new RotationTransition(
+      turns: curved,
+      child: Container(
+        color: CommonBuilder.getRandomColor(),
+        child: Center(
+          child: title,
+        ),
+      ),
+    );
+  }
+
+  FadeTransition buildFadeTransition() {
+    return new FadeTransition(
+      opacity: curved,
+      child: Container(
+        padding: EdgeInsets.all(5.0),
+        color: CommonBuilder.getRandomColor(),
+        child: Center(
+          child: title,
         ),
       ),
     );
