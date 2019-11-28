@@ -777,7 +777,7 @@ abstract class BoxScrollView extends ScrollView {
 /// [childrenDelegate] being a [MySliverChildListDelegate] with that same
 /// argument. The [new ListView.builder] constructor's `itemBuilder` and
 /// `childCount` arguments correspond to the [childrenDelegate] being a
-/// [SliverChildBuilderDelegate] with the matching arguments.
+/// [MySliverChildBuilderDelegate] with the matching arguments.
 ///
 /// The [padding] property corresponds to having a [SliverPadding] in the
 /// [CustomScrollView.slivers] property instead of the list itself, and having
@@ -921,11 +921,11 @@ class MyListView extends BoxScrollView {
   /// this constructor's `itemBuilder` callback.
   ///
   /// The `addAutomaticKeepAlives` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addAutomaticKeepAlives] property. The
+  /// [MySliverChildBuilderDelegate.addAutomaticKeepAlives] property. The
   /// `addRepaintBoundaries` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addRepaintBoundaries] property. The
+  /// [MySliverChildBuilderDelegate.addRepaintBoundaries] property. The
   /// `addSemanticIndexes` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addSemanticIndexes] property. None may be
+  /// [MySliverChildBuilderDelegate.addSemanticIndexes] property. None may be
   /// null.
   ///
   /// [ListView.builder] by default does not support child reordering. If
@@ -949,7 +949,7 @@ class MyListView extends BoxScrollView {
     double cacheExtent,
     int semanticChildCount,
     ges.DragStartBehavior dragStartBehavior = ges.DragStartBehavior.start,
-  })  : childrenDelegate = SliverChildBuilderDelegate(
+  })  : childrenDelegate = MySliverChildBuilderDelegate(
           itemBuilder,
           childCount: itemCount,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -1011,11 +1011,11 @@ class MyListView extends BoxScrollView {
   /// {@end-tool}
   ///
   /// The `addAutomaticKeepAlives` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addAutomaticKeepAlives] property. The
+  /// [MySliverChildBuilderDelegate.addAutomaticKeepAlives] property. The
   /// `addRepaintBoundaries` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addRepaintBoundaries] property. The
+  /// [MySliverChildBuilderDelegate.addRepaintBoundaries] property. The
   /// `addSemanticIndexes` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addSemanticIndexes] property. None may be
+  /// [MySliverChildBuilderDelegate.addSemanticIndexes] property. None may be
   /// null.
   MyListView.separated({
     Key key,
@@ -1037,7 +1037,7 @@ class MyListView extends BoxScrollView {
         assert(separatorBuilder != null),
         assert(itemCount != null && itemCount >= 0),
         itemExtent = null,
-        childrenDelegate = SliverChildBuilderDelegate(
+        childrenDelegate = MySliverChildBuilderDelegate(
           (BuildContext context, int index) {
             final int itemIndex = index ~/ 2;
             Widget widget;
@@ -1082,7 +1082,7 @@ class MyListView extends BoxScrollView {
   ///
   /// {@tool sample}
   ///
-  /// This [ListView] uses a custom [SliverChildBuilderDelegate] to support child
+  /// This [ListView] uses a custom [MySliverChildBuilderDelegate] to support child
   /// reordering.
   ///
   /// ```dart
@@ -1274,7 +1274,7 @@ class MyListView extends BoxScrollView {
 /// constructors' `children` arguments correspond to the [childrenDelegate]
 /// being a [MySliverChildListDelegate] with that same argument. The [new
 /// GridView.builder] constructor's `itemBuilder` and `childCount` arguments
-/// correspond to the [childrenDelegate] being a [SliverChildBuilderDelegate]
+/// correspond to the [childrenDelegate] being a [MySliverChildBuilderDelegate]
 /// with the matching arguments.
 ///
 /// The [new GridView.count] and [new GridView.extent] constructors create
@@ -1476,9 +1476,9 @@ class MyGridView extends BoxScrollView {
   /// The [gridDelegate] argument must not be null.
   ///
   /// The `addAutomaticKeepAlives` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addAutomaticKeepAlives] property. The
+  /// [MySliverChildBuilderDelegate.addAutomaticKeepAlives] property. The
   /// `addRepaintBoundaries` argument corresponds to the
-  /// [SliverChildBuilderDelegate.addRepaintBoundaries] property. Both must not
+  /// [MySliverChildBuilderDelegate.addRepaintBoundaries] property. Both must not
   /// be null.
   MyGridView.builder({
     Key key,
@@ -1498,7 +1498,7 @@ class MyGridView extends BoxScrollView {
     double cacheExtent,
     int semanticChildCount,
   })  : assert(gridDelegate != null),
-        childrenDelegate = SliverChildBuilderDelegate(
+        childrenDelegate = MySliverChildBuilderDelegate(
           itemBuilder,
           childCount: itemCount,
           addAutomaticKeepAlives: addAutomaticKeepAlives,
@@ -1522,7 +1522,7 @@ class MyGridView extends BoxScrollView {
   /// [SliverGridDelegate] and a custom [SliverChildDelegate].
   ///
   /// To use an [IndexedWidgetBuilder] callback to build children, either use
-  /// a [SliverChildBuilderDelegate] or use the [GridView.builder] constructor.
+  /// a [MySliverChildBuilderDelegate] or use the [GridView.builder] constructor.
   ///
   /// The [gridDelegate] and [childrenDelegate] arguments must not be null.
   const MyGridView.custom({
@@ -1757,7 +1757,7 @@ class MyBoxScrollView extends BoxScrollView {
         crossAxisSpacing: 10.0,
         childAspectRatio: 4.0,
       ),
-      delegate: SliverChildBuilderDelegate(
+      delegate: MySliverChildBuilderDelegate(
         (BuildContext context, int index) {
           return Container(
             alignment: Alignment.center,
@@ -1772,7 +1772,7 @@ class MyBoxScrollView extends BoxScrollView {
 
   prefix0.SliverPrototypeExtentList buildSliverList() {
     return prefix0.SliverPrototypeExtentList(
-      delegate: SliverChildBuilderDelegate(
+      delegate: MySliverChildBuilderDelegate(
         (_, index) => Container(
           alignment: Alignment.center,
           color: Colors.teal[100 * (index % 9)],
@@ -2013,4 +2013,175 @@ class ExtCard extends prefix0.SliverWithKeepAliveWidget {
     // TODO: implement createElement
     return null;
   }
+}
+
+
+
+
+
+
+
+
+class MySliverChildBuilderDelegate extends SliverChildDelegate {
+  /// Creates a delegate that supplies children for slivers using the given
+  /// builder callback.
+  ///
+  /// The [builder], [addAutomaticKeepAlives], [addRepaintBoundaries],
+  /// [addSemanticIndexes], and [semanticIndexCallback] arguments must not be
+  /// null.
+  ///
+  /// If the order in which [builder] returns children ever changes, consider
+  /// providing a [findChildIndex]. This allows the delegate to find the new index
+  /// for a child that was previously located at a different index to attach the
+  /// existing state to the [Widget] at its new location.
+  const MySliverChildBuilderDelegate(
+      this.builder, {
+        this.findChildIndexCallback,
+        this.childCount,
+        this.addAutomaticKeepAlives = true,
+        this.addRepaintBoundaries = true,
+        this.addSemanticIndexes = true,
+        this.semanticIndexCallback = _kDefaultSemanticIndexCallback,
+        this.semanticIndexOffset = 0,
+      }) : assert(builder != null),
+        assert(addAutomaticKeepAlives != null),
+        assert(addRepaintBoundaries != null),
+        assert(addSemanticIndexes != null),
+        assert(semanticIndexCallback != null);
+
+  /// Called to build children for the sliver.
+  ///
+  /// Will be called only for indices greater than or equal to zero and less
+  /// than [childCount] (if [childCount] is non-null).
+  ///
+  /// Should return null if asked to build a widget with a greater index than
+  /// exists.
+  ///
+  /// The delegate wraps the children returned by this builder in
+  /// [RepaintBoundary] widgets.
+  final IndexedWidgetBuilder builder;
+
+  /// The total number of children this delegate can provide.
+  ///
+  /// If null, the number of children is determined by the least index for which
+  /// [builder] returns null.
+  final int childCount;
+
+  /// Whether to wrap each child in an [AutomaticKeepAlive].
+  ///
+  /// Typically, children in lazy list are wrapped in [AutomaticKeepAlive]
+  /// widgets so that children can use [KeepAliveNotification]s to preserve
+  /// their state when they would otherwise be garbage collected off-screen.
+  ///
+  /// This feature (and [addRepaintBoundaries]) must be disabled if the children
+  /// are going to manually maintain their [KeepAlive] state. It may also be
+  /// more efficient to disable this feature if it is known ahead of time that
+  /// none of the children will ever try to keep themselves alive.
+  ///
+  /// Defaults to true.
+  final bool addAutomaticKeepAlives;
+
+  /// Whether to wrap each child in a [RepaintBoundary].
+  ///
+  /// Typically, children in a scrolling container are wrapped in repaint
+  /// boundaries so that they do not need to be repainted as the list scrolls.
+  /// If the children are easy to repaint (e.g., solid color blocks or a short
+  /// snippet of text), it might be more efficient to not add a repaint boundary
+  /// and simply repaint the children during scrolling.
+  ///
+  /// Defaults to true.
+  final bool addRepaintBoundaries;
+
+  /// Whether to wrap each child in an [IndexedSemantics].
+  ///
+  /// Typically, children in a scrolling container must be annotated with a
+  /// semantic index in order to generate the correct accessibility
+  /// announcements. This should only be set to false if the indexes have
+  /// already been provided by an [IndexedChildSemantics] widget.
+  ///
+  /// Defaults to true.
+  ///
+  /// See also:
+  ///
+  ///  * [IndexedChildSemantics], for an explanation of how to manually
+  ///    provide semantic indexes.
+  final bool addSemanticIndexes;
+
+  /// An initial offset to add to the semantic indexes generated by this widget.
+  ///
+  /// Defaults to zero.
+  final int semanticIndexOffset;
+
+  /// A [SemanticIndexCallback] which is used when [addSemanticIndexes] is true.
+  ///
+  /// Defaults to providing an index for each widget.
+  final SemanticIndexCallback semanticIndexCallback;
+
+  /// Called to find the new index of a child based on its key in case of reordering.
+  ///
+  /// If not provided, a child widget may not map to its existing [RenderObject]
+  /// when the order in which children are returned from [builder] changes.
+  /// This may result in state-loss.
+  ///
+  /// This callback should take an input [Key], and It should return the
+  /// index of the child element with associated key, null if not found.
+  final ChildIndexGetter findChildIndexCallback;
+
+  @override
+  int findIndexByKey(Key key) {
+    if (findChildIndexCallback == null)
+      return null;
+    assert(key != null);
+    Key childKey;
+    if (key is _SaltedValueKey) {
+      final _SaltedValueKey saltedValueKey = key;
+      childKey = saltedValueKey.value;
+    } else {
+      childKey = key;
+    }
+    return findChildIndexCallback(childKey);
+  }
+
+  @override
+  Widget build(BuildContext context, int index) {
+    assert(builder != null);
+    if (index < 0 || (childCount != null && index >= childCount))
+      return null;
+    Widget child;
+    try {
+      child = builder(context, index);
+    } catch (exception, stackTrace) {
+      child = _createErrorWidget(exception, stackTrace);
+    }
+    if (child == null)
+      return null;
+    final Key key = child.key != null ? _SaltedValueKey(child.key) : null;
+    if (addRepaintBoundaries)
+      child = RepaintBoundary(child: child);
+    if (addSemanticIndexes) {
+      final int semanticIndex = semanticIndexCallback(child, index);
+      if (semanticIndex != null)
+        child = IndexedSemantics(index: semanticIndex + semanticIndexOffset, child: child);
+    }
+    if (addAutomaticKeepAlives)
+      child = AutomaticKeepAlive(child: child);
+    return KeyedSubtree(child: child, key: key);
+  }
+
+  @override
+  int get estimatedChildCount => childCount;
+
+  @override
+  bool shouldRebuild(covariant MySliverChildBuilderDelegate oldDelegate) => true;
+}
+
+Widget _createErrorWidget(dynamic exception, StackTrace stackTrace) {
+  final FlutterErrorDetails details = FlutterErrorDetails(
+    exception: exception,
+    stack: stackTrace,
+    library: 'widgets library',
+    context: ErrorDescription('building'),
+  );
+  FlutterError.reportError(details);
+  return ErrorWidget.builder(details);
 }
