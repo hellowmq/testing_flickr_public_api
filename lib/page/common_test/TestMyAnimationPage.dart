@@ -1,20 +1,19 @@
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 import 'package:wenmq_first_flickr_flutter_app/base/view/MyListView.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/view/MyScrollPhysics.dart';
 
-class TestMyListViewPage extends StatefulWidget {
+class TestMyAnimationPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
-    return TestMyListViewPage();
+    return TestMyAnimationPage();
   }
 
   @override
-  _TestMyListViewPageState createState() => _TestMyListViewPageState();
+  _TestMyAnimationPageState createState() => _TestMyAnimationPageState();
 }
 
-class _TestMyListViewPageState extends State<TestMyListViewPage> {
+class _TestMyAnimationPageState extends State<TestMyAnimationPage> {
   bool isVertical = false;
   Axis direction = Axis.horizontal;
   ScrollPhysics scrollPhysics = ClampingScrollPhysics();
@@ -33,22 +32,44 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
           });
         },
       ),
-      body: MyListView.builder(
+      body: GridView.builder(
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          mainAxisSpacing: 20.0,
+          crossAxisSpacing: 3.0,
+          childAspectRatio: 9 / 16.0,
+        ),
         controller: ScrollController(debugLabel: "MyScrollControllerRR"),
         itemBuilder: (_, index) => Container(
           height: 100.0,
+          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 40.0),
           color: CommonBuilder.getRandomColor(),
           child: Center(
             child: MyFadeTest(
-              title: index.toString(),
+//              title: Container(
+//                decoration: new BoxDecoration(
+//                  color: CommonBuilder.getRandomColor(),
+//                  borderRadius: new BorderRadius.all(Radius.circular(5.0)),
+//                ),
+//                padding: EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
+//                child: MyFadeTest(
+//                  title: Container(
+//                    padding:
+//                        EdgeInsets.symmetric(vertical: 25.0, horizontal: 5.0),
+//                    child: MyFadeTest(
+              title: Text(index.toString()),
+//                    ),
+//                  ),
+//                ),
+//              ),
             ),
           ),
         ),
         itemCount: 100,
         scrollDirection: direction,
         physics: scrollPhysics,
-        dragStartBehavior: DragStartBehavior.start,
-        itemExtent: 100.0,
+//        dragStartBehavior: DragStartBehavior.start,
+//        itemExtent: 100.0,
       ),
     );
   }
@@ -56,7 +77,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
 
 class MyFadeTest extends StatefulWidget {
   MyFadeTest({Key key, this.title}) : super(key: key);
-  final String title;
+  final Widget title;
 
   @override
   State createState() => new _MyFadeTest(title);
@@ -66,7 +87,7 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   AnimationController controller; //动画控制器
   CurvedAnimation curved; //曲线动画，动画插值，
   bool forward = true;
-  String title;
+  final Widget title;
 
   _MyFadeTest(this.title);
 
@@ -74,8 +95,8 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
   void initState() {
     super.initState();
     controller = new AnimationController(
-        vsync: this, duration: const Duration(seconds: 2));
-    curved = new CurvedAnimation(parent: controller, curve: Curves.ease);
+        vsync: this, duration: const Duration(seconds: 10));
+    curved = new CurvedAnimation(parent: controller, curve: Curves.bounceOut);
     controller.addStatusListener((AnimationStatus status) {
       if (status == AnimationStatus.dismissed) {
         controller.forward();
@@ -86,22 +107,37 @@ class _MyFadeTest extends State<MyFadeTest> with TickerProviderStateMixin {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     controller.dispose();
     super.dispose();
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: new RotationTransition(
-        turns: curved,
-        child: Container(
-          color: CommonBuilder.getRandomColor(),
-          child: Center(
-            child: new Text(title),
-          ),
+      child: buildFadeTransition(),
+    );
+  }
+
+  RotationTransition buildRotationTransition() {
+    return new RotationTransition(
+      turns: curved,
+      child: Container(
+        color: CommonBuilder.getRandomColor(),
+        child: Center(
+          child: title,
+        ),
+      ),
+    );
+  }
+
+  FadeTransition buildFadeTransition() {
+    return new FadeTransition(
+      opacity: curved,
+      child: Container(
+        padding: EdgeInsets.symmetric(vertical: 20.0),
+        color: CommonBuilder.getRandomColor(),
+        child: Center(
+          child: title,
         ),
       ),
     );

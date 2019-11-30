@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/string.dart';
-import 'package:wenmq_first_flickr_flutter_app/page/QrCodePage.dart';
+import 'package:wenmq_first_flickr_flutter_app/page/common_test/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
 ///
@@ -121,9 +121,15 @@ const List<PageIndex> pageIndexList = const <PageIndex>[
     buildRoute: MultiScreensPage.startPage,
   ),
   PageIndex(
-    title: 'My ListView Sample',
+    title: 'My Animation Sample',
+    subtitle: 'use some anition',
+    routeName: '/testMyAnimation',
+    buildRoute: TestMyAnimationPage.startPage,
+  ),
+  PageIndex(
+    title: 'My Listener Sample',
     subtitle: 'rewrite a listview class',
-    routeName: '/testMyListView',
+    routeName: '/testMyListenerWidget',
     buildRoute: TestMyListViewPage.startPage,
   )
 ];
