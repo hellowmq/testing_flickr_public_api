@@ -1202,9 +1202,15 @@ class MyListView extends BoxScrollView {
   @override
   Widget buildChildLayout(BuildContext context) {
     if (itemExtent != null) {
-      return SliverFixedExtentList(
+      return SliverGrid(
         delegate: childrenDelegate,
-        itemExtent: itemExtent,
+        gridDelegate: SliverGridDelegateWithMaxCrossAxisExtent(
+          maxCrossAxisExtent: 250.0,
+          mainAxisSpacing: 20.0,
+          crossAxisSpacing: 20.0,
+          childAspectRatio: 1.0,
+        ),
+//        itemExtent: itemExtent,
       );
     }
     return SliverList(delegate: childrenDelegate);
