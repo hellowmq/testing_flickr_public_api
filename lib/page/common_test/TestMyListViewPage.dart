@@ -38,8 +38,12 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
       body: new CustomScrollView(
         slivers: List<Widget>.generate(
           100,
-          (index) =>
-              _buildAppBar(context, statusBarHeight, title: index.toString()),
+          (index) => _buildAppBar(
+            context,
+            statusBarHeight,
+            title: index.toString(),
+            color: CommonBuilder.getRandomColor(),
+          ),
         ),
 
 //        <Widget>[
@@ -111,7 +115,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
   }
 
   Widget _buildAppBar(BuildContext context, double statusBarHeight,
-      {String title = "title"}) {
+      {String title = "title", Color color}) {
     final _kAppbarHeight = 128.0;
     return SliverAppBar(
       pinned: false,
@@ -143,9 +147,12 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
             ),
             child: Center(
               child: Container(
-                padding: EdgeInsets.all(8.0),
-                color: CommonBuilder.getRandomColor(),
-                child: Text(title),
+                height: logoHeight,
+                width: logoHeight * 2,
+                color: color,
+                child: Center(
+                  child: Text(title),
+                ),
               ),
             ),
           );
