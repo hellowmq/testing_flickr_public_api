@@ -1,3 +1,5 @@
+import 'package:flutter/widgets.dart';
+
 class MQLogger {
   final String name;
   bool mute = false;
@@ -13,11 +15,11 @@ class MQLogger {
   MQLogger._internal(this.name);
 
   void log(String msg) {
-    if (!mute) print('Logger_$name: $msg');
+    if (!mute) debugPrint('Logger_$name: $msg');
   }
 
   static void debug(dynamic msg, {String loggerName}) {
-    if(loggerName == null || loggerName.isEmpty) loggerName = "ThisApp";
+    if (loggerName == null || loggerName.isEmpty) loggerName = "ThisApp";
     MQLogger(loggerName).log(msg.toString());
   }
 }
