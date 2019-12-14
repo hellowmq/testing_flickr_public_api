@@ -13,7 +13,7 @@ class MFlickrPhotoApi {
           .map<Photo>((json) => Photo.fromJson(json))
           .toList();
     } catch (exception) {
-      MQLogger().log(exception);
+      MQLogger.debugPrint(exception);
       return List<Photo>();
     }
   }

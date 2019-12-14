@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class ShowMessage {
   static showSnackBar(GlobalKey<ScaffoldState> key, dynamic message) {
@@ -18,6 +19,7 @@ class ShowMessage {
 
   static showSnackBarWithContext(BuildContext context, dynamic message) {
     Scaffold.of(context).showSnackBar(new SnackBar(content: Text(message.toString())));
+    MQLogger.debugPrint(message,logger: context.findRenderObject());
   }
 
   /// Actually a Logger with key-value structure and factory function class is needed.

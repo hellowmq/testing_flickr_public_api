@@ -1,6 +1,3 @@
-import 'dart:math';
-
-import 'package:flutter/widgets.dart';
 import 'dart:developer' as developer;
 
 class MQLogger {
@@ -21,8 +18,13 @@ class MQLogger {
     if (!mute) developer.log(msg, name: 'Logger_$name', error: error);
   }
 
-  static void debug(dynamic msg, {String loggerName, dynamic error}) {
+  static void debugPrint(dynamic msg, {dynamic logger, dynamic error}) {
+    String loggerName = logger.toString();
     if (loggerName == null || loggerName.isEmpty) loggerName = "ThisApp";
-    MQLogger(loggerName).log(msg.toString(), error: error);
+    if (error == null) {
+      MQLogger(loggerName).log(msg.toString());
+    } else {
+      MQLogger(loggerName).log(msg.toString(), error: error);
+    }
   }
 }
