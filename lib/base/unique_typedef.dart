@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'photo.dart';
+import 'bean/bean.dart';
 
 typedef MQSuccessCallback<T> = T Function(http.Response);
 typedef MQErrorCallback = Function(Exception, http.Response);

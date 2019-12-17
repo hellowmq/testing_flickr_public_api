@@ -2,8 +2,8 @@ import 'dart:convert';
 
 import 'package:http/http.dart' as http;
 import 'package:wenmq_first_flickr_flutter_app/api/key.dart' as key;
-import 'unique_typedef.dart';
-import 'string.dart';
+import '../unique_typedef.dart';
+import '../string.dart';
 
 ///
 /// @Author hellowmq
