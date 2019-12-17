@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:transparent_image/transparent_image.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 import 'dart:math' as math;
 import 'package:wenmq_first_flickr_flutter_app/base/bean/photo.dart';
@@ -28,7 +30,7 @@ class CommonBuilder {
                 child: Stack(
                   children: <Widget>[
                     Center(
-                      child: buildFadeInImage(photo),
+                      child: buildHeroImage(photo),
                     ),
                   ],
                 ),
@@ -41,19 +43,21 @@ class CommonBuilder {
   static String createImageUrl(Photo photo) =>
       'https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg';
 
+  static Widget buildHeroImage(Photo photo) {
+    return new PhotoViewWithBasePage(
+        buildFadeInImage(photo), photo.id + photo.hashCode.toString());
+  }
+
   static FadeInImage buildFadeInImage(Photo photo) {
-    return FadeInImage(
-      image: NetworkImage(createImageUrl(photo)),
+    return FadeInImage.memoryNetwork(
+      placeholder: kTransparentImage,
+      image: createImageUrl(photo),
       fit: BoxFit.fill,
     );
   }
 
   static Image buildNetworkImage(Photo photo) {
-    return Image(
-      image: NetworkImage(
-        createImageUrl(photo),
-      ),
-    );
+    return new Image.network(createImageUrl(photo));
   }
 
   static WidgetBuilder createWidgetBuilder(dynamic widget) {
