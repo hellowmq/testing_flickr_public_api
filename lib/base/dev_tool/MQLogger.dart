@@ -1,6 +1,9 @@
 import 'dart:developer' as developer;
 
 class MQLogger {
+  /// Actually a Logger with key-value structure and factory function class is needed.
+  static List<String> logger = new List();
+
   final String name;
   bool mute = false;
 
@@ -15,7 +18,10 @@ class MQLogger {
   MQLogger._internal(this.name);
 
   void log(String msg, {dynamic error}) {
-    if (!mute) developer.log(msg, name: 'Logger_$name', error: error);
+    if (!mute) {
+      logger.add(msg);
+      developer.log(msg, name: 'Logger_$name', error: error);
+    }
   }
 
   static void debugPrint(dynamic msg, {dynamic logger, dynamic error}) {
