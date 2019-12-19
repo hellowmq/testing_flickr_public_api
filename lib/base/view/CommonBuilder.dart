@@ -26,7 +26,7 @@ class CommonBuilder {
                     photo.secret),
               ),
               Padding(
-                padding: EdgeInsets.all(5.0),
+                padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 10.0),
                 child: Stack(
                   children: <Widget>[
                     Center(
@@ -45,7 +45,10 @@ class CommonBuilder {
 
   static Widget buildHeroImage(Photo photo) {
     return new PhotoViewWithBasePage(
-        buildFadeInImage(photo), photo.id + photo.hashCode.toString());
+      buildFadeInImage(photo),
+      photo.hashCode.toString(),
+      photoUrl: createImageUrl(photo),
+    );
   }
 
   static FadeInImage buildFadeInImage(Photo photo) {
