@@ -7,7 +7,10 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
-      theme: GlobalSetting.theme,
+      theme: GlobalSetting.isDebug()
+          ? GlobalSetting.defaultTheme
+          : GlobalSetting.amberTheme,
+      debugShowCheckedModeBanner: true,
       darkTheme: ThemeData(
         brightness: Brightness.dark,
       ),
