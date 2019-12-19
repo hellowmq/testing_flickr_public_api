@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/base/global_settings.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/PageIndex.dart' as page;
 
 class MyApp extends StatelessWidget {
@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       initialRoute: '/',
-      theme: GlobalSetting.isDebug()
+      theme: DebugUtils.isDebug()
           ? GlobalSetting.defaultTheme
           : GlobalSetting.amberTheme,
       debugShowCheckedModeBanner: true,
