@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/api/flickr.photos.getRecent.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
 
 const String TAG = "SqfLiteTestPage";
 
@@ -35,29 +35,29 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
         children: _widgetList,
       ),
       floatingActionButton: new FloatingActionButton(
-          child: Icon(Icons.add),
-          onPressed: () async {
-            Photo photo = await GetRecentPhotos()
-                .request(
-                    additionalParams: new Map<String, String>()
-                      ..[FlickrConstant.PER_PAGE] = '5'
-                      ..[FlickrConstant.PAGE] = '1')
-                .then((v) => v[0]);
-            this._photos = await LocalDataBase.getPhotos();
-            print(
-              TAG + "---Generate Photo Object---" + this._photos.toString(),
-            );
-            print(TAG +
-                "---Generate Photo Object---" +
-                photo.toJson().toString());
-
-            LocalDataBase.insertPhoto(photo);
-            this._photos = await LocalDataBase.getPhotos();
-            print(
-              TAG + "---Generate Photo Object---" + _photos.toString(),
-            );
-            updateWidgetList();
-          }),
+          child: Icon(Icons.add), onPressed: getRecentPhoto),
     );
+  }
+
+  GetPhotoListViewModel _mViewModel = (GetPhotoListViewModelBuilder()
+        ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_RECENT
+        ..perPage = 1)
+      .build();
+
+  void getRecentPhoto() async {
+    _mViewModel.loadMorePhotoListWithCallback(
+        onSuccessCallback: (List<Photo> photoList) async {
+      Photo first = photoList[0];
+      this._photos = await LocalDataBase.getPhotos();
+      MQLogger.debugPrint("Generate Photo Object" + this._photos.toString(),
+          logger: TAG);
+      MQLogger.debugPrint("Generate Photo Object" + first.toJson().toString(),
+          logger: TAG);
+      LocalDataBase.insertPhoto(first);
+      this._photos = await LocalDataBase.getPhotos();
+      MQLogger.debugPrint("After insert Photo Object" + this._photos.toString(),
+          logger: TAG);
+      updateWidgetList();
+    });
   }
 }

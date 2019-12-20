@@ -32,7 +32,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
       ),
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
-          onPressed: () => _sendMessage(context),
+          onPressed: () => _getRecentPhoto(context),
           child: Icon(Icons.send),
         ),
       ),
@@ -53,7 +53,7 @@ class _GetRecentPhotosPageState extends State<GetRecentPhotosPage> {
     );
   }
 
-  void _sendMessage(BuildContext context) {
+  void _getRecentPhoto(BuildContext context) {
     showLoading(true);
     _mViewModel.loadMorePhotoListWithCallback(
         onSuccessCallback: (List<Photo> photoList) {
