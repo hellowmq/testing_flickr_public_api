@@ -46,4 +46,14 @@ class MFlickrTestApi {
       onError: onError,
     );
   }
+
+  void newRequest(String echoText,
+      {Function(String) onSuccess, ErrorCallback onError}) {
+    Map<String, String> params = new Map();
+    params['name'] = echoText;
+    MFlickrTestApi().testEcho(
+        params: params,
+        onSuccess: (Map<String, String> params) => onSuccess(params['name']),
+        onError: onError);
+  }
 }

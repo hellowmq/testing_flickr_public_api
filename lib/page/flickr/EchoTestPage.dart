@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/api/flickr.test.echo.dart';
+import 'package:wenmq_first_flickr_flutter_app/api/flickr_test_api.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 /// This page [EchoTestPage] show an example of echo test with a word.
@@ -62,7 +62,7 @@ class _EchoTestPageState extends State<EchoTestPage> {
 
   _sendMessage(BuildContext context) async {
     if (_controller.text.isNotEmpty) {
-      EchoTest().newRequest(_controller.text, onSuccess: (newText) {
+      MFlickrTestApi().newRequest(_controller.text, onSuccess: (newText) {
         if (newText != null && newText.isNotEmpty) {
           setState(() {
             echoText = newText;
