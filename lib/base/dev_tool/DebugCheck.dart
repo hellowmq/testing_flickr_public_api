@@ -1,5 +1,7 @@
-class DebugUtils{
-  static bool isDebug() {
+class DebugUtils {
+  static bool get isDebug => isDebugModel();
+
+  static bool isDebugModel() {
     bool result = false;
     assert(() {
       result = true;
