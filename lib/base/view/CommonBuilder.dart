@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:transparent_image/transparent_image.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
 import 'package:wenmq_first_flickr_flutter_app/base/bean/photo.dart';
 
@@ -56,6 +56,17 @@ class CommonBuilder {
       placeholder: kTransparentImage,
       image: createImageUrl(photo),
       fit: BoxFit.fill,
+    );
+  }
+
+  static Widget buildCacheNetWorkImage(Photo photo) {
+    return new CachedNetworkImage(
+      placeholder: (BuildContext c, string) {
+        return CircularProgressIndicator(
+          backgroundColor: getRandomColor(),
+        );
+      },
+      imageUrl: createImageUrl(photo),
     );
   }
 

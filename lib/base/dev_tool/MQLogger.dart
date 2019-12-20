@@ -1,5 +1,7 @@
 import 'dart:developer' as developer;
 
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+
 class MQLogger {
   /// Actually a Logger with key-value structure and factory function class is needed.
   static List<String> logger = new List();
@@ -25,6 +27,7 @@ class MQLogger {
   }
 
   static void debugPrint(dynamic msg, {dynamic logger, dynamic error}) {
+    if (!DebugUtils.isDebug) return;
     String loggerName = logger.toString();
     if (loggerName == null || loggerName.isEmpty) loggerName = "ThisApp";
     if (error == null) {

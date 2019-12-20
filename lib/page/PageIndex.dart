@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:wenmq_first_flickr_flutter_app/base/string.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/bean/FlickrString.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/common_test/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
 
