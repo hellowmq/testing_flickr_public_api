@@ -35,28 +35,30 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
           });
         },
       ),
-      body: new CustomScrollView(
-        slivers: List<Widget>.generate(
-          100,
-          (index) => _buildAppBar(
+      body: ListView(
+        children: <Widget>[
+          _buildAppBarWidget(
             context,
             statusBarHeight,
-            title: index.toString(),
+            title: CommonBuilder.getRandomColor().toString(),
             color: CommonBuilder.getRandomColor(),
-          ),
-        ),
+          )
+        ],
+      ),
+    );
+  }
 
-//        <Widget>[
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//          _buildAppBar(context, statusBarHeight),
-//        ],
+  CustomScrollView buildCustomScrollView(
+      BuildContext context, double statusBarHeight) {
+    return new CustomScrollView(
+      slivers: List<Widget>.generate(
+        100,
+        (index) => _buildAppBar(
+          context,
+          statusBarHeight,
+          title: index.toString(),
+          color: CommonBuilder.getRandomColor(),
+        ),
       ),
     );
   }
@@ -81,8 +83,6 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
       itemCount: 100,
       scrollDirection: direction,
       physics: scrollPhysics,
-//        dragStartBehavior: DragStartBehavior.start,
-//        itemExtent: 100.0,
     );
   }
 
@@ -107,7 +107,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
           color: CommonBuilder.getRandomColor(),
           padding: EdgeInsets.all(5.0),
           child: Container(
-            child: Text(index.toString() + ""),
+            child: Text(index.toString()),
           ),
         ),
       );
@@ -152,6 +152,54 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
                 color: color,
                 child: Center(
                   child: Text(title),
+                ),
+              ),
+            ),
+          );
+        },
+      ),
+    );
+  }
+
+  Widget _buildAppBarWidget(BuildContext context, double statusBarHeight,
+      {String title = "title", Color color}) {
+    final _kAppbarHeight = 158.0;
+    return SliverAppBar(
+      pinned: false,
+      automaticallyImplyLeading: false,
+      expandedHeight: _kAppbarHeight,
+//      actions: <Widget>[
+//        Builder(
+//          builder: (BuildContext context) => IconButton(
+//            icon: const Icon(Icons.search),
+//            tooltip: 'Search',
+//            onPressed: () {
+//              ShowMessage.showSnackBarWithContext(context, "no supported");
+//            },
+//          ),
+//        )
+//      ],
+      flexibleSpace: LayoutBuilder(
+        builder: (BuildContext context, BoxConstraints constraints) {
+          final Size size = constraints.biggest;
+          final double appBarHeight = size.height - statusBarHeight;
+          final double t = (appBarHeight - kToolbarHeight) /
+              (_kAppbarHeight - kToolbarHeight);
+          final double extraPadding =
+              Tween<double>(begin: 10.0, end: 24.0).transform(t);
+          final double logoHeight = appBarHeight - 1.5 * extraPadding;
+          return Padding(
+            padding: EdgeInsets.only(
+              top: statusBarHeight + 0.5 * extraPadding,
+              bottom: extraPadding,
+            ),
+            child: Center(
+              child: Container(
+                height: logoHeight,
+                width: logoHeight * 2,
+                color: color,
+                child: Center(
+                  child: VideoWidget(),
                 ),
               ),
             ),
