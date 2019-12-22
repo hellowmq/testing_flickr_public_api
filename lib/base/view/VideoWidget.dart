@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:logging/logging.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class VideoWidget extends StatefulWidget {
   static Widget startPage(BuildContext context) {
@@ -23,6 +25,7 @@ class _VideoWidgetState extends State<VideoWidget> {
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even
         // before the play button has been pressed.
+        print(_controller.value.initialized);
         setState(() {
           _controller.play();
         });
@@ -32,15 +35,18 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: <Widget>[
-      Center(
-        child: _controller.value.initialized
-            ? AspectRatio(
-                aspectRatio: _controller.value.aspectRatio,
-                child: VideoPlayer(_controller),
-              )
-            : Container(),
-      ),
+    return Center(
+      child: _controller.value.initialized
+          ? AspectRatio(
+              aspectRatio: _controller.value.aspectRatio,
+              child: VideoPlayer(_controller),
+            )
+          : Container(
+              color: CommonBuilder.getRandomColor(),
+              width: 400.0,
+              height: 200.0,
+            ),
+    );
 //      Container(
 //        child: GestureDetector(
 //          onTap: () => setState(() {
@@ -64,7 +70,6 @@ class _VideoWidgetState extends State<VideoWidget> {
 //        ),
 ////        visible: isOptionVisible,
 //      ),
-    ]);
   }
 
   @override

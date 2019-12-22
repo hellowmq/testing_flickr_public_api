@@ -24,6 +24,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
   Widget build(BuildContext context) {
     final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
+      appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.build),
         onPressed: () {
