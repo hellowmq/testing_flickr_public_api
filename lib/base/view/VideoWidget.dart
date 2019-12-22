@@ -12,7 +12,7 @@ class VideoWidget extends StatefulWidget {
 
 class _VideoWidgetState extends State<VideoWidget> {
   VideoPlayerController _controller;
-  static const String testVideoUrl =
+  String testVideoUrl =
       'http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4';
   bool isOptionVisible = true;
 
@@ -32,45 +32,39 @@ class _VideoWidgetState extends State<VideoWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      home: Stack(children: <Widget>[
-        Center(
-          child: _controller.value.initialized
-              ? AspectRatio(
-                  aspectRatio: _controller.value.aspectRatio,
-                  child: VideoPlayer(_controller),
-                )
-              : Container(),
-        ),
-        Visibility(
-          child: SizedBox.expand(
-            child: GestureDetector(
-              onTap: () => setState(() {
-                isOptionVisible = !isOptionVisible;
-              }),
-              child: Container(
-                color: Color.fromARGB(0x80, 0xFF, 0xFF, 0xFF),
-                child: Center(
-                  child: FloatingActionButton(
-                    onPressed: () => setState(() {
-                      _controller.value.isPlaying
-                          ? _controller.pause()
-                          : _controller.play();
-                    }),
-                    child: Icon(
-                      _controller.value.isPlaying
-                          ? Icons.pause
-                          : Icons.play_arrow,
-                    ),
-                  ),
-                ),
-              ),
-            ),
-          ),
-          visible: isOptionVisible,
-        ),
-      ]),
-    );
+    return Stack(children: <Widget>[
+      Center(
+        child: _controller.value.initialized
+            ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
+            : Container(),
+      ),
+//      Container(
+//        child: GestureDetector(
+//          onTap: () => setState(() {
+//            isOptionVisible = !isOptionVisible;
+//          }),
+//          child: Container(
+//            color: Color.fromARGB(0x80, 0xFF, 0xFF, 0xFF),
+//            child: Center(
+//              child: FloatingActionButton(
+//                onPressed: () => setState(() {
+//                  _controller.value.isPlaying
+//                      ? _controller.pause()
+//                      : _controller.play();
+//                }),
+//                child: Icon(
+//                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
+//                ),
+//              ),
+//            ),
+//          ),
+//        ),
+////        visible: isOptionVisible,
+//      ),
+    ]);
   }
 
   @override

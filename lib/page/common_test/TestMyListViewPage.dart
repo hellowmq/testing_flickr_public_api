@@ -36,13 +36,12 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
         },
       ),
       body: ListView(
+        scrollDirection: Axis.vertical,
         children: <Widget>[
-          _buildAppBarWidget(
-            context,
-            statusBarHeight,
-            title: CommonBuilder.getRandomColor().toString(),
-            color: CommonBuilder.getRandomColor(),
-          )
+          VideoWidget(),
+          VideoWidget(),
+          VideoWidget(),
+          VideoWidget(),
         ],
       ),
     );
