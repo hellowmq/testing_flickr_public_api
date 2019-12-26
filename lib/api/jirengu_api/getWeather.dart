@@ -7,8 +7,16 @@ class GetWeather {
   static const String UrlWeatherOfCity =
       'http://api.jirengu.com/getWeather.php';
 
-  static void getWeather() {
-    getAnotherM(UrlWeatherOfCity, onSuccess: parseWeather, onError: (e, re) {});
+  static void getWeather(void Function(WeatherBean bean) onParseWeather,
+      ErrorCallback errorCallback) {
+    getAnotherM(UrlWeatherOfCity,
+        onSuccess: (http.Response re) => onParseWeather(parseWeather(re)),
+        onError: (e, re) {
+          if (errorCallback != null) {
+            errorCallback(e, re);
+          }
+          MQLogger.debugPrint(e);
+        });
   }
 
   static parseWeather(http.Response response) {
