@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 ///
 /// Actually, this page is the sample page of plugin: video_player.
@@ -18,8 +19,8 @@ class VideoTestPage extends StatefulWidget {
 
 class _VideoTestPageState extends State<VideoTestPage> {
   VideoPlayerController _controller;
-  static const String testVideoUrl =
-      'http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4';
+  String testVideoUrl =
+      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4';
 
   @override
   void initState() {
@@ -31,7 +32,11 @@ class _VideoTestPageState extends State<VideoTestPage> {
         setState(() {
           _controller.play();
         });
+        MQLogger.debugPrint(_controller);
+        print(_controller);
       });
+    MQLogger.debugPrint(_controller);
+    print(_controller);
     _controller.setLooping(true);
   }
 
@@ -53,6 +58,7 @@ class _VideoTestPageState extends State<VideoTestPage> {
             _controller.value.isPlaying
                 ? _controller.pause()
                 : _controller.play();
+            MQLogger.debugPrint(_controller.value);
           }),
           child: Icon(
             _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/bean/FlickrString.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/common_test/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
@@ -143,11 +144,47 @@ final Map<String, WidgetBuilder> routeMap =
 // create the enter for the sub page
 List<Widget> buildPageIndexWidgetList(context) {
   return pageIndexList
-      .map((page) => ListTile(
-            title: Text(page.title),
-            subtitle: Text(page.subtitle),
-            isThreeLine: true,
-            onTap: () => Navigator.pushNamed(context, page.routeName),
-          ))
+      .map(
+        (page) => GestureDetector(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: SizedBox(
+                child: Card(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0),
+                child: Column(
+                  children: <Widget>[
+                    SizedBox(
+                      width: double.infinity,
+                      child: Text(
+                        page.title,
+                        textAlign: TextAlign.start,
+                        textScaleFactor: 1.5,
+                        style: new TextStyle(
+                          color: CommonBuilder.getRandomColor()
+                        ),
+                      ),
+                    ),
+                    Divider(),
+                    SizedBox(
+                      width: double.infinity,
+                      child: Padding(
+                        padding:
+                            const EdgeInsets.fromLTRB(0.0, 10.0, 0.0, 10.0),
+                        child: Text(
+                          page.subtitle,
+                          textAlign: TextAlign.start,
+                          textScaleFactor: 1.2,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            )),
+          ),
+          onTap: () => Navigator.pushNamed(context, page.routeName),
+        ),
+      )
       .toList();
 }

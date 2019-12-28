@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:logging/logging.dart';
 import 'package:video_player/video_player.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
@@ -15,7 +14,7 @@ class VideoWidget extends StatefulWidget {
 class _VideoWidgetState extends State<VideoWidget> {
   VideoPlayerController _controller;
   String testVideoUrl =
-      'http://vfx.mtime.cn/Video/2019/03/21/mp4/190321153853126488.mp4';
+      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4';
   bool isOptionVisible = true;
 
   @override
