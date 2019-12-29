@@ -35,40 +35,44 @@ class _VideoWidgetState extends State<VideoWidget> {
   @override
   Widget build(BuildContext context) {
     return Center(
-      child: _controller.value.initialized
-          ? AspectRatio(
-              aspectRatio: _controller.value.aspectRatio,
-              child: VideoPlayer(_controller),
-            )
-          : Container(
-              color: CommonBuilder.getRandomColor(),
-              width: 400.0,
-              height: 200.0,
+      child: Stack(children: [
+        _controller.value.initialized
+            ? AspectRatio(
+                aspectRatio: _controller.value.aspectRatio,
+                child: VideoPlayer(_controller),
+              )
+            : Container(
+                color: CommonBuilder.getRandomColor(),
+                width: 400.0,
+                height: 200.0,
+              ),
+        Container(
+          child: GestureDetector(
+            onTap: () => setState(() {
+              isOptionVisible = !isOptionVisible;
+            }),
+            child: Container(
+              color: Color.fromARGB(0x80, 0xFF, 0xFF, 0xFF),
+              child: Center(
+                child: FloatingActionButton(
+                  onPressed: () => setState(() {
+                    _controller.value.isPlaying
+                        ? _controller.pause()
+                        : _controller.play();
+                  }),
+                  child: Icon(
+                    _controller.value.isPlaying
+                        ? Icons.pause
+                        : Icons.play_arrow,
+                  ),
+                ),
+              ),
             ),
+          ),
+//        visible: isOptionVisible,
+        ),
+      ]),
     );
-//      Container(
-//        child: GestureDetector(
-//          onTap: () => setState(() {
-//            isOptionVisible = !isOptionVisible;
-//          }),
-//          child: Container(
-//            color: Color.fromARGB(0x80, 0xFF, 0xFF, 0xFF),
-//            child: Center(
-//              child: FloatingActionButton(
-//                onPressed: () => setState(() {
-//                  _controller.value.isPlaying
-//                      ? _controller.pause()
-//                      : _controller.play();
-//                }),
-//                child: Icon(
-//                  _controller.value.isPlaying ? Icons.pause : Icons.play_arrow,
-//                ),
-//              ),
-//            ),
-//          ),
-//        ),
-////        visible: isOptionVisible,
-//      ),
   }
 
   @override
