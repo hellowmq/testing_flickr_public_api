@@ -16,6 +16,12 @@ class Photo {
 
   get isFamilyBool => int.parse(isfamily ?? '0');
 
+  static String createImageUrl(Photo photo) =>
+      'https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg';
+
+  get imgUrl =>
+      'https://farm${this.farm}.staticflickr.com/${this.server}/${this.id}_${this.secret}.jpg';
+
   Photo(
       {this.id,
       this.owner,
@@ -67,7 +73,6 @@ class Photo {
         'isfamily': isFamilyBool, // int
       };
 
-
   /// TODO: Actually toDataBaseType is not used now
   /// That means the database field should match json field identically.
   /// It's not a good idea.
@@ -87,8 +92,6 @@ class Photo {
   String toString() {
     return 'Photo{id: $id, owner: $owner, secret: $secret, server: $server, farm: $farm, title: $title, ispublic: $ispublic, isfriend: $isfriend, isfamily: $isfamily}';
   }
-
-
 }
 
 class Photos {
@@ -131,6 +134,4 @@ class Photos {
   String toString() {
     return 'Photos{photo: $photo, page: $page, pages: $pages, perpage: $perpage, total: $total}';
   }
-
-
 }

@@ -17,12 +17,7 @@ class CommonBuilder {
             children: <Widget>[
               ListTile(
                 title: Text(photo.title),
-                subtitle: Text('id :' +
-                    photo.id +
-                    ' owner:' +
-                    photo.owner +
-                    ' secret:' +
-                    photo.secret),
+                subtitle: Text(photo.toString()),
               ),
               Padding(
                 padding: EdgeInsets.fromLTRB(25.0, 15.0, 25.0, 10.0),
@@ -58,17 +53,6 @@ class CommonBuilder {
     );
   }
 
-//  static Widget buildCacheNetWorkImage(Photo photo) {
-//    return new CachedNetworkImage(
-//      placeholder: (BuildContext c, string) {
-//        return CircularProgressIndicator(
-//          backgroundColor: getRandomColor(),
-//        );
-//      },
-//      imageUrl: createImageUrl(photo),
-//    );
-//  }
-
   static Image buildNetworkImage(Photo photo) {
     return new Image.network(createImageUrl(photo));
   }
@@ -81,11 +65,9 @@ class CommonBuilder {
   static const Icon iconBack = Icon(Icons.arrow_back_ios);
 
   static Color getRandomColor() => Color.fromARGB(
-        127,
+        255,
         math.Random().nextInt(255),
         math.Random().nextInt(255),
         math.Random().nextInt(255),
       );
-
-  RotationTransition a;
 }

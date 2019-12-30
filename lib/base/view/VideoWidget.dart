@@ -13,14 +13,14 @@ class VideoWidget extends StatefulWidget {
 
 class _VideoWidgetState extends State<VideoWidget> {
   VideoPlayerController _controller;
-  String testVideoUrl =
-      'https://flutter.github.io/assets-for-api-docs/assets/videos/bee.mp4';
+  String testVideoUrl = 'https://media.w3.org/2010/05/sintel/trailer.mp4';
   bool isOptionVisible = true;
 
   @override
   void initState() {
     super.initState();
-    _controller = VideoPlayerController.network(testVideoUrl)
+    _controller = VideoPlayerController.network(
+        testVideoUrl + new DateTime.now().toIso8601String())
       ..initialize().then((_) {
         // Ensure the first frame is shown after the video is initialized, even
         // before the play button has been pressed.
