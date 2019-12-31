@@ -11,7 +11,7 @@ class MainPage extends StatelessWidget {
         title: Text(DebugUtils.isDebug ? 'This is our Flickr Api' : ''),
       ),
       body: ListView(
-        children: page.buildPageIndexWidgetList(context),
+        children: page.PageIndexList().buildPageIndexWidgetList(context),
       ),
     );
   }
