@@ -36,8 +36,7 @@ class PhotoViewWithBasePage extends StatelessWidget {
   final String heroTag;
   final String photoUrl;
 
-  PhotoViewWithBasePage(this.widget, this.heroTag,
-      {Key key, this.photoUrl})
+  PhotoViewWithBasePage(this.widget, this.heroTag, {Key key, this.photoUrl})
       : super(key: key);
 
   @override
@@ -46,31 +45,33 @@ class PhotoViewWithBasePage extends StatelessWidget {
     return new PhotoViewer(
       widget,
       heroTag: heroTag,
-      onTap: () {
-        Navigator.of(context)
-            .push(new MaterialPageRoute<Null>(builder: (BuildContext context) {
-          return new Scaffold(
-            body: new Container(
-              // The blue background emphasizes that it's a new route.
-              color: Colors.lightBlueAccent,
-              alignment: Alignment.center,
-              child: new SizedBox(
-                width: double.infinity,
-                child: new PhotoViewer(
-                  widget,
-                  heroTag: heroTag,
-                  onTap: () {
-                    Navigator.of(context)
-                        .push(new MaterialPageRoute(builder: (BuildContext c) {
-                      return RadialExpansionDemo(photoUrl);
-                    }));
-                  },
-                ),
-              ),
-            ),
-          );
-        }));
-      },
+      onTap: () => onTapPhotoViewer(context),
     );
+  }
+
+  void onTapPhotoViewer(BuildContext context) {
+    Navigator.of(context)
+        .push(new MaterialPageRoute<Null>(builder: (BuildContext context) {
+      return new Scaffold(
+        body: new Container(
+          // The blue background emphasizes that it's a new route.
+          color: Colors.lightBlueAccent,
+          alignment: Alignment.center,
+          child: new SizedBox(
+            width: double.infinity,
+            child: new PhotoViewer(
+              widget,
+              heroTag: heroTag,
+              onTap: () {
+                Navigator.of(context)
+                    .push(new MaterialPageRoute(builder: (BuildContext c) {
+                  return RadialExpansionDemo(photoUrl);
+                }));
+              },
+            ),
+          ),
+        ),
+      );
+    }));
   }
 }
