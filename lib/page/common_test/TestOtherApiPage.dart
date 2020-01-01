@@ -10,11 +10,14 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      floatingActionButton: FloatingActionButton(
-        child: Icon(Icons.send),
-        onPressed: () {
-        },
+      floatingActionButton: Builder(
+        builder: (context) => FloatingActionButton(
+          child: Icon(Icons.send),
+          onPressed: () => _sendMessage(context),
+        ),
       ),
     );
   }
+
+  _sendMessage(BuildContext context) {}
 }

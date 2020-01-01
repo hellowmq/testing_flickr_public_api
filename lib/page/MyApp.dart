@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
         brightness: Brightness.dark,
       ),
 //      The routeMap of the whole application
-      routes: page.routeMap,
+      routes: page.PageIndexList().routeMap,
     );
   }
 }

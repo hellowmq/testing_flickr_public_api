@@ -60,7 +60,7 @@ class _EchoTestPageState extends State<EchoTestPage> {
     );
   }
 
-  _sendMessage(BuildContext context) async {
+  _sendMessage(BuildContext context) {
     if (_controller.text.isNotEmpty) {
       MFlickrTestApi().newRequest(_controller.text, onSuccess: (newText) {
         if (newText != null && newText.isNotEmpty) {

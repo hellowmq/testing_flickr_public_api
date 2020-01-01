@@ -34,27 +34,24 @@ class CommonBuilder {
         ),
       );
 
-  static String createImageUrl(Photo photo) =>
-      'https://farm${photo.farm}.staticflickr.com/${photo.server}/${photo.id}_${photo.secret}.jpg';
-
   static Widget buildHeroImage(Photo photo) {
     return new PhotoViewWithBasePage(
       buildFadeInImage(photo),
       photo.hashCode.toString(),
-      photoUrl: createImageUrl(photo),
+      photoUrl: photo.imgUrl,
     );
   }
 
   static FadeInImage buildFadeInImage(Photo photo) {
     return FadeInImage.memoryNetwork(
       placeholder: kTransparentImage,
-      image: createImageUrl(photo),
+      image: photo.imgUrl,
       fit: BoxFit.fill,
     );
   }
 
   static Image buildNetworkImage(Photo photo) {
-    return new Image.network(createImageUrl(photo));
+    return new Image.network(photo.imgUrl);
   }
 
   static WidgetBuilder createWidgetBuilder(dynamic widget) {
