@@ -28,6 +28,11 @@ class WeatherBean {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'WeatherBean{results: $results}';
+  }
 }
 
 class Results {
@@ -67,6 +72,11 @@ class Results {
     }
     return data;
   }
+
+  @override
+  String toString() {
+    return 'Results{currentCity: $currentCity, pm25: $pm25, index: $index, weatherData: $weatherData}';
+  }
 }
 
 class Index {
@@ -91,6 +101,11 @@ class Index {
     data['title'] = this.title;
     data['zs'] = this.zs;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'Index{des: $des, tipt: $tipt, title: $title, zs: $zs}';
   }
 }
 
@@ -128,5 +143,10 @@ class WeatherData {
     data['wind'] = this.wind;
     data['temperature'] = this.temperature;
     return data;
+  }
+
+  @override
+  String toString() {
+    return 'WeatherData{date: $date, dayPictureUrl: $dayPictureUrl, nightPictureUrl: $nightPictureUrl, weather: $weather, wind: $wind, temperature: $temperature}';
   }
 }
