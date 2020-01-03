@@ -142,7 +142,13 @@ class PageIndexList {
       subtitle: 'rewrite a listview class',
       routeName: '/testMyListenerWidget',
       buildRoute: TestMyListViewPage.startPage,
-    )
+    ),
+    PageIndex(
+      title: 'My TestApi Sample',
+      subtitle: 'test otherr api',
+      routeName: '/testOtherApiPage',
+      buildRoute: TestOtherApiPage.startPage,
+    ),
   ];
 
 // a routeMap should be submit to MaterialApp as a route

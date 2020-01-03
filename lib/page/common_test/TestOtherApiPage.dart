@@ -3,13 +3,15 @@ import 'package:wenmq_first_flickr_flutter_app/api/jirengu_api/jirengu_api.dart'
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class TestOtherApiPage extends StatefulWidget {
+  static Widget startPage(BuildContext context) {
+    return TestOtherApiPage();
+  }
+
   @override
   _TestOtherApiPageState createState() => _TestOtherApiPageState();
 }
 
 class _TestOtherApiPageState extends State<TestOtherApiPage> {
-  String text = "default text";
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -22,16 +24,22 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
       appBar: AppBar(
         title: Text(this.toString()),
       ),
-      body: Column(
-        children: <Widget>[
-          Card(
-            child: Padding(
-              padding:
-                  const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-              child: Text(text),
-            ),
-          )
-        ],
+      body: ListView(
+        children: cardResponseList,
+      ),
+    );
+  }
+
+  List<String> strings = ["default text"];
+
+  get cardResponseList =>
+      strings.map((text) => createResponseCard(text)).toList();
+
+  Widget createResponseCard(String text) {
+    return Card(
+      child: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+        child: Text(text),
       ),
     );
   }
@@ -39,7 +47,7 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
   _sendMessage(BuildContext context) {
     GetWeather.getWeather((WeatherBean bean) {
       setState(() {
-        text = bean.toString();
+        strings.add(bean.toString());
       });
     }, (e, re) {
       MQLogger.debugPrint(e);
