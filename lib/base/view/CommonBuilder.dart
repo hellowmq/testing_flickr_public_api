@@ -61,35 +61,34 @@ class CommonBuilder {
 
   static const Icon iconBack = Icon(Icons.arrow_back_ios);
 
-  static Color getRandomColor() => Color.fromARGB(
-        255,
-        math.Random().nextInt(255),
-        math.Random().nextInt(255),
-        math.Random().nextInt(255),
-      );
+  static Color getRandomColor({int a = 255}) {
+//    var valueA = 255;
+    return Color.fromARGB(
+      a,
+      math.Random().nextInt(255),
+      math.Random().nextInt(255),
+      math.Random().nextInt(255),
+    );
+  }
 }
 
-
-
-
-
 class CustomActionSheet {
-
-  static void showSheet(BuildContext context,List<String> titleList, CustomActionSheetCallBack callBack,{int selectedIndex}){
-    if(selectedIndex == null){
+  static void showSheet(BuildContext context, List<String> titleList,
+      CustomActionSheetCallBack callBack,
+      {int selectedIndex}) {
+    if (selectedIndex == null) {
       selectedIndex = 0;
     }
-    double height = titleList.length * 48.0 + MediaQuery.of(context).padding.bottom;
+    double height =
+        titleList.length * 48.0 + MediaQuery.of(context).padding.bottom;
     showModalBottomSheet(
       context: context,
       builder: (BuildContext context) {
-
         return Container(
           color: Color(0XFFd6d6e0),
           height: height,
           child: Column(
-            children: titleList.map((e){
-
+            children: titleList.map((e) {
               return GestureDetector(
                 onTap: () {
                   callBack(titleList.indexOf(e));
@@ -98,7 +97,6 @@ class CustomActionSheet {
                 child: Container(
                   height: 48,
                   alignment: Alignment.center,
-
                   decoration: BoxDecoration(
                     color: Colors.white,
                     border: Border(
@@ -113,42 +111,44 @@ class CustomActionSheet {
                     style: TextStyle(
                       fontSize: 18,
                       fontWeight: FontWeight.normal,
-                      color: selectedIndex == titleList.indexOf(e) ? Colors.red : ColorManager.color33,
+                      color: selectedIndex == titleList.indexOf(e)
+                          ? Colors.red
+                          : ColorManager.color33,
                     ),
                   ),
                 ),
               );
-
             }).toList(),
           ),
         );
-
       },
-    ).then((e){
+    ).then((e) {
       print(e);
     });
   }
 }
 
-
 class ColorManager {
   static const Color mainTabSelectTextColor = const Color(0xFF222222);
   static const Color mainTabNormalTextColor = const Color(0xFF555555);
-  static const Color mainTableViewBgColor = const Color(0xFFF8F8F8);//tableView的背景颜色
+  static const Color mainTableViewBgColor =
+      const Color(0xFFF8F8F8); //tableView的背景颜色
   static const Color mainColor = const Color(0xFFF6483E); //主色值
   static const Color mainBgColor = const Color(0xFFF8F8F8); //主背景色
   static const Color mainTextBlackColor = const Color(0xFF333333);
-  static const Color greyTextBlackColor = const Color(0xFF666666);//
+  static const Color greyTextBlackColor = const Color(0xFF666666); //
   static const Color mainColor99 = const Color(0xFF999999);
   static const Color loginTipTextColor = const Color(0xFFC1C1C1);
   static const Color loginHintTextColor = const Color(0xFFAAAAAA);
   static const Color lineColor = const Color(0xFFE3E3E3);
   static const Color loginBtnBgColor = const Color(0xFFEEEEEE);
   static const Color accountPwdLoginTextColor = const Color(0xFFD5BB8B);
-  static const Color loginThirdPartyCircleBgColor = const Color(0xFFDCDCDC); //第三方登录的圆圈背景色
+  static const Color loginThirdPartyCircleBgColor =
+      const Color(0xFFDCDCDC); //第三方登录的圆圈背景色
   static const Color loginAgreementColor = const Color(0xFF252525); //登录协议字体颜色
   static const Color forgetPwdTextColor = const Color(0xFF888888);
-  static const Color titleTextColor = const Color(0xFF1B1B1B); //页面appbar的title颜色值
+  static const Color titleTextColor =
+      const Color(0xFF1B1B1B); //页面appbar的title颜色值
   static const Color loginWelcomePageBgColor = const Color(0xFFC5A364); //
   static const Color whiteColor = const Color(0xFFFFFFFF);
   static const Color borderOpaqueShadowColor = const Color(0x1A000000);
@@ -209,5 +209,4 @@ class ColorManager {
   static const Color color30 = const Color(0xFFFF3B30);
   static const Color color1DA1F6 = const Color(0xFF1DA1F6);
   static const Color colorE5 = const Color(0xFFE5E5E5);
-
 }

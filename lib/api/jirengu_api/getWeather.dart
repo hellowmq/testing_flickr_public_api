@@ -20,9 +20,8 @@ class GetWeather {
   }
 
   static parseWeather(http.Response response) {
-    print(response.body);
-    print(utf8.decode(response.bodyBytes));
-    return WeatherBean.fromJson(json.decode(response.body));
+    var decodedString = utf8.decode(response.bodyBytes);
+    return WeatherBean.fromJson(json.decode(decodedString));
   }
 
   static void getAnotherM(String fullUrl,
