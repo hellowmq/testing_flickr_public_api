@@ -138,9 +138,9 @@ class PageIndexList {
       buildRoute: TestMyAnimationPage.startPage,
     ),
     PageIndex(
-      title: 'My Listener Sample',
+      title: 'My listview Sample',
       subtitle: 'rewrite a listview class',
-      routeName: '/testMyListenerWidget',
+      routeName: '/testMyListWidget',
       buildRoute: TestMyListViewPage.startPage,
     ),
     PageIndex(
