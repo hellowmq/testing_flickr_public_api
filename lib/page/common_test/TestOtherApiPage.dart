@@ -14,11 +14,18 @@ class TestOtherApiPage extends StatefulWidget {
 
 class _TestOtherApiPageState extends State<TestOtherApiPage> {
   @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    _sendMessage(null);
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
-          child: Icon(Icons.send),
+          child: Icon(Icons.refresh),
           onPressed: () => _sendMessage(context),
         ),
       ),
@@ -190,7 +197,14 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
     return Card(
       child: Padding(
         padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        child: Text(text),
+        child: Text(
+          text.toUpperCase(),
+          textScaleFactor: 1.5,
+          style: TextStyle(
+            fontWeight: FontWeight.bold,
+            fontStyle: FontStyle.italic,
+          ),
+        ),
       ),
     );
   }
@@ -198,7 +212,10 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
   _sendMessage(BuildContext context) {
     GetWeather.getWeather((WeatherBean bean) {
       setState(() {
-        strings.add(bean);
+        if (strings.length > 1) {
+          strings.removeAt(1);
+        }
+        strings.insert(1, bean);
       });
     }, (e, re) {
       MQLogger.debugPrint(e);
