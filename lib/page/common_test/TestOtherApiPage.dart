@@ -32,13 +32,49 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
       appBar: AppBar(
         title: Text(this.toString()),
       ),
-      body: ListView(
-        children: cardResponseList,
+      body:
+//        NestedScrollView(
+//          headerSliverBuilder: (_,__){return null;},
+//          body: SliverToBoxAdapter(
+//            child: ListView(
+//              children: cardResponseList,
+//            ),
+//          ),
+//          physics: BouncingScrollPhysics(),
+//        )
+          CustomScrollView(
+        slivers: <Widget>[
+//          SliverSafeArea(
+//            sliver: Column(
+//              children: cardResponseList,
+//            ),
+//          ),
+          SliverToBoxAdapter(
+            child: Column(
+              children: cardResponseList,
+            ),
+          ),
+
+//          SliverFillViewport(
+//            delegate: SliverChildBuilderDelegate(
+//                (context, index) => Column(
+//                      children: cardResponseList,
+//                    ),
+//                childCount: 1),
+//          ),
+//          SliverToBoxAdapter(
+//            child: Text(cardResponseList.toString()),
+//          ),
+//          SliverToBoxAdapter(
+//            child: ListView(children: cardResponseList),
+//          ),
+        ],
+        physics: BouncingScrollPhysics(),
       ),
     );
   }
 
-  List<dynamic> strings = ["default text"];
+  List<dynamic> strings = ["TestOtherApiPage Title"];
 
   get cardResponseList => strings.map((result) {
         if (result is WeatherBean) {
@@ -56,53 +92,57 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
     var weatherWidgetList = List.generate(
       weatherList.length,
       (index) {
-        return Column(
-          children: <Widget>[
-            ListTile(
-              title: RichText(
-                text: TextSpan(
-                  children: [
-                    TextSpan(
-                        text: weatherList[index].date + ": ",
-                        style: TextStyle(color: Colors.black87)),
-                    TextSpan(
-                        text: weatherList[index].weather + "/",
-                        style: TextStyle(color: Colors.blue)),
-                    TextSpan(
-                        text: weatherList[index].wind + "/",
-                        style: TextStyle(color: Colors.blue)),
-                    TextSpan(
-                        text: weatherList[index].temperature,
-                        style: TextStyle(color: Colors.blue)),
-                  ],
+        return Card(
+          child: Column(
+            children: <Widget>[
+              ListTile(
+                title: RichText(
+                  text: TextSpan(
+                    children: [
+                      TextSpan(
+                          text: weatherList[index].date + ": ",
+                          style: TextStyle(color: Colors.black87)),
+                      TextSpan(
+                          text: weatherList[index].weather + "/",
+                          style: TextStyle(color: Colors.blue)),
+                      TextSpan(
+                          text: weatherList[index].wind + "/",
+                          style: TextStyle(color: Colors.blue)),
+                      TextSpan(
+                          text: weatherList[index].temperature,
+                          style: TextStyle(color: Colors.blue)),
+                    ],
+                  ),
+                ),
+                subtitle: Text(
+                  indexList[index].des,
                 ),
               ),
-              subtitle: Text(
-                indexList[index].des,
-              ),
-            ),
-            SizedBox(
-              width: double.infinity,
-              child: Container(
-                padding: EdgeInsets.all(10.0),
-                child: Row(
-//                  spacing: 5.0,
-//                  direction: Axis.horizontal,
-                  children: <Widget>[
-                    Image.network(
-                      weatherList[index].dayPictureUrl,
-                      fit: BoxFit.fill,
-                    ),
-                    Image.network(
-                      weatherList[index].nightPictureUrl,
-                      fit: BoxFit.fill,
-                    ),
-                  ],
+              Divider(),
+              SizedBox(
+                width: double.infinity,
+                child: Container(
+                  padding: EdgeInsets.all(10.0),
+                  child: Wrap(
+                    spacing: 5.0,
+                    direction: Axis.horizontal,
+                    children: <Widget>[
+                      Image.network(
+                        weatherList[index].dayPictureUrl,
+                        fit: BoxFit.fill,
+                        height: 100.0,
+                      ),
+                      Image.network(
+                        weatherList[index].nightPictureUrl,
+                        fit: BoxFit.fill,
+                        height: 100.0,
+                      ),
+                    ],
+                  ),
                 ),
               ),
-            ),
-            Divider(),
-          ],
+            ],
+          ),
         );
       },
     );
@@ -137,22 +177,41 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
   Container buildDataTag(WeatherBean weatherBean) {
     return Container(
       padding: EdgeInsets.symmetric(
-        vertical: 5.0,
+        vertical: 15.0,
         horizontal: 20.0,
       ),
       child: SizedBox(
         width: double.infinity,
         child: Align(
-          alignment: Alignment.centerRight,
-          child: Text(
-            "更新于 " + DateFormat.yMMMd().format(DateTime.now()),
-            style: TextStyle(
-              color: Colors.white,
-              fontFamily: 'Milonga',
-              letterSpacing: 1.0,
-              fontStyle: FontStyle.italic,
-              fontWeight: FontWeight.w300,
-            ),
+          alignment: Alignment.center,
+          child: Flex(
+            direction: Axis.horizontal,
+            children: <Widget>[
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Divider(
+                  color: Colors.white,
+                ),
+              )),
+              Text(
+                "更新于 " + DateFormat.yMMMd().format(DateTime.now()),
+                style: TextStyle(
+                  color: Colors.white,
+                  fontFamily: 'Milonga',
+                  letterSpacing: 1.0,
+                  fontStyle: FontStyle.italic,
+                  fontWeight: FontWeight.w300,
+                ),
+              ),
+              Expanded(
+                  child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 8.0),
+                child: Divider(
+                  color: Colors.white,
+                ),
+              )),
+            ],
           ),
         ),
       ),
@@ -193,15 +252,19 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
   }
 
   Widget createResponseCard(String text) {
-    return Card(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        child: Text(
-          text.toUpperCase(),
-          textScaleFactor: 1.5,
-          style: TextStyle(
-            fontWeight: FontWeight.bold,
-            fontStyle: FontStyle.italic,
+    return SizedBox(
+      width: double.infinity,
+      child: Card(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
+          child: Text(
+            text.toUpperCase(),
+            textScaleFactor: 1.5,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              fontWeight: FontWeight.bold,
+              fontStyle: FontStyle.italic,
+            ),
           ),
         ),
       ),
