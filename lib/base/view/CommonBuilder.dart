@@ -62,7 +62,6 @@ class CommonBuilder {
   static const Icon iconBack = Icon(Icons.arrow_back_ios);
 
   static Color getRandomColor({int a = 255}) {
-//    var valueA = 255;
     return Color.fromARGB(
       a,
       math.Random().nextInt(255),

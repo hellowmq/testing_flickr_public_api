@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 class ShowMessage {
-  static bool shouldThrowExceptionNullContext = false;
+  static bool shouldIgnoreNullContext = false;
 
   static showSnackBar(GlobalKey<ScaffoldState> key, dynamic message) {
     key.currentState
@@ -21,7 +21,17 @@ class ShowMessage {
 //        ),
 
   static showSnackBarWithContext(BuildContext context, dynamic message) {
-    if (context == null) return;
+    if (context == null) {
+      assert(() {
+        if (!shouldIgnoreNullContext) {
+          MQLogger.debugPrint(
+              "showSnackBarWithContext:  get a null Context, This mean a message has bean ignored",
+              logger: ShowMessage);
+        }
+        return true;
+      }());
+      return;
+    }
     Scaffold.of(context)
         .showSnackBar(new SnackBar(content: Text(message.toString())));
     MQLogger.debugPrint(message, logger: context.findRenderObject());

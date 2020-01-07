@@ -2,6 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/api/jirengu_api/jirengu_api.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+import 'package:intl/intl.dart';
 
 class TestOtherApiPage extends StatefulWidget {
   static Widget startPage(BuildContext context) {
@@ -15,9 +16,8 @@ class TestOtherApiPage extends StatefulWidget {
 class _TestOtherApiPageState extends State<TestOtherApiPage> {
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
-    _sendMessage(null);
+    _requestWeatherData(null);
   }
 
   @override
@@ -26,7 +26,7 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
       floatingActionButton: Builder(
         builder: (context) => FloatingActionButton(
           child: Icon(Icons.refresh),
-          onPressed: () => _sendMessage(context),
+          onPressed: () => _requestWeatherData(context),
         ),
       ),
       appBar: AppBar(
@@ -85,9 +85,9 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
               width: double.infinity,
               child: Container(
                 padding: EdgeInsets.all(10.0),
-                child: Wrap(
-                  spacing: 5.0,
-                  direction: Axis.horizontal,
+                child: Row(
+//                  spacing: 5.0,
+//                  direction: Axis.horizontal,
                   children: <Widget>[
                     Image.network(
                       weatherList[index].dayPictureUrl,
@@ -100,7 +100,8 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
                   ],
                 ),
               ),
-            )
+            ),
+            Divider(),
           ],
         );
       },
@@ -127,7 +128,6 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
               padding: EdgeInsets.all(10.0),
             ),
           ),
-          Divider(),
           buildDataTag(weatherBean),
         ],
       ),
@@ -145,7 +145,7 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
         child: Align(
           alignment: Alignment.centerRight,
           child: Text(
-            weatherBean.date,
+            "更新于 " + DateFormat.yMMMd().format(DateTime.now()),
             style: TextStyle(
               color: Colors.white,
               fontFamily: 'Milonga',
@@ -186,7 +186,6 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
                 textAlign: TextAlign.center,
               ),
             ),
-//            color: CommonBuilder.getRandomColor(),
           );
         },
       ).toList(),
@@ -209,18 +208,20 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
     );
   }
 
-  _sendMessage(BuildContext context) {
-    GetWeather.getWeather((WeatherBean bean) {
-      setState(() {
-        if (strings.length > 1) {
-          strings.removeAt(1);
-        }
-        strings.insert(1, bean);
-      });
-    }, (e, re) {
-      MQLogger.debugPrint(e);
-      ShowMessage.showSnackBarWithContext(context, e.toString());
+  _requestWeatherData(BuildContext context) {
+    GetWeather.getWeather(onWeatherBeanSuccess, (Exception exception, re) {
+      MQLogger.debugPrint(exception);
+      ShowMessage.showSnackBarWithContext(context, exception.toString());
       MQLogger.debugPrint(re);
+    });
+  }
+
+  void onWeatherBeanSuccess(WeatherBean bean) {
+    setState(() {
+      if (strings.length > 1) {
+        strings.removeAt(1);
+      }
+      strings.insert(1, bean);
     });
   }
 }
