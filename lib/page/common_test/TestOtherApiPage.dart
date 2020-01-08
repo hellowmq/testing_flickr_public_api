@@ -54,6 +54,18 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
               children: cardResponseList,
             ),
           ),
+          SliverFillRemaining(
+            child: Container(
+              color: CommonBuilder.getRandomColor(),
+              child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Align(
+                    child: Text("This is a SliverFillRemaining widget"),
+                    alignment: Alignment.center,
+                  )),
+            ),
+            hasScrollBody: false,
+          ),
 
 //          SliverFillViewport(
 //            delegate: SliverChildBuilderDelegate(
@@ -195,7 +207,10 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
                 ),
               )),
               Text(
-                "更新于 " + DateFormat.yMMMd().format(DateTime.now()),
+                "更新于 " +
+                    DateFormat.yMMMMEEEEd().format(DateTime.now()) +
+                    " " +
+                    DateFormat.Hms().format(DateTime.now()),
                 style: TextStyle(
                   color: Colors.white,
                   fontFamily: 'Milonga',

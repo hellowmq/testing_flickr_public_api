@@ -34,9 +34,11 @@ class PhotoViewWithBasePage extends StatelessWidget {
   final Widget widget;
 
   final String heroTag;
-  final String photoUrl;
+  final String uniqueTag;
+  final bool onTapPopContext;
 
-  PhotoViewWithBasePage(this.widget, this.heroTag, {Key key, this.photoUrl})
+  PhotoViewWithBasePage(this.widget, this.heroTag,
+      {Key key, this.uniqueTag, this.onTapPopContext = true})
       : super(key: key);
 
   @override
@@ -63,10 +65,14 @@ class PhotoViewWithBasePage extends StatelessWidget {
               widget,
               heroTag: heroTag,
               onTap: () {
-                Navigator.of(context)
-                    .push(new MaterialPageRoute(builder: (BuildContext c) {
-                  return RadialExpansionDemo(photoUrl);
-                }));
+                if (onTapPopContext) {
+                  Navigator.of(context).pop();
+                } else {
+                  Navigator.of(context)
+                      .push(new MaterialPageRoute(builder: (BuildContext c) {
+                    return RadialExpansionDemo(uniqueTag);
+                  }));
+                }
               },
             ),
           ),

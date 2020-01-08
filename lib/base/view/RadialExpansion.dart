@@ -160,7 +160,7 @@ class RadialExpansionDemo extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    timeDilation = 5.0; // 1.0 is normal animation speed.
+    timeDilation = 0.2; // 1.0 is normal animation speed.
 
     return Scaffold(
       appBar: AppBar(

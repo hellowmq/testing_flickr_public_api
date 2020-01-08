@@ -38,7 +38,7 @@ class CommonBuilder {
     return new PhotoViewWithBasePage(
       buildFadeInImage(photo),
       photo.hashCode.toString(),
-      photoUrl: photo.imgUrl,
+      uniqueTag: photo.imgUrl,
     );
   }
 

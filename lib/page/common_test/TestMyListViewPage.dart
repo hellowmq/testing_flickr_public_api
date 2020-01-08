@@ -22,9 +22,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double statusBarHeight = MediaQuery.of(context).padding.top;
     return Scaffold(
-      appBar: AppBar(),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.build),
         onPressed: () {
@@ -42,7 +40,7 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
             pinned: true,
             expandedHeight: 250.0,
             flexibleSpace: FlexibleSpaceBar(
-              title: Text('Demo'),
+              title: Text('This is a SliverAppBar'),
             ),
           ),
           SliverGrid(
@@ -54,10 +52,14 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
             ),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
-                return Container(
-                  alignment: Alignment.center,
-                  color: Colors.teal[100 * (index % 9)],
-                  child: Text('Grid Item $index'),
+                return PhotoViewWithBasePage(
+                  Container(
+                    alignment: Alignment.center,
+                    color: Colors.teal[100 * (index % 9)],
+                    child: Text('Grid Item $index'),
+                  ),
+                  index.toString(),
+                  uniqueTag: index.toString(),
                 );
               },
               childCount: 20,
@@ -74,6 +76,44 @@ class _TestMyListViewPageState extends State<TestMyListViewPage> {
                   child: Text('List Item $index'),
                 );
               },
+            ),
+          ),
+          // SliverFillViewport 的子件占据剩余空间
+          SliverFillRemaining(
+            child: Container(
+              color: CommonBuilder.getRandomColor(),
+              child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Align(
+                    child: Text("This is a SliverFillRemaining widget"),
+                    alignment: Alignment.center,
+                  )),
+            ),
+            hasScrollBody: false,
+          ),
+//           SliverFillViewport 的每个子件占据整个窗口
+          SliverFillViewport(
+            delegate: SliverChildBuilderDelegate(
+              (context, index) => Container(
+                color: CommonBuilder.getRandomColor(),
+                child: Padding(
+                  padding: EdgeInsets.all(20.0),
+                  child: Align(
+                    child: Text("This is a SliverFillViewport widget： " +
+                        index.toString()),
+                    alignment: Alignment.center,
+                  ),
+                ),
+              ),
+              childCount: 2,
+            ),
+          ),
+          //   SliverToBoxAdapter 直接将子件封装为 Sliver
+          SliverToBoxAdapter(
+            child: Container(
+              height: 200.0,
+              width: double.infinity,
+              color: CommonBuilder.getRandomColor(),
             ),
           ),
         ],
