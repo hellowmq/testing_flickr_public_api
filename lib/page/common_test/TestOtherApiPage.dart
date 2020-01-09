@@ -42,6 +42,8 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
 //          ),
 //          physics: BouncingScrollPhysics(),
 //        )
+          // EE: ScrollView 的行为中，如果 slivers 高度不足一个屏幕，那么滑动行为本身不能生效
+
           CustomScrollView(
         slivers: <Widget>[
 //          SliverSafeArea(
@@ -54,16 +56,19 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
               children: cardResponseList,
             ),
           ),
+          //  SliverFillRemaining will occupy the remain space, so that the
+          //  scrollview can scroll even the slivers are not full of one screen
           SliverFillRemaining(
             child: Container(
-              color: CommonBuilder.getRandomColor(),
-              child: Padding(
-                  padding: EdgeInsets.all(20.0),
-                  child: Align(
-                    child: Text("This is a SliverFillRemaining widget"),
-                    alignment: Alignment.center,
-                  )),
-            ),
+//              color: CommonBuilder.getRandomColor(),
+//              child: Padding(
+//                padding: EdgeInsets.all(20.0),
+//                child: Align(
+//                  child: Text("This is a SliverFillRemaining widget"),
+//                  alignment: Alignment.center,
+//                ),
+//              ),
+                ),
             hasScrollBody: false,
           ),
 
@@ -213,7 +218,6 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
                     DateFormat.Hms().format(DateTime.now()),
                 style: TextStyle(
                   color: Colors.white,
-                  fontFamily: 'Milonga',
                   letterSpacing: 1.0,
                   fontStyle: FontStyle.italic,
                   fontWeight: FontWeight.w300,
