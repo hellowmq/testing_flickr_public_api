@@ -9,7 +9,7 @@ class MainPage extends StatelessWidget {
     return new Scaffold(
       appBar: AppBar(
         title: Text(
-          DebugUtils.isDebug ? 'android' : 'This is our Flickr Api',
+          DebugUtils.isDebug ? (DebugUtils.getPlatformName()) : 'This is our Flickr Api',
           style: TextStyle(fontFamily: 'Steiner', fontWeight: FontWeight.bold),
         ),
       ),
