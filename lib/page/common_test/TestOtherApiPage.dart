@@ -217,6 +217,7 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
                     " " +
                     DateFormat.Hms().format(DateTime.now()),
                 style: TextStyle(
+                  fontFamily: "Steiner",
                   color: Colors.white,
                   letterSpacing: 1.0,
                   fontStyle: FontStyle.italic,
@@ -281,6 +282,7 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
             textScaleFactor: 1.5,
             textAlign: TextAlign.center,
             style: TextStyle(
+              fontFamily: "Steiner",
               fontWeight: FontWeight.bold,
               fontStyle: FontStyle.italic,
             ),

@@ -8,7 +8,10 @@ class MainPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Scaffold(
       appBar: AppBar(
-        title: Text(DebugUtils.isDebug ? 'This is our Flickr Api' : ''),
+        title: Text(
+          DebugUtils.isDebug ? 'android' : 'This is our Flickr Api',
+          style: TextStyle(fontFamily: 'Steiner', fontWeight: FontWeight.bold),
+        ),
       ),
       body: ListView(
         children: page.PageIndexList().buildPageIndexWidgetList(context),
