@@ -23,7 +23,7 @@ class _SearchPhotosPageState extends State<SearchPhotosPage> {
       .build();
 
   /// Keep the photo in this page.
-  List<Widget> _widgetList;
+  List<Widget> _widgetList = <Widget>[];
 
   /// Keep a state of network to show loading.
   bool _isSending = false;
