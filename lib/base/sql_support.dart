@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:path/path.dart';
 
 import 'package:sqflite/sqflite.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 import 'bean/photo.dart';
 
@@ -29,11 +30,13 @@ class LocalDataBase {
       version: 1,
     ).then((db) {
       _database = db;
+      MQLogger.debugPrint("photo_database.db not open");
+      print(_database);
     });
   }
 
   static Future<void> insertPhoto(Photo photo) async {
-    final Database database = _database;
+    final Database database = getDataBaseInstance();
     if (database == null) {
       throw Exception("Database not open");
     }
@@ -45,7 +48,7 @@ class LocalDataBase {
   }
 
   static Future<void> insertPhotoList(List<Photo> photoList) async {
-    final Database database = _database;
+    final Database database = getDataBaseInstance();
     if (database == null) {
       throw Exception("Database not open");
     }
@@ -59,7 +62,7 @@ class LocalDataBase {
   }
 
   static Future<void> clearPhotoDatabase() async{
-    final Database database = _database;
+    final Database database = getDataBaseInstance();
     if(database == null){
       throw Exception("Database not open");
     }
@@ -68,7 +71,7 @@ class LocalDataBase {
   }
 
   static Future<List<Photo>> getPhotos() async {
-    final database = _database;
+    final database = getDataBaseInstance();
     if (database == null) {
       throw Exception("Database not open");
     }
@@ -80,7 +83,7 @@ class LocalDataBase {
   }
 
   static Future<void> deletePhoto(String id) async {
-    final database = _database;
+    final database = getDataBaseInstance();
     if (database == null) {
       throw Exception("Database not open");
     }
@@ -92,7 +95,7 @@ class LocalDataBase {
   }
 
   static Future<void> updatePhoto(Photo photo) async {
-    final database = _database;
+    final database = getDataBaseInstance();
     if (database == null) {
       throw Exception("Database not open");
     }

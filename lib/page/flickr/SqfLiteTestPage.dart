@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
+import 'package:sqflite/sqflite.dart';
 
 const String TAG = "SqfLiteTestPage";
 
@@ -14,9 +15,15 @@ class SqfLiteTestPage extends StatefulWidget {
 }
 
 class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
-  final database = LocalDataBase.getDataBaseInstance();
   List<Photo> _photos = List<Photo>();
   List<Widget> _widgetList = List<Widget>();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    LocalDataBase.getDataBaseInstance();
+  }
 
   void updateWidgetList() {
     setState(() {
@@ -26,16 +33,12 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
 
   @override
   Widget build(BuildContext context) {
-    LocalDataBase.getPhotos().then((list) {
-      _photos = list;
-      updateWidgetList();
-    });
     return Scaffold(
       body: ListView(
         children: _widgetList,
       ),
       floatingActionButton: new FloatingActionButton(
-          child: Icon(Icons.add), onPressed: getRecentPhoto),
+          child: Icon(Icons.add), onPressed: () => getRecentPhoto()),
     );
   }
 
@@ -47,7 +50,9 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
   void getRecentPhoto() async {
     _mViewModel.loadMorePhotoListWithCallback(
         onSuccessCallback: (List<Photo> photoList) async {
+
       Photo first = photoList[0];
+      print(first);
       this._photos = await LocalDataBase.getPhotos();
       MQLogger.debugPrint("Generate Photo Object" + this._photos.toString(),
           logger: TAG);
