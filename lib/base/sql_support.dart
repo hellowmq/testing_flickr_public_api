@@ -30,7 +30,7 @@ class LocalDataBase {
       version: 1,
     ).then((db) {
       _database = db;
-      MQLogger.debugPrint("photo_database.db not open");
+      MQLogger.debugPrint("photo_database.db not open" + (_database == null).toString());
       print(_database);
     });
   }

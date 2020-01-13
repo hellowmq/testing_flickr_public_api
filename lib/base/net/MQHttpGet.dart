@@ -84,16 +84,17 @@ class MRestGet {
 
   static MRestGet _instance;
 
-  static MRestGet get instance => _getInstance();
-
-  factory MRestGet() => _getInstance();
-
-  static MRestGet _getInstance() {
-    if (_instance == null) {
-      _instance = MRestGet._internal();
-    }
-    return _instance;
-  }
+//  static MRestGet get instance => _getInstance();
+//
+//  factory MRestGet() => _getInstance();
+//
+//  static MRestGet _getInstance() {
+//    if (_instance == null) {
+//      _instance = MRestGet._internal();
+//    }
+//    return _instance;
+//  }
+  MRestGet();
 
   MRestGet._internal() {
     print(new DateTime.now());

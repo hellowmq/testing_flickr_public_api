@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/view_model/get_photo_list_model.dart';
-import 'package:sqflite/sqflite.dart';
 
 const String TAG = "SqfLiteTestPage";
 
@@ -22,7 +21,13 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
   void initState() {
     // TODO: implement initState
     super.initState();
+    initialGetLocalData();
+  }
+
+  initialGetLocalData() async {
     LocalDataBase.getDataBaseInstance();
+    this._photos = await LocalDataBase.getPhotos();
+    updateWidgetList();
   }
 
   void updateWidgetList() {
@@ -37,32 +42,41 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
       body: ListView(
         children: _widgetList,
       ),
-      floatingActionButton: new FloatingActionButton(
-          child: Icon(Icons.add), onPressed: () => getRecentPhoto()),
+      floatingActionButton: Builder(
+        builder: (context) =>
+            FloatingActionButton(
+              onPressed: () => getRecentPhoto(context),
+              child: Icon(Icons.send),
+            ),
+      ),
     );
   }
 
   GetPhotoListViewModel _mViewModel = (GetPhotoListViewModelBuilder()
-        ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_RECENT
-        ..perPage = 1)
+    ..methodName = FlickrConstant.FLICKR_PHOTOS_GET_RECENT
+    ..perPage = 1)
       .build();
 
-  void getRecentPhoto() async {
+  void getRecentPhoto(BuildContext context) async {
     _mViewModel.loadMorePhotoListWithCallback(
         onSuccessCallback: (List<Photo> photoList) async {
-
-      Photo first = photoList[0];
-      print(first);
-      this._photos = await LocalDataBase.getPhotos();
-      MQLogger.debugPrint("Generate Photo Object" + this._photos.toString(),
-          logger: TAG);
-      MQLogger.debugPrint("Generate Photo Object" + first.toJson().toString(),
-          logger: TAG);
-      LocalDataBase.insertPhoto(first);
-      this._photos = await LocalDataBase.getPhotos();
-      MQLogger.debugPrint("After insert Photo Object" + this._photos.toString(),
-          logger: TAG);
-      updateWidgetList();
+          Photo first = photoList[0];
+          print(first);
+          this._photos = await LocalDataBase.getPhotos();
+          MQLogger.debugPrint("Get Photo Object" + this._photos.toString(),
+              logger: TAG);
+          MQLogger.debugPrint(
+              "Generate Photo Object" + first.toJson().toString(),
+              logger: TAG);
+          LocalDataBase.insertPhoto(first);
+          this._photos = await LocalDataBase.getPhotos();
+          MQLogger.debugPrint(
+              "After insert Photo Object" + this._photos.toString(),
+              logger: TAG);
+          updateWidgetList();
+        }, onErrorCallback: (e, response) {
+      print(e.toString());
+      ShowMessage.showSnackBarWithContext(context, e.toString());
     });
   }
 }
