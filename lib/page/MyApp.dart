@@ -5,6 +5,9 @@ import 'package:wenmq_first_flickr_flutter_app/page/PageIndex.dart' as page;
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    PaintingBinding.instance.imageCache.maximumSize = 100;
+    InheritedWidget a;
+    CustomSingleChildLayout b;
     return MaterialApp(
       initialRoute: '/',
       theme: DebugUtils.isDebug
