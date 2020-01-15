@@ -26,8 +26,12 @@ class _SqfLiteTestPageState extends State<SqfLiteTestPage> {
 
   initialGetLocalData() async {
     LocalDataBase.getDataBaseInstance();
-    this._photos = await LocalDataBase.getPhotos();
-    updateWidgetList();
+    try {
+      this._photos = await LocalDataBase.getPhotos();
+      updateWidgetList();
+    } catch (e) {
+      MQLogger.debugPrint(e.toString(), logger: LocalDataBase.TAG);
+    }
   }
 
   void updateWidgetList() {
