@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
 
 import 'package:wenmq_first_flickr_flutter_app/base/view/RadialExpansion.dart';
+import 'package:intl/intl.dart';
 
 class PhotoViewer extends StatelessWidget {
-  PhotoViewer(this.widget, {Key key, this.heroTag, this.onTap})
+  PhotoViewer(this.widget,
+      {Key key, this.heroTag, this.onTap, this.onLongPress})
       : super(key: key);
 
   final Widget widget;
   final String heroTag;
   final VoidCallback onTap;
+  VoidCallback onLongPress;
 
   Widget build(BuildContext context) {
     return new SizedBox(
@@ -18,6 +21,7 @@ class PhotoViewer extends StatelessWidget {
           color: Colors.transparent,
           child: new InkWell(
             onTap: onTap,
+            onLongPress: onLongPress,
             child: widget,
           ),
         ),
@@ -61,19 +65,24 @@ class PhotoViewWithBasePage extends StatelessWidget {
           alignment: Alignment.center,
           child: new SizedBox(
             width: double.infinity,
-            child: new PhotoViewer(
-              widget,
-              heroTag: heroTag,
-              onTap: () {
-                if (onTapPopContext) {
-                  Navigator.of(context).pop();
-                } else {
-                  Navigator.of(context)
-                      .push(new MaterialPageRoute(builder: (BuildContext c) {
-                    return RadialExpansionDemo(uniqueTag);
-                  }));
-                }
-              },
+            child: Tooltip(
+              message: DateFormat.yMMMMEEEEd().format(DateTime.now()) +
+                  " " +
+                  DateFormat.Hms().format(DateTime.now()),
+              child: new PhotoViewer(
+                widget,
+                heroTag: heroTag,
+                onTap: () {
+                  if (onTapPopContext) {
+                    Navigator.of(context).pop();
+                  } else {
+                    Navigator.of(context)
+                        .push(new MaterialPageRoute(builder: (BuildContext c) {
+                      return RadialExpansionDemo(uniqueTag);
+                    }));
+                  }
+                },
+              ),
             ),
           ),
         ),
