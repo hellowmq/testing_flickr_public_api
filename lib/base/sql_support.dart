@@ -2,7 +2,6 @@ import 'dart:async';
 import 'package:path/path.dart';
 
 import 'package:sqflite/sqflite.dart';
-import 'package:sqflite/src/exception_impl.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 import 'bean/photo.dart';
