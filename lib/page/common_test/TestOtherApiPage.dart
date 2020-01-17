@@ -212,10 +212,7 @@ class _TestOtherApiPageState extends State<TestOtherApiPage> {
                 ),
               )),
               Text(
-                "更新于 " +
-                    DateFormat.yMMMMEEEEd().format(DateTime.now()) +
-                    " " +
-                    DateFormat.Hms().format(DateTime.now()),
+                "更新于 " + formatWithYMMMMEEEEdHms(DateTime.now()),
                 style: TextStyle(
                   fontFamily: "Steiner",
                   color: Colors.white,

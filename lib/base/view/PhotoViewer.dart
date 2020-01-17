@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 
 import 'package:wenmq_first_flickr_flutter_app/base/view/RadialExpansion.dart';
 import 'package:intl/intl.dart';
@@ -66,9 +67,7 @@ class PhotoViewWithBasePage extends StatelessWidget {
           child: new SizedBox(
             width: double.infinity,
             child: Tooltip(
-              message: DateFormat.yMMMMEEEEd().format(DateTime.now()) +
-                  " " +
-                  DateFormat.Hms().format(DateTime.now()),
+              message: formatWithYMMMMEEEEdHms(DateTime.now()),
               child: new PhotoViewer(
                 widget,
                 heroTag: heroTag,
