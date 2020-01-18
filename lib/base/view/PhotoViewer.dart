@@ -67,7 +67,7 @@ class PhotoViewWithBasePage extends StatelessWidget {
           child: new SizedBox(
             width: double.infinity,
             child: Tooltip(
-              message: formatWithYMMMMEEEEdHms(DateTime.now()),
+              message: TimeUtils.formatWithYMMMMEEEEdHms(DateTime.now()),
               child: new PhotoViewer(
                 widget,
                 heroTag: heroTag,
