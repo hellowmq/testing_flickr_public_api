@@ -155,7 +155,7 @@ class PageIndexList {
   Map<String, WidgetBuilder> routeMap =
       (Map<String, WidgetBuilder>.fromIterable(pageIndexList,
           key: (v) => v.routeName, value: (v) => v.buildRoute))
-        ..['/'] = ((context) => MainPage());
+        ..['/'] = ((context) => NewMainPage());
 
 // create the enter for the sub page
   List<Widget> buildPageIndexWidgetList(context) {
