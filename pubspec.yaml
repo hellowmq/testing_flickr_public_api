@@ -38,6 +38,7 @@ dependencies:
   fish_redux: ^0.2.8
   logging: ^0.11.3+2
   intl: ^0.16.1
+  ml_linalg: ^12.7.1
 #  cached_network_image: ^1.1.3
 
 

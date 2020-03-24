@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'package:ml_linalg/linalg.dart';
 
 class TwoDUtils {
   static List<double> polar2XY(num rou, num theta) {
@@ -20,5 +21,11 @@ class TwoDUtils {
     } else {
       return atan(y / x);
     }
+  }
+
+  static double distance(List<num> point1, List<num> point2) {
+    Vector v1 = Vector.fromList(point1);
+    Vector v2 = Vector.fromList(point2);
+    return (v1 - v2).norm();
   }
 }
