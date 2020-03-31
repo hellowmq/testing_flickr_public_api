@@ -3,6 +3,7 @@ import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
 import 'package:wenmq_first_flickr_flutter_app/base/bean/FlickrString.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/common_test/QrCodePage.dart';
 import 'package:wenmq_first_flickr_flutter_app/page/all_page.dart';
+import 'package:wenmq_first_flickr_flutter_app/particle/main.dart' as clock;
 
 ///
 /// auth: hellowmq 2019/07/23
@@ -19,7 +20,7 @@ class PageIndex {
   final WidgetBuilder buildRoute;
   final String documentationUrl;
 
-  const PageIndex({
+  PageIndex({
     @required this.title,
     @required this.routeName,
     @required this.buildRoute,
@@ -45,7 +46,7 @@ class PageIndexList {
   PageIndexList._internal();
 
 // All sub routes are stored in a PageIndex List.
-  static const List<PageIndex> pageIndexList = const <PageIndex>[
+  static List<PageIndex> pageIndexList = <PageIndex>[
     PageIndex(
       title: 'flickr.test.echo',
       subtitle:
@@ -148,6 +149,12 @@ class PageIndexList {
       subtitle: 'test otherr api',
       routeName: '/testOtherApiPage',
       buildRoute: TestOtherApiPage.startPage,
+    ),
+    PageIndex(
+      title: "Patical Clock Sample",
+      subtitle: "The sample of flutter clock",
+      routeName: '/paticalClock',
+      buildRoute: clock.clockBuilder,
     ),
   ];
 
