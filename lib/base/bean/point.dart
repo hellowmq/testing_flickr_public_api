@@ -8,13 +8,30 @@ class Point {
   Vector pxy; // position vector
   Vector vxy; // velocity vector
   double get px => pxy[0];
-  set px(double x) => (pxy as Iterable<double>)[0] = x;
+
+  set px(double x) {
+    pxy = Vector.fromList([x, pxy[1]]);
+  }
 
   double get py => pxy[1];
 
+
+  set py(double y) {
+    pxy = Vector.fromList([pxy[0], y]);
+  }
+
   double get vx => vxy[0];
 
+  set vx(double x) {
+    vxy = Vector.fromList([x, vxy[1]]);
+  }
+
   double get vy => vxy[1];
+
+
+  set vy(double y) {
+    vxy = Vector.fromList([vxy[0], y]);
+  }
 
   double get pr => vxy.norm();
 
@@ -53,6 +70,6 @@ class Point {
   }
 
   void step(double time) {
-        pxy = pxy + vxy * time;
+    pxy = pxy + vxy * time;
   }
 }
