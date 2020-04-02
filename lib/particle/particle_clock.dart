@@ -51,6 +51,9 @@ class _ParticleClockState extends State<ParticleClock>
   Future<List<Palette>> _loadPalettes() async {
     String data =
         await DefaultAssetBundle.of(context).loadString("assets/palettes.json");
+    print(data);
+    print(data.runtimeType);
+
     var palettes = json.decode(data) as List;
     return palettes.map((p) => Palette.fromJson(p)).toList();
   }

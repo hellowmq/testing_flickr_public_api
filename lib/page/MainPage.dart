@@ -1,6 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 
 import 'package:wenmq_first_flickr_flutter_app/base/base_tool.dart';
+import 'package:wenmq_first_flickr_flutter_app/particle/palette.dart';
 import 'PageIndex.dart' as page;
 
 class MainPage extends StatelessWidget {
@@ -52,8 +55,8 @@ class NewMainPage extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 page.PageIndex p = page.PageIndexList.pageIndexList[index];
-                return Card(
-                  child: GestureDetector(
+                return GestureDetector(
+                  child: Card(
                     child: Padding(
                       padding: const EdgeInsets.fromLTRB(8.0, 4.0, 8.0, 0.0),
                       child: Column(
@@ -86,10 +89,10 @@ class NewMainPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    onTap: () {
-                      Navigator.pushNamed(context, p.routeName);
-                    },
                   ),
+                  onTap: () {
+                    Navigator.pushNamed(context, p.routeName);
+                  },
                 );
               },
               childCount: page.PageIndexList.pageIndexList.length,
@@ -100,3 +103,4 @@ class NewMainPage extends StatelessWidget {
     );
   }
 }
+
