@@ -45,11 +45,10 @@ class NewMainPage extends StatelessWidget {
           ),
           SliverGrid(
             gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-              mainAxisSpacing: 10.0,
-              crossAxisSpacing: 1.0,
-              childAspectRatio: 3.0 / 4.0,
-              crossAxisCount: 2
-            ),
+                mainAxisSpacing: 10.0,
+                crossAxisSpacing: 1.0,
+                childAspectRatio: 3.0 / 4.0,
+                crossAxisCount: 2),
             delegate: SliverChildBuilderDelegate(
               (BuildContext context, int index) {
                 page.PageIndex p = page.PageIndexList.pageIndexList[index];
@@ -87,7 +86,9 @@ class NewMainPage extends StatelessWidget {
                         ],
                       ),
                     ),
-                    onTap: () => Navigator.pushNamed(context, p.routeName),
+                    onTap: () {
+                      Navigator.pushNamed(context, p.routeName);
+                    },
                   ),
                 );
               },
